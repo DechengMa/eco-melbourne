@@ -1,28 +1,27 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './resources/styles.css';
+import Header from './components/header_footer/Header';
+import Banner from './components/banner/Banner';
+import Description from './components/description/Description';
+import Charts from './components/charts';
+import Calculator from './components/calculator';
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+	render() {
+		return (
+			<div className='App'>
+				<Header />
+				<div style={{ marginTop: '88px' }}>
+					<Banner />
+				</div>
+
+				<Description description='Let see some data first' />
+				<Charts />
+				<Description description='Come and try our calculcator feature!' />
+				<Calculator />
+			</div>
+		);
+	}
 }
 
 export default App;

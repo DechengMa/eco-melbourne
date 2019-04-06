@@ -1,0 +1,63 @@
+body {
+	padding: 0;
+	margin: 0;
+	font-family: 'Roboto', sans-serif;
+}
+
+.font_righteous {
+	font-family: 'Righteous', cursive;
+}
+
+.bck_black {
+	background: #3c3c3c;
+}
+.bck_white {
+	background: #ffffff;
+}
+.bck_red {
+	background: #ff4800;
+}
+.bck_yellow {
+	background: #ffa800;
+}
+
+.iconImage {
+	width: 20px;
+	margin-right: 10px;
+}
+
+.center_wrapper {
+	width: 900px;
+	margin: 0 auto;
+}
+
+.wrapper {
+	margin-right: auto; /* 1 */
+	margin-left: auto; /* 1 */
+
+	max-width: 960px; /* 2 */
+
+	padding-right: 10px; /* 3 */
+	padding-left: 10px; /* 3 */
+}
+/*====================
+        HEADER
+======================*/
+
+header {
+	padding: 10px 0px;
+	transition: all 300ms ease-in;
+}
+
+header .header_logo {
+	flex-grow: 1;
+}
+header .header_logo_venue {
+	color: black;
+	font-size: 40px;
+}
+
+header .header_logo_title {
+	color: black;
+	text-transform: uppercase;
+}
