@@ -1,8 +1,5 @@
 import React from 'react';
-import PlacesAutocomplete, {
-	geocodeByAddress,
-	getLatLng
-} from 'react-places-autocomplete';
+import PlacesAutocomplete from 'react-places-autocomplete';
 
 import { TextField, MenuItem, FormHelperText } from '@material-ui/core';
 // import './LocationSearchInput.css';

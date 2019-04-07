@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { unstable_Box as Box } from '@material-ui/core/Box';
 import { DirectionsCar, Power } from '@material-ui/icons';
@@ -31,13 +30,20 @@ class FirstDataVisualColumn extends Component {
 					<Box p={1}>
 						<div style={{ margin: '15px 15px' }}>
 							<Card style={{ height: '40vh', position: 'relative' }}>
+								<DirectionsCar
+									style={{
+										position: 'absolute',
+										right: '15px',
+										top: '15px',
+										color: Colors.mainYellow
+									}}
+								/>
 								<CardContent>
 									<Typography variant='h5' component='h2'>
-										Carbon emission
+										Carbon Emission
 									</Typography>
-									<DirectionsCar />
 
-									<Typography variant='h6'>
+									{/* <Typography variant='h6'>
 										<AnimatedNumber
 											style={{
 												transition: '0.8s ease-out',
@@ -54,6 +60,9 @@ class FirstDataVisualColumn extends Component {
 											// formatValue={n => prettyBytes(n)}
 										/>
 										<span style={{ fontSize: 28 }}>Kg CO2e</span>
+									</Typography> */}
+									<Typography component='p' style={{ marginTop: '30px' }}>
+										What is my current carbon footprint ?
 									</Typography>
 								</CardContent>
 								<CardActions
@@ -63,8 +72,22 @@ class FirstDataVisualColumn extends Component {
 										bottom: '20px'
 									}}
 								>
-									<Typography component='p'>
-										How much carbon emission is created by a car ?
+									<Typography variant='h6'>
+										<AnimatedNumber
+											style={{
+												transition: '0.8s ease-out',
+												fontSize: 48,
+												transitionProperty: 'background-color, color, opacity',
+												color: Colors.mainYellow
+											}}
+											frameStyle={perc =>
+												perc === 100 ? {} : { opacity: 0.25 }
+											}
+											duration={300}
+											value={this.props.carEmission}
+											component='text'
+										/>
+										<span style={{ fontSize: 28 }}>Kg CO2e</span>
 									</Typography>
 								</CardActions>
 							</Card>
@@ -74,12 +97,44 @@ class FirstDataVisualColumn extends Component {
 				<Box p={1}>
 					<div style={{ margin: '15px 15px' }}>
 						<Card style={{ height: '40vh', position: 'relative' }}>
+							<Power
+								style={{
+									position: 'absolute',
+									right: '15px',
+									top: '15px',
+									color: Colors.mainBlue
+								}}
+							/>
 							<CardContent>
 								<Typography variant='h5' component='h2'>
-									Energy price
+									My Spending
 								</Typography>
-								<Power />
-
+								<Typography component='p' style={{ marginTop: '30px' }}>
+									How much am I currently spending ?
+								</Typography>
+								{/* <Typography variant='h6'>
+									<AnimatedNumber
+										style={{
+											transition: '0.8s ease-out',
+											fontSize: 48,
+											transitionProperty: 'background-color, color, opacity',
+											color: Colors.mainBlue
+										}}
+										frameStyle={perc => (perc === 100 ? {} : { opacity: 0.25 })}
+										duration={300}
+										value={this.props.energyPrice}
+										component='text'
+										// formatValue={n => prettyBytes(n)}
+									/>
+									<span style={{ fontSize: 28 }}>$AUD</span>
+								</Typography> */}
+							</CardContent>
+							<CardActions
+								style={{ position: 'absolute', margin: '15px', bottom: '20px' }}
+							>
+								{/* <Typography component='p'>
+									How much the user is spending for current travel method ?
+								</Typography> */}
 								<Typography variant='h6'>
 									<AnimatedNumber
 										style={{
@@ -95,13 +150,6 @@ class FirstDataVisualColumn extends Component {
 										// formatValue={n => prettyBytes(n)}
 									/>
 									<span style={{ fontSize: 28 }}>$AUD</span>
-								</Typography>
-							</CardContent>
-							<CardActions
-								style={{ position: 'absolute', margin: '15px', bottom: '20px' }}
-							>
-								<Typography component='p'>
-									How much the user is spending for current travel method ?
 								</Typography>
 							</CardActions>
 						</Card>

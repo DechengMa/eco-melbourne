@@ -8,6 +8,7 @@ import { GoogleApiWrapper } from 'google-maps-react';
 import { GOOGLEMAPAPI } from '../../config/keys';
 import axios from 'axios';
 import { isNumeric } from '../utils/Variables';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 class Question extends Component {
 	state = {
@@ -16,14 +17,13 @@ class Question extends Component {
 		vehicle: '',
 		daysWork: '',
 		fuelType: '',
-		fuelConsumption: '',
+		fuelConsumption: 0,
 		distance: '',
+		period: 'Week',
+		loading: false,
+		errorOrNot: false,
 		error: {}
 	};
-
-	componentDidMount() {
-		this.getDataFromBackEnd();
-	}
 
 	getDistance = (baseLocation, targetLocation) => {
 		const { google } = this.props;
@@ -40,18 +40,13 @@ class Question extends Component {
 				// avoidTolls: true
 			},
 			(response, status) => {
-				console.log('Callback called');
-
 				if (status !== 'OK') {
 					console.log('ERROR!');
 					console.log(status);
 				} else {
-					console.log('Distance Come UP!');
 					// console.log(response.rows[0].elements[0].distance.text);
 					var distance = response.rows[0].elements[0].distance.text;
 					distance = distance.substring(0, distance.length - 2);
-					console.log('DISTANCE');
-					console.log(distance);
 					// return;
 
 					this.setState({
@@ -64,6 +59,13 @@ class Question extends Component {
 		);
 	};
 
+	componentWillReceiveProps(props) {
+		if (props.period !== this.state.period) {
+			this.setState({ period: props.period });
+			this.handleCheckResult();
+		}
+	}
+
 	getDataFromBackEnd = () => {
 		const {
 			daysWork,
@@ -72,16 +74,14 @@ class Question extends Component {
 			fuelConsumption,
 			distance
 		} = this.state;
-		var url = `Https://ecomelbourne.azurewebsites.net/Calculator/index?fuelType=${fuelType}&distance=${distance}&days=${daysWork}&average=${fuelConsumption}&vehicleType=${vehicle}&period=Week`;
+		const { period } = this.props;
+		var url = `Https://ecomelbourne.azurewebsites.net/Calculator/index?fuelType=${fuelType}&distance=${distance}&days=${daysWork}&average=${fuelConsumption}&vehicleType=${vehicle}&period=${period}`;
 		console.log(url);
 		axios
 			.get(url)
 			.then(response => {
-				// console.log(response.data);
-				console.log('THIS.PROPS');
-				console.log(this.props);
+				this.setState({ loading: false });
 				this.props.setupResult(response.data);
-				console.log('After setupUp result');
 			})
 			.catch(error => {
 				console.log(error);
@@ -89,68 +89,78 @@ class Question extends Component {
 	};
 
 	handleCheckResult = () => {
-		console.log('THIS.STATE');
-		console.log(this.state);
-
 		const {
 			livingSuburb,
 			workingSuburb,
 			daysWork,
 			vehicle,
 			fuelType,
-			fuelConsumption
+			fuelConsumption,
+			error
 		} = this.state;
+
+		// var hasError = false;
 
 		if (livingSuburb === '') {
 			this.setState({
-				error: { livingSuburb: 'Please select a valid suburb' }
+				error: {
+					...error,
+					livingSuburb: 'Please select a valid suburb'
+				}
 			});
-			return;
+			return
 		}
 
 		if (workingSuburb === '') {
 			this.setState({
-				error: { workingSuburb: 'Please select a valid suburb' }
+				error: {
+					...this.state.error,
+					workingSuburb: 'Please select a valid suburb'
+				}
 			});
-			return;
+			return
 		}
 
 		if (daysWork === '') {
 			this.setState({
-				error: { daysWork: 'Please select a how many days you work weekly' }
+				error: {
+					...this.state.error,
+					daysWork: 'Please select a how many days you work weekly'
+				}
 			});
-			return;
+			return
 		}
 
 		if (vehicle === '') {
 			this.setState({
-				error: { vehicle: 'Please select a way of travel' }
+				error: { ...this.state.error, vehicle: 'Please select a way of travel' }
 			});
-			return;
+			return
 		}
 
 		if (vehicle === 'Car' || vehicle === 'MotorBike') {
 			if (fuelType === '') {
 				this.setState({
-					error: { fuelType: 'Please select type of fuel you use' }
+					error: {
+						...this.state.error,
+						fuelType: 'Please select type of fuel you use'
+					}
 				});
-				return;
+				return
 			}
 
-			if (
-				fuelConsumption === '' ||
-				!isNumeric(fuelConsumption) ||
-				parseInt(fuelConsumption) <= 0
-			) {
+			if (!isNumeric(fuelConsumption) || parseInt(fuelConsumption) <= 0) {
 				this.setState({
 					error: {
+						...this.state.error,
 						fuelConsumption: 'Please select a valid fuel consumption'
 					}
 				});
-				return;
+				return
 			}
 		}
 
+		this.setState({ loading: true });
 		this.getDistance(this.state.livingSuburb, this.state.workingSuburb);
 	};
 
@@ -264,10 +274,18 @@ class Question extends Component {
 					<Box p={1}>
 						<Button
 							variant='contained'
-							style={{ backgroundColor: '#009a3f', color: '#fff' }}
+							style={{
+								backgroundColor: '#009a3f',
+								color: '#fff',
+								width: '100%'
+							}}
 							onClick={this.handleCheckResult}
 						>
-							Check How Much You Can Save !
+							{this.state.loading ? (
+								<CircularProgress color='#fff' />
+							) : (
+								'Check How Much You Can Save !'
+							)}
 						</Button>
 					</Box>
 				</Box>

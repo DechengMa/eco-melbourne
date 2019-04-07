@@ -18,10 +18,10 @@ const SideDrawer = props => {
 		<Drawer anchor='right' open={props.open} onClose={() => props.onClose()}>
 			<List>
 				<ListItem button onClick={() => scrollToElement('chart')}>
-					See what is happening now
+					SEE WHAT IS HAPPENING NOW
 				</ListItem>
 				<ListItem button onClick={() => scrollToElement('calculator')}>
-					Calculator
+					CALCULATOR
 				</ListItem>
 			</List>
 		</Drawer>

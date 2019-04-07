@@ -4,7 +4,7 @@ import { Colors } from '../utils/Variables';
 const Description = props => {
 	return (
 		<div style={{ margin: '25px 25px' }}>
-			<div className='wrapper' style={{ fontSize: '1.5rem' }}>
+			<div style={{ marginLeft: '30px', fontSize: '1.5rem',fontWeight: "300",lineHeight:'1.5' }}>
 				{props.description}
 			</div>
 
