@@ -11,9 +11,9 @@ const ChartCard = props => {
 			<CardContent>
 				<TableauReport url={props.url} />
 			</CardContent>
-			<CardActions>
+			{/* <CardActions>
 				<Button size='small'>Learn More</Button>
-			</CardActions>
+			</CardActions> */}
 		</Card>
 	);
 };

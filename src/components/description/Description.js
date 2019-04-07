@@ -1,6 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import Grid from '@material-ui/core/Grid';
+import { Colors } from '../utils/Variables';
 
 const Description = props => {
 	return (
@@ -9,7 +8,7 @@ const Description = props => {
 				{props.description}
 			</div>
 
-			<hr style={{ height: '1px', backgroundColor: '#489e52' }} />
+			<hr style={{ height: '1px', backgroundColor: Colors.mainGreen }} />
 		</div>
 	);
 };

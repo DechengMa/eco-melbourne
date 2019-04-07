@@ -17,7 +17,7 @@ const SideDrawer = props => {
 	return (
 		<Drawer anchor='right' open={props.open} onClose={() => props.onClose()}>
 			<List>
-				<ListItem button onClick={() => scrollToElement('dataVisual')}>
+				<ListItem button onClick={() => scrollToElement('chart')}>
 					See what is happening now
 				</ListItem>
 				<ListItem button onClick={() => scrollToElement('calculator')}>

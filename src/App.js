@@ -5,6 +5,7 @@ import Banner from './components/banner/Banner';
 import Description from './components/description/Description';
 import Charts from './components/charts';
 import Calculator from './components/calculator';
+import { Element } from 'react-scroll';
 
 class App extends Component {
 	render() {
@@ -16,9 +17,13 @@ class App extends Component {
 				</div>
 
 				<Description description='Let see some data first' />
-				<Charts />
+				<Element name='chart'>
+					<Charts />
+				</Element>
 				<Description description='Come and try our calculcator feature!' />
-				<Calculator />
+				<Element name='calculator'>
+					<Calculator />
+				</Element>
 			</div>
 		);
 	}
