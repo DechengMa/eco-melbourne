@@ -6,7 +6,7 @@ const DataVisual = () => {
 	let table1 =
 		'https://public.tableau.com/views/methodoftraveltowork2/Dashboard1?:embed=y&:display_count=yes';
 	let table2 =
-		'https://public.tableau.com/views/PopulationCongestion/Dashboard1?:embed=y&:display_count=yes';
+		'https://public.tableau.com/views/PopulationCongestion_final/Dashboard1?:embed=y&:display_count=yes';
 	return (
 		// <React.Fragment>
 		// 	<ChartCard url={table1} />
