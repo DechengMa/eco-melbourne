@@ -61,8 +61,7 @@ class LocationSearchInput extends React.Component {
 						<FormHelperText
 							style={{
 								color: '#e45342',
-								position: 'absolute',
-								marginLeft: '30px'
+								position: 'absolute'
 							}}
 							id='component-error-text'
 						>
