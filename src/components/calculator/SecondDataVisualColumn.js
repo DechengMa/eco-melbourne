@@ -89,7 +89,6 @@ class SecondDataVisualColumn extends Component {
 											}
 											duration={300}
 											value={this.props.equation}
-											component='text'
 										/>
 									</Typography>
 								</CardActions>
@@ -149,7 +148,7 @@ class SecondDataVisualColumn extends Component {
 									Price Comparison
 								</Typography>
 								<Typography component='p'>
-								How much can I save using other methods of travel ?
+									How much can I save using other methods of travel ?
 								</Typography>
 							</CardContent>
 

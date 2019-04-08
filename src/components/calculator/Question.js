@@ -76,7 +76,6 @@ class Question extends Component {
 		} = this.state;
 		const { period } = this.props;
 		var url = `Https://ecomelbourne.azurewebsites.net/Calculator/index?fuelType=${fuelType}&distance=${distance}&days=${daysWork}&average=${fuelConsumption}&vehicleType=${vehicle}&period=${period}`;
-		console.log(url);
 		axios
 			.get(url)
 			.then(response => {
@@ -95,69 +94,77 @@ class Question extends Component {
 			daysWork,
 			vehicle,
 			fuelType,
-			fuelConsumption,
-			error
+			fuelConsumption
 		} = this.state;
 
-		// var hasError = false;
+		var hasError = false;
 
 		if (livingSuburb === '') {
-			this.setState({
+			this.setState((prevState, props) => ({
 				error: {
-					...error,
+					...prevState.error,
 					livingSuburb: 'Please select a valid suburb'
 				}
-			});
-			return
+			}));
+			hasError = true;
 		}
 
 		if (workingSuburb === '') {
-			this.setState({
+			this.setState((prevState, props) => ({
 				error: {
-					...this.state.error,
+					...prevState.error,
 					workingSuburb: 'Please select a valid suburb'
 				}
-			});
-			return
+			}));
+			hasError = true;
 		}
 
 		if (daysWork === '') {
-			this.setState({
+			this.setState((prevState, props) => ({
 				error: {
-					...this.state.error,
+					...prevState.error,
 					daysWork: 'Please select a how many days you work weekly'
 				}
-			});
-			return
+			}));
+			hasError = true;
 		}
 
 		if (vehicle === '') {
-			this.setState({
-				error: { ...this.state.error, vehicle: 'Please select a way of travel' }
-			});
-			return
+			this.setState((prevState, props) => ({
+				error: {
+					...prevState.error,
+					vehicle: 'Please select a way of travel'
+				}
+			}));
+
+			hasError = true;
 		}
 
 		if (vehicle === 'Car' || vehicle === 'MotorBike') {
 			if (fuelType === '') {
-				this.setState({
+				this.setState((prevState, props) => ({
 					error: {
-						...this.state.error,
+						...prevState.error,
 						fuelType: 'Please select type of fuel you use'
 					}
-				});
-				return
+				}));
+
+				hasError = true;
 			}
 
 			if (!isNumeric(fuelConsumption) || parseInt(fuelConsumption) <= 0) {
-				this.setState({
+				this.setState((prevState, props) => ({
 					error: {
-						...this.state.error,
+						...prevState.error,
 						fuelConsumption: 'Please select a valid fuel consumption'
 					}
-				});
-				return
+				}));
+
+				hasError = true;
 			}
+		}
+		if (hasError) {
+			return;
 		}
 
 		this.setState({ loading: true });
@@ -173,7 +180,6 @@ class Question extends Component {
 	};
 
 	handleChange = event => {
-		console.log(event);
 		this.setState({ [event.target.name]: event.target.value, error: {} });
 	};
 
@@ -277,12 +283,13 @@ class Question extends Component {
 							style={{
 								backgroundColor: '#009a3f',
 								color: '#fff',
-								width: '100%'
+								width: '100%',
+								height: '52px'
 							}}
 							onClick={this.handleCheckResult}
 						>
 							{this.state.loading ? (
-								<CircularProgress color='#fff' />
+								<CircularProgress style={{ color: '#fff' }} />
 							) : (
 								'Check How Much You Can Save !'
 							)}

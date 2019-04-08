@@ -15,15 +15,15 @@ class App extends Component {
 				<div style={{ marginTop: '88px' }}>
 					<Banner />
 				</div>
-
-				<Description description='Melbourne is changing. With growing population and more cars congesting the roads, it is important to start changing the way people travel. Take a look at the charts below:' />
 				<Element name='chart'>
+				<Description description='Melbourne is changing. With growing population and more cars congesting the roads, it is important to start changing the way people travel. Take a look at the charts below:' />
 					<Charts />
 				</Element>
-				<Description description='Calculate your impact now:' />
-				<Element name='calculator'>
-					<Calculator />
-				</Element>
+					
+					<Element name='calculator'>
+					<Description description='Calculate your impact now:' />
+						<Calculator />
+					</Element>
 			</div>
 		);
 	}

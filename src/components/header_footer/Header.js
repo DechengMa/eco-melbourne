@@ -43,7 +43,6 @@ class Header extends Component {
 
 						<IconButton
 							aria-label='Menu'
-							color='black'
 							onClick={() => {
 								this.toggleDrawer(true);
 							}}

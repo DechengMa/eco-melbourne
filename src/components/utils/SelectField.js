@@ -17,7 +17,9 @@ const SelectField = props => {
 				style={{ width: '200px' }}
 			>
 				{props.itemList.map(item => (
-					<MenuItem value={item}>{item}</MenuItem>
+					<MenuItem key={item} value={item}>
+						{item}
+					</MenuItem>
 				))}
 			</Select>
 			<FormHelperText>{props.errorMsg}</FormHelperText>

@@ -15,8 +15,6 @@ class FirstDataVisualColumn extends Component {
 	};
 
 	componentWillReceiveProps() {
-		console.log('This.Props');
-		console.log(this.props);
 		this.setState({
 			carEmission: this.props.carEmission,
 			energyPrice: this.props.energyPrice
@@ -85,7 +83,7 @@ class FirstDataVisualColumn extends Component {
 											}
 											duration={300}
 											value={this.props.carEmission}
-											component='text'
+											// component='text'
 										/>
 										<span style={{ fontSize: 28 }}>Kg CO2e</span>
 									</Typography>
@@ -112,29 +110,10 @@ class FirstDataVisualColumn extends Component {
 								<Typography component='p' style={{ marginTop: '30px' }}>
 									How much am I currently spending ?
 								</Typography>
-								{/* <Typography variant='h6'>
-									<AnimatedNumber
-										style={{
-											transition: '0.8s ease-out',
-											fontSize: 48,
-											transitionProperty: 'background-color, color, opacity',
-											color: Colors.mainBlue
-										}}
-										frameStyle={perc => (perc === 100 ? {} : { opacity: 0.25 })}
-										duration={300}
-										value={this.props.energyPrice}
-										component='text'
-										// formatValue={n => prettyBytes(n)}
-									/>
-									<span style={{ fontSize: 28 }}>$AUD</span>
-								</Typography> */}
 							</CardContent>
 							<CardActions
 								style={{ position: 'absolute', margin: '15px', bottom: '20px' }}
 							>
-								{/* <Typography component='p'>
-									How much the user is spending for current travel method ?
-								</Typography> */}
 								<Typography variant='h6'>
 									<AnimatedNumber
 										style={{
@@ -146,8 +125,6 @@ class FirstDataVisualColumn extends Component {
 										frameStyle={perc => (perc === 100 ? {} : { opacity: 0.25 })}
 										duration={300}
 										value={this.props.energyPrice}
-										component='text'
-										// formatValue={n => prettyBytes(n)}
 									/>
 									<span style={{ fontSize: 28 }}>$AUD</span>
 								</Typography>

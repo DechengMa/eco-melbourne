@@ -14,8 +14,6 @@ class LocationSearchInput extends React.Component {
 	};
 
 	handleSelect = address => {
-		console.log(address);
-
 		const { handleSelect } = this.props;
 		this.setState({ address });
 
@@ -27,6 +25,10 @@ class LocationSearchInput extends React.Component {
 		// 	.then(latLng => this.props.returnCenterPoint(latLng))
 		// 	.catch(error => console.error('Error', error));
 	};
+
+	componentWillReceiveProps(props) {
+		this.setState({ address: props.value });
+	}
 
 	render() {
 		var options = {
