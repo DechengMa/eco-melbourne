@@ -60,19 +60,19 @@ class index extends Component {
 				<div style={{ height: '50px' }} />
 
 				<Grid container>
-					<Grid item xs={4}>
+					<Grid item md={4} xs={12}>
 						<Question
 							setupResult={this.setupResult}
 							period={this.state.period}
 						/>
 					</Grid>
-					<Grid item xs={4}>
+					<Grid item md={4} xs={12}>
 						<FirstDataVisualColumn
 							carEmission={this.state.carEmission}
 							energyPrice={this.state.energyPrice}
 						/>
 					</Grid>
-					<Grid item xs={4}>
+					<Grid item md={4} xs={12}>
 						<SecondDataVisualColumn
 							equation={this.state.equation}
 							carPrice={this.state.energyPrice}

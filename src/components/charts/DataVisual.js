@@ -13,10 +13,10 @@ const DataVisual = () => {
 		// 	<ChartCard url={table2} />
 		// </React.Fragment>
 		<Grid container>
-			<Grid item xs={6}>
+			<Grid item xs={12} md={6}>
 				<ChartCard url={table1} />
 			</Grid>
-			<Grid xs={6}>
+			<Grid item xs={12} md={6}>
 				<ChartCard url={table2} />
 			</Grid>
 		</Grid>
