@@ -51,7 +51,7 @@ class SecondDataVisualColumn extends Component {
 				<Box display='flex' flexDirection='column'>
 					<Box p={1}>
 						<div style={{ margin: '15px 15px' }}>
-							<Card style={{ height: '40vh', position: 'relative' }}>
+							<Card style={{ height: '30vh', position: 'relative' }}>
 								<Spa
 									style={{
 										position: 'absolute',
@@ -96,45 +96,9 @@ class SecondDataVisualColumn extends Component {
 						</div>
 					</Box>
 				</Box>
-				{/* <Box p={1}>
-					<div style={{ margin: '15px 15px' }}>
-						<Card style={{ height: '40vh', position: 'relative' }}>
-							<CardContent>
-								<Typography variant='h5' component='h2'>
-									Fuel Consumption
-								</Typography>
-								<MeetingRoom />
-
-								<Typography variant='h6'>
-									<AnimatedNumber
-										style={{
-											transition: '0.8s ease-out',
-											fontSize: 48,
-											transitionProperty: 'background-color, color, opacity',
-											color: Colors.mainBlue
-										}}
-										frameStyle={perc => (perc === 100 ? {} : { opacity: 0.25 })}
-										duration={300}
-										value={this.props.energyPrice}
-										component='text'
-										// formatValue={n => prettyBytes(n)}
-									/>
-									<span style={{ fontSize: 28 }}>$AUD</span>
-								</Typography>
-							</CardContent>
-							<CardActions
-								style={{ position: 'absolute', margin: '15px', bottom: '20px' }}
-							>
-								<Typography component='p'>
-									How much fuel the user's car will consume
-								</Typography>
-							</CardActions>
-						</Card>
-					</div>
-				</Box> */}
 				<Box p={1}>
 					<div style={{ margin: '15px 15px' }}>
-						<Card style={{ height: '40vh', position: 'relative' }}>
+						<Card style={{ height: '30vh', position: 'relative' }}>
 							<AttachMoney
 								style={{
 									position: 'absolute',
@@ -158,8 +122,8 @@ class SecondDataVisualColumn extends Component {
 							<div>
 								<Bar
 									data={data}
-									width={100}
-									height={190}
+									width={60}
+									height={150}
 									options={{
 										maintainAspectRatio: false
 									}}

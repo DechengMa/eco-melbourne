@@ -16,14 +16,14 @@ class App extends Component {
 					<Banner />
 				</div>
 				<Element name='chart'>
-				<Description description='Melbourne is changing. With growing population and more cars congesting the roads, it is important to start changing the way people travel. Take a look at the charts below:' />
+					<Description description='Melbourne is changing. With growing population and more cars congesting the roads, it is important to start changing the way people travel. Take a look at the charts below:' />
 					<Charts />
 				</Element>
-					
-					<Element name='calculator'>
+
+				<Element name='calculator'>
 					<Description description='Calculate your impact now:' />
-						<Calculator />
-					</Element>
+					<Calculator />
+				</Element>
 			</div>
 		);
 	}

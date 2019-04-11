@@ -9,9 +9,6 @@ const ChartCard = props => {
 			<CardContent>
 				<TableauReport url={props.url} />
 			</CardContent>
-			{/* <CardActions>
-				<Button size='small'>Learn More</Button>
-			</CardActions> */}
 		</Card>
 	);
 };

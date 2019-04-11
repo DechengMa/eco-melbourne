@@ -21,24 +21,9 @@ class index extends Component {
 	setupResult = props => {
 		let valueArr = props.substring(1, props.length - 1).split(',');
 
-		// let equation = parseFloat(
-		// 	valueArr[0].substring(0, valueArr[0].indexOf('.'))
-		// );
+		let equation = Number(valueArr[0]).toFixed(1);
 
-		// let carEmission = parseFloat(Math.round(valueArr[2] * 100) / 100).toFixed(
-		// 	2
-		// );
-
-		// let energyPrice = parseFloat(valueArr[1]);
-
-		// let ptvPrice = parseFloat(Math.round(valueArr[3] * 100) / 100).toFixed(2);
-		// let bicyclePrice = parseFloat(valueArr[4]);
-
-		let equation = Number(
-			valueArr[0]
-		).toFixed(1);
-
-		let carEmission = Number(valueArr[2]).toFixed(2)
+		let carEmission = Number(valueArr[2]).toFixed(2);
 
 		let energyPrice = Number(valueArr[1]).toFixed(2);
 
@@ -55,13 +40,10 @@ class index extends Component {
 
 	handlePeriodSelect = period => {
 		console.log(period.target.value);
-		// this.setState( { period: period.target.value });
-
 		this.setState((prevState, props) => ({
 			...prevState,
 			period: period.target.value
 		}));
-
 	};
 
 	render() {

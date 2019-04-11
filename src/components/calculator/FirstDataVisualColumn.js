@@ -27,7 +27,7 @@ class FirstDataVisualColumn extends Component {
 				<Box display='flex' flexDirection='column'>
 					<Box p={1}>
 						<div style={{ margin: '15px 15px' }}>
-							<Card style={{ height: '40vh', position: 'relative' }}>
+							<Card style={{ height: '30vh', position: 'relative' }}>
 								<DirectionsCar
 									style={{
 										position: 'absolute',
@@ -94,7 +94,7 @@ class FirstDataVisualColumn extends Component {
 				</Box>
 				<Box p={1}>
 					<div style={{ margin: '15px 15px' }}>
-						<Card style={{ height: '40vh', position: 'relative' }}>
+						<Card style={{ height: '30vh', position: 'relative' }}>
 							<Power
 								style={{
 									position: 'absolute',

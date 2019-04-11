@@ -9,6 +9,7 @@ import { GOOGLEMAPAPI } from '../../config/keys';
 import axios from 'axios';
 import { isNumeric } from '../utils/Variables';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { Colors } from '../utils/Variables';
 
 class Question extends Component {
 	state = {
@@ -171,6 +172,22 @@ class Question extends Component {
 		this.getDistance(this.state.livingSuburb, this.state.workingSuburb);
 	};
 
+	clearResult = () => {
+		this.setState({
+			livingSuburb: '',
+			workingSuburb: '',
+			vehicle: '',
+			daysWork: '',
+			fuelType: '',
+			fuelConsumption: 0,
+			distance: '',
+			period: 'Week',
+			loading: false,
+			errorOrNot: false,
+			error: {}
+		});
+	};
+
 	handleLivingSelect = address => {
 		this.setState({ livingSuburb: address, error: { livingSuburb: '' } });
 	};
@@ -281,9 +298,22 @@ class Question extends Component {
 						<Button
 							variant='contained'
 							style={{
-								backgroundColor: '#009a3f',
+								backgroundColor: Colors.mainYellow,
 								color: '#fff',
-								width: '100%',
+								width: '40%',
+								height: '52px',
+								marginRight: '20px'
+							}}
+							onClick={this.clearResult}
+						>
+							Reset Input
+						</Button>
+						<Button
+							variant='contained'
+							style={{
+								backgroundColor: Colors.mainGreen,
+								color: '#fff',
+								width: '40%',
 								height: '52px'
 							}}
 							onClick={this.handleCheckResult}
@@ -291,7 +321,7 @@ class Question extends Component {
 							{this.state.loading ? (
 								<CircularProgress style={{ color: '#fff' }} />
 							) : (
-								'Check How Much You Can Save !'
+								'Check Result !'
 							)}
 						</Button>
 					</Box>
