@@ -7,7 +7,8 @@ import { unstable_Box as Box } from '@material-ui/core/Box';
 import { Spa, AttachMoney } from '@material-ui/icons';
 import { Bar } from 'react-chartjs-2';
 import { Colors } from '../utils/Variables';
-import AnimatedNumber from 'react-animated-number';
+// import AnimatedNumber from 'react-animated-number';
+import { AnimatedNum } from '../utils/AnimatedNum';
 
 class SecondDataVisualColumn extends Component {
 	chartOptions = {
@@ -47,92 +48,74 @@ class SecondDataVisualColumn extends Component {
 		};
 
 		return (
-			<div>
-				<Box display='flex' flexDirection='column'>
-					<Box p={1}>
-						<div style={{ margin: '15px 15px' }}>
-							<Card style={{ height: '30vh', position: 'relative' }}>
-								<Spa
-									style={{
-										position: 'absolute',
-										right: '15px',
-										top: '15px',
-										color: Colors.mainGreen
-									}}
-								/>
-								<CardContent>
-									<Typography variant='h5' component='h2'>
-										Impact
-									</Typography>
+			<>
+				<Card style={{ margin: '20px', height: '45%', position: 'relative' }}>
+					<Spa
+						style={{
+							position: 'absolute',
+							right: '15px',
+							top: '15px',
+							color: Colors.mainGreen
+						}}
+					/>
+					<CardContent>
+						<Typography variant='h5' component='h2'>
+							Impact
+						</Typography>
 
-									<Typography component='p' style={{ marginTop: '30px' }}>
-										How many trees would be able to absorb this carbon dioxide ?
-									</Typography>
-								</CardContent>
-								<CardActions
-									style={{
-										position: 'absolute',
-										margin: '15px',
-										bottom: '20px'
-									}}
-								>
-									<Typography variant='h6'>
-										<AnimatedNumber
-											style={{
-												transition: '0.8s ease-out',
-												fontSize: 48,
-												transitionProperty: 'background-color, color, opacity',
-												color: Colors.mainGreen
-											}}
-											frameStyle={perc =>
-												perc === 100 ? {} : { opacity: 0.25 }
-											}
-											duration={300}
-											value={this.props.equation}
-										/>
-									</Typography>
-								</CardActions>
-							</Card>
-						</div>
-					</Box>
-				</Box>
-				<Box p={1}>
-					<div style={{ margin: '15px 15px' }}>
-						<Card style={{ height: '30vh', position: 'relative' }}>
-							<AttachMoney
-								style={{
-									position: 'absolute',
-									right: '15px',
-									top: '15px',
-									color: Colors.mainGreen
-								}}
+						<Typography component='p' style={{ marginTop: '30px' }}>
+							How many trees would be able to absorb this carbon dioxide ?
+						</Typography>
+					</CardContent>
+					<CardActions
+						style={{
+							position: 'absolute',
+							margin: '15px',
+							bottom: '20px'
+						}}
+					>
+						<Typography variant='h6'>
+							<AnimatedNum
+								color={Colors.mainGreen}
+								value={this.props.equation}
 							/>
-							<CardContent>
-								<Typography variant='h5' component='h2'>
-									Price Comparison
-								</Typography>
-								<Typography component='p'>
-									How much can I save using other methods of travel ?
-								</Typography>
-							</CardContent>
+						</Typography>
+					</CardActions>
+				</Card>
 
-							<CardActions
-								style={{ position: 'absolute', margin: '15px', bottom: '20px' }}
-							/>
-							<div>
-								<Bar
-									data={data}
-									width={60}
-									height={150}
-									options={{
-										maintainAspectRatio: false
-									}}
-								/>
-							</div>
-						</Card>
+				<Card style={{ margin: '20px', height: '45%', position: 'relative' }}>
+					<AttachMoney
+						style={{
+							position: 'absolute',
+							right: '15px',
+							top: '15px',
+							color: Colors.mainGreen
+						}}
+					/>
+					<CardContent>
+						<Typography variant='h5' component='h2'>
+							Price Comparison
+						</Typography>
+						<Typography component='p'>
+							How much can I save using other methods of travel ?
+						</Typography>
+					</CardContent>
+
+					<CardActions
+						style={{ position: 'absolute', margin: '15px', bottom: '20px' }}
+					/>
+					<div>
+						<Bar
+							data={data}
+							width={60}
+							height={150}
+							options={{
+								maintainAspectRatio: false
+							}}
+						/>
 					</div>
-				</Box>
-			</div>
+				</Card>
+			</>
 		);
 	}
 }

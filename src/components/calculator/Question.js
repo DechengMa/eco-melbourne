@@ -208,8 +208,12 @@ class Question extends Component {
 			fuelTypeArr = ['Petrol'];
 		}
 		return (
-			<div style={{ margin: '30px' }}>
-				<Box display='flex' flexDirection='column'>
+			<>
+				<Box
+					display='flex'
+					flexDirection='column'
+					style={{ marginLeft: '20px' }}
+				>
 					<Box p={1}>
 						<p>Input Where You Live</p>
 						<LocationSearchInput
@@ -301,32 +305,32 @@ class Question extends Component {
 								backgroundColor: Colors.mainYellow,
 								color: '#fff',
 								width: '40%',
-								height: '52px',
+								height: '50px',
 								marginRight: '20px'
 							}}
 							onClick={this.clearResult}
 						>
-							Reset Input
+							Reset
 						</Button>
 						<Button
 							variant='contained'
 							style={{
 								backgroundColor: Colors.mainGreen,
 								color: '#fff',
-								width: '40%',
-								height: '52px'
+								height: '50px',
+								width: '40%'
 							}}
 							onClick={this.handleCheckResult}
 						>
 							{this.state.loading ? (
 								<CircularProgress style={{ color: '#fff' }} />
 							) : (
-								'Check Result !'
+								'Check'
 							)}
 						</Button>
 					</Box>
 				</Box>
-			</div>
+			</>
 		);
 	}
 }

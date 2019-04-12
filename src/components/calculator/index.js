@@ -48,8 +48,8 @@ class index extends Component {
 
 	render() {
 		return (
-			<div>
-				<div style={{ position: 'absolute', right: '30px' }}>
+			<React.Fragment>
+				<div style={{ position: 'absolute', right: '20px' }}>
 					<FormControl style={{ width: '200px' }} variant='outlined'>
 						<InputLabel>Period</InputLabel>
 						<Select
@@ -63,9 +63,22 @@ class index extends Component {
 					</FormControl>
 				</div>
 				<div style={{ height: '50px' }} />
-
-				<Grid container>
-					<Grid item md={4} xs={12}>
+				<Grid
+					container
+					style={{
+						height: '80vh',
+						gridAutoRows: '1fr'
+					}}
+				>
+					<Grid
+						item
+						md={4}
+						xs={12}
+						style={{
+							overflow: 'scroll',
+							height: '100%'
+						}}
+					>
 						<Question
 							setupResult={this.setupResult}
 							period={this.state.period}
@@ -86,7 +99,8 @@ class index extends Component {
 						/>
 					</Grid>
 				</Grid>
-			</div>
+				{/* </React.Fragment> */}
+			</React.Fragment>
 		);
 	}
 }
