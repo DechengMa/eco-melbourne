@@ -3,43 +3,67 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import { unstable_Box as Box } from '@material-ui/core/Box';
-import { DirectionsCar, Power } from '@material-ui/icons';
+import { Spa, AttachMoney } from '@material-ui/icons';
+import { Bar } from 'react-chartjs-2';
+import { Colors } from '../utils/Variables';
 // import AnimatedNumber from 'react-animated-number';
 import { AnimatedNum } from '../utils/AnimatedNum';
-import { Colors } from '../utils/Variables';
 
-class FirstDataVisualColumn extends Component {
-	state = {
-		carEmission: '',
-		energyPrice: ''
+class SecondDataVisualColumn extends Component {
+	chartOptions = {
+		scales: {
+			xAxes: [
+				{
+					barPercentage: 0.5,
+					barThickness: 6,
+					maxBarThickness: 8,
+					minBarLength: 2,
+					gridLines: {
+						offsetGridLines: true
+					}
+				}
+			]
+		}
 	};
 
-	componentWillReceiveProps() {
-		this.setState({
-			carEmission: this.props.carEmission,
-			energyPrice: this.props.energyPrice
-		});
-	}
-
 	render() {
+		const data = {
+			labels: ['Car', 'PTV', 'Bicycle'],
+			datasets: [
+				{
+					label: 'Travel Cost ($AUD)',
+					backgroundColor: Colors.mainGreen,
+					borderColor: Colors.mainGreen,
+					borderWidth: 1,
+					hoverBackgroundColor: Colors.mainGreen,
+					hoverBorderColor: Colors.mainGreen,
+					data: [
+						this.props.carPrice,
+						this.props.ptvPrice,
+						this.props.bicyclePrice
+					]
+				}
+			]
+		};
+
 		return (
 			<>
 				<Card style={{ margin: '20px', height: '45%', position: 'relative' }}>
-					<DirectionsCar
+					<Spa
 						style={{
 							position: 'absolute',
 							right: '15px',
 							top: '15px',
-							color: Colors.mainYellow
+							color: Colors.mainGreen
 						}}
 					/>
 					<CardContent>
 						<Typography variant='h5' component='h2'>
-							Carbon Emission
+							Impact
 						</Typography>
+
 						<Typography component='p' style={{ marginTop: '30px' }}>
-							What is my current carbon footprint ?
+							How many trees would be able to absorb this carbon dioxide ?
 						</Typography>
 					</CardContent>
 					<CardActions
@@ -51,46 +75,48 @@ class FirstDataVisualColumn extends Component {
 					>
 						<Typography variant='h6'>
 							<AnimatedNum
-								value={this.props.carEmission}
-								units={'Kg CO2e'}
-								color={Colors.mainYellow}
+								color={Colors.mainGreen}
+								value={this.props.equation}
 							/>
 						</Typography>
 					</CardActions>
 				</Card>
 
 				<Card style={{ margin: '20px', height: '45%', position: 'relative' }}>
-					<Power
+					<AttachMoney
 						style={{
 							position: 'absolute',
 							right: '15px',
 							top: '15px',
-							color: Colors.mainBlue
+							color: Colors.mainGreen
 						}}
 					/>
 					<CardContent>
 						<Typography variant='h5' component='h2'>
-							My Spending
+							Price Comparison
 						</Typography>
-						<Typography component='p' style={{ marginTop: '30px' }}>
-							How much am I currently spending ?
+						<Typography component='p'>
+							How much can I save using other methods of travel ?
 						</Typography>
 					</CardContent>
+
 					<CardActions
 						style={{ position: 'absolute', margin: '15px', bottom: '20px' }}
-					>
-						<Typography variant='h6'>
-							<AnimatedNum
-								value={this.props.energyPrice}
-								units={'$Aud'}
-								color={Colors.mainBlue}
-							/>
-						</Typography>
-					</CardActions>
+					/>
+					<div>
+						<Bar
+							data={data}
+							width={60}
+							height={150}
+							options={{
+								maintainAspectRatio: false
+							}}
+						/>
+					</div>
 				</Card>
 			</>
 		);
 	}
 }
 
-export default FirstDataVisualColumn;
+export default SecondDataVisualColumn;

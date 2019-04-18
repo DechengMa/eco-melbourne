@@ -28,6 +28,14 @@ class Question extends Component {
 
 	getDistance = (baseLocation, targetLocation) => {
 		const { google } = this.props;
+
+		// const transitOptions = {
+		// 	arrivalTime: Date,
+		// 	departureTime: Date,
+		// 	modes: ['TRAM', 'TRAIN'],
+		// 	routingPreference: TransitRoutePreference
+		// };
+
 		var service = new google.maps.DistanceMatrixService();
 		service.getDistanceMatrix(
 			{
@@ -214,7 +222,7 @@ class Question extends Component {
 					flexDirection='column'
 					style={{ marginLeft: '20px' }}
 				>
-					<Box p={1}>
+					<Box>
 						<p>Input Where You Live</p>
 						<LocationSearchInput
 							value={this.state.livingSuburb}
@@ -229,7 +237,7 @@ class Question extends Component {
 							returnCenterPoint={this.returnCenterPoint}
 						/>
 					</Box>
-					<Box p={1}>
+					<Box>
 						<p>Input Where You Work</p>
 						<LocationSearchInput
 							value={this.state.workingSuburb}
@@ -244,7 +252,7 @@ class Question extends Component {
 							returnCenterPoint={this.returnCenterPoint}
 						/>
 					</Box>
-					<Box p={1}>
+					<Box>
 						<p>Input How many days you work weekly</p>
 						<SelectField
 							name='daysWork'
@@ -256,7 +264,7 @@ class Question extends Component {
 							handleChange={this.handleChange}
 						/>
 					</Box>
-					<Box p={1}>
+					<Box>
 						<p>How Do You Usually Travel?</p>
 						<SelectField
 							name='vehicle'
@@ -298,7 +306,7 @@ class Question extends Component {
 					) : (
 						<div />
 					)}
-					<Box p={1}>
+					<Box>
 						<Button
 							variant='contained'
 							style={{
