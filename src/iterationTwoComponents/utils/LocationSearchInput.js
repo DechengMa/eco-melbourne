@@ -2,6 +2,16 @@ import React from 'react';
 import PlacesAutocomplete from 'react-places-autocomplete';
 
 import { TextField, MenuItem, FormHelperText } from '@material-ui/core';
+import {
+	Card,
+	CardHeader,
+	ListGroup,
+	ListGroupItem,
+	FormInput,
+	Button,
+	FormGroup,
+	FormFeedback
+} from 'shards-react';
 
 class LocationSearchInput extends React.Component {
 	state = {
@@ -47,7 +57,19 @@ class LocationSearchInput extends React.Component {
 			>
 				{({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
 					<div style={{ position: 'relative' }}>
-						<TextField
+						<FormGroup>
+							<FormInput
+								{...getInputProps({
+									placeholder: 'Search Places ...',
+									className: 'input location-search-input'
+								})}
+								required
+								invalid={this.props.error}
+							/>
+							<FormFeedback>{this.props.errorMsg}</FormFeedback>
+						</FormGroup>
+
+						{/* <TextField
 							{...getInputProps({
 								placeholder: 'Search Places ...',
 								className: 'input location-search-input'
@@ -56,8 +78,8 @@ class LocationSearchInput extends React.Component {
 							error={this.props.error}
 							label={this.props.name}
 							name={this.props.name}
-						/>
-						<FormHelperText
+						/> */}
+						{/* <FormHelperText
 							style={{
 								color: '#e45342',
 								position: 'absolute'
@@ -65,9 +87,9 @@ class LocationSearchInput extends React.Component {
 							id='component-error-text'
 						>
 							{this.props.errorMsg}
-						</FormHelperText>
+						</FormHelperText> */}
 						<div className='autocomplete-dropdown-container'>
-							{loading && <MenuItem>Loading...</MenuItem>}
+							{loading && <ListGroupItem>Loading...</ListGroupItem>}
 
 							{suggestions.map(suggestion => {
 								const className = suggestion.active
@@ -78,14 +100,14 @@ class LocationSearchInput extends React.Component {
 									? { backgroundColor: '#fafafa', cursor: 'pointer' }
 									: { backgroundColor: '#ffffff', cursor: 'pointer' };
 								return (
-									<MenuItem
+									<ListGroup
 										{...getSuggestionItemProps(suggestion, {
 											className,
 											style
 										})}
 									>
-										<span>{suggestion.description}</span>
-									</MenuItem>
+										<ListGroupItem>{suggestion.description}</ListGroupItem>
+									</ListGroup>
 								);
 							})}
 						</div>

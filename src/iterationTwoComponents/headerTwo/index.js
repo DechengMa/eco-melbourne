@@ -1,30 +1,39 @@
 import React, { Component } from 'react';
-import NavBar from './Navbar/NavBar.js';
 import header from '../../resources/img/header.jpg';
 import QuestionBox from './QuestionBox.js';
+import Navigation from './Nav/Navigation.js';
+import Grid from '@material-ui/core/Grid';
+import withWidth from '@material-ui/core/withWidth';
 
 class index extends Component {
-	render() {
+	renderQuestionBox = () => {
+		console.log(this.props.width);
+		var containerStyle = {
+			height: '100%'
+		};
+		var bgStyle = {
+			width: '100vw',
+			height: '100vh',
+			backgroundImage: `url(${header})`,
+			backgroundSize: 'cover',
+			position: 'relative'
+		};
+
 		return (
-			<header>
-				<NavBar />
-				<div style={{ height: '100vh', width: '100vw', position: 'relative' }}>
-					<img src={header} style={{ height: '100%', width: '100%' }} />
-					<div
-						style={{
-							display: 'inline-block',
-							position: 'absolute',
-							left: '30%',
-							top: '50%',
-							transform: 'translate(-50%, -50%)'
-						}}
-					>
+			<div style={bgStyle}>
+				<Grid container style={containerStyle} alignItems='center'>
+					<Grid item xs={1} md={2} />
+					<Grid item xs={8} md={4}>
 						<QuestionBox />
-					</div>
-				</div>
-			</header>
+					</Grid>
+				</Grid>
+			</div>
 		);
+	};
+
+	render() {
+		return <>{this.renderQuestionBox()}</>;
 	}
 }
 
-export default index;
+export default withWidth()(index);

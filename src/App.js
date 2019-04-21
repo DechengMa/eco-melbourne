@@ -12,6 +12,9 @@ import PriceComparison from './iterationTwoComponents/PriceComparison';
 // Iteration 2
 import HeaderTwo from './iterationTwoComponents/headerTwo';
 import CalculatorTwo from './iterationTwoComponents/calculatorTwo';
+import ComparisonTwo from './iterationTwoComponents/comparisonTwo';
+import Navigation from './iterationTwoComponents/headerTwo/Nav/Navigation';
+import Iteration2 from './iterationTwoComponents';
 
 class App extends Component {
 	iteration1 = () => (
@@ -32,28 +35,29 @@ class App extends Component {
 		</div>
 	);
 
-	// iteration2 = () => <PriceComparison>Iteration2</PriceComparison>;
-	iteration2HomePage = () => (
-		<div class='App'>
-			<HeaderTwo />
-		</div>
-	);
-
+	// Iteration 2 Components
+	iteration2HomePage = () => <HeaderTwo />;
 	iteration2Calculator = () => <CalculatorTwo />;
+	comparisonTwo = () => <ComparisonTwo />;
+
+	// End of iteration 2 Components
 
 	render() {
 		return (
 			<Router>
 				<Route path='/iteration1' component={this.iteration1} />
-				<Route
-					path='/iteration2'
-					exact={true}
-					component={this.iteration2HomePage}
-				/>
-				<Route
-					path='/iteration2/calculator'
-					component={this.iteration2Calculator}
-				/>
+				<Iteration2>
+					<Route
+						path='/iteration2'
+						exact={true}
+						component={this.iteration2HomePage}
+					/>
+					<Route
+						path='/iteration2/calculator'
+						component={this.iteration2Calculator}
+					/>
+					<Route path='/iteration2/comparison' component={this.comparisonTwo} />
+				</Iteration2>
 			</Router>
 		);
 	}
