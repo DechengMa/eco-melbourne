@@ -13,7 +13,7 @@ class index extends Component {
 		};
 		var bgStyle = {
 			width: '100vw',
-			height: '100vh',
+			height: '90vh',
 			backgroundImage: `url(${header})`,
 			backgroundSize: 'cover',
 			position: 'relative'

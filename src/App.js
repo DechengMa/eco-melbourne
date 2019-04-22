@@ -1,20 +1,25 @@
 import React, { Component } from 'react';
+
+import { Element } from 'react-scroll';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+
 import './resources/styles.css';
+
+// Iteration 1
 import Header from './iterationOneComponents/header_footer/Header';
 import Banner from './iterationOneComponents/banner/Banner';
 import Description from './iterationOneComponents/description/Description';
 import Charts from './iterationOneComponents/charts';
 import Calculator from './iterationOneComponents/calculator';
-import { Element } from 'react-scroll';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import PriceComparison from './iterationTwoComponents/PriceComparison';
 
 // Iteration 2
 import HeaderTwo from './iterationTwoComponents/headerTwo';
 import CalculatorTwo from './iterationTwoComponents/calculatorTwo';
 import ComparisonTwo from './iterationTwoComponents/comparisonTwo';
 import Navigation from './iterationTwoComponents/headerTwo/Nav/Navigation';
+import PriceComparison from './iterationTwoComponents/PriceComparison';
 import Iteration2 from './iterationTwoComponents';
+import NotFoundPage from './iterationTwoComponents/NotFoundPage';
 
 class App extends Component {
 	iteration1 = () => (
@@ -47,16 +52,22 @@ class App extends Component {
 			<Router>
 				<Route path='/iteration1' component={this.iteration1} />
 				<Iteration2>
-					<Route
-						path='/iteration2'
-						exact={true}
-						component={this.iteration2HomePage}
-					/>
-					<Route
-						path='/iteration2/calculator'
-						component={this.iteration2Calculator}
-					/>
-					<Route path='/iteration2/comparison' component={this.comparisonTwo} />
+					<Switch>
+						<Route
+							path='/iteration2'
+							exact
+							component={this.iteration2HomePage}
+						/>
+						<Route
+							path='/iteration2/calculator'
+							component={this.iteration2Calculator}
+						/>
+						<Route
+							path='/iteration2/comparison'
+							component={this.comparisonTwo}
+						/>
+						<Route exact component={NotFoundPage} />
+					</Switch>
 				</Iteration2>
 			</Router>
 		);

@@ -47,9 +47,6 @@ class LocationSearchInput extends React.Component {
 
 		return (
 			<PlacesAutocomplete
-				// value={this.state.address}
-				// onChange={this.handleChange}
-				// onSelect={this.handleSelect}
 				value={this.state.address}
 				onChange={this.handleChange}
 				onSelect={this.handleSelect}
@@ -68,26 +65,6 @@ class LocationSearchInput extends React.Component {
 							/>
 							<FormFeedback>{this.props.errorMsg}</FormFeedback>
 						</FormGroup>
-
-						{/* <TextField
-							{...getInputProps({
-								placeholder: 'Search Places ...',
-								className: 'input location-search-input'
-							})}
-							style={{ width: '100%' }}
-							error={this.props.error}
-							label={this.props.name}
-							name={this.props.name}
-						/> */}
-						{/* <FormHelperText
-							style={{
-								color: '#e45342',
-								position: 'absolute'
-							}}
-							id='component-error-text'
-						>
-							{this.props.errorMsg}
-						</FormHelperText> */}
 						<div className='autocomplete-dropdown-container'>
 							{loading && <ListGroupItem>Loading...</ListGroupItem>}
 

@@ -77,7 +77,7 @@ Comparison.defaultProps = {
 		{
 			label: 'Pages',
 			value: '182',
-			percentage: '12.4',
+			percentage: '12.4%',
 			increase: true,
 			chartLabels: [null, null, null, null, null, null, null],
 			attrs: { md: '6', sm: '6' },

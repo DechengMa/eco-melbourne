@@ -6,11 +6,14 @@ import {
 	FormSelect
 } from 'shards-react';
 
-const CustomSelect = () => (
+const CustomSelect = props => (
 	<div>
 		<InputGroup className='mb-3'>
-			<FormSelect>
-				<option>Choose</option>
+			<FormSelect
+				name={props.name}
+				value={props.value}
+				onChange={props.handleChange}
+			>
 				<option>1</option>
 				<option>2</option>
 				<option>3</option>
