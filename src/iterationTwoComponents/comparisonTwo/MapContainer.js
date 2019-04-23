@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
-import PropTypes from 'prop-types';
-import { Row, Col, Card, CardHeader, CardBody, Button } from 'shards-react';
+import { GoogleApiWrapper } from 'google-maps-react';
+import { Card, CardHeader, CardBody } from 'shards-react';
 import { GOOGLEMAPAPI } from '../../config/keys';
-import { Grid } from '@material-ui/core';
 
 import {
 	withScriptjs,

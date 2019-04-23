@@ -1,51 +1,119 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Container, Row, Col } from 'shards-react';
+import {
+	Container,
+	Row,
+	Col,
+	Button,
+	Modal,
+	ModalBody,
+	ModalHeader,
+	ModalFooter,
+	FormInput,
+	Form,
+	FormGroup,
+	Fade
+} from 'shards-react';
+// import { Fab } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
 import PageTitle from './../components/common/PageTitle';
 import SmallStats from './../components/common/SmallStats';
 import UsersOverview from './../components/blog/UsersOverview';
 import UsersByDevice from './../components/blog/UsersByDevice';
 
-const Overview = ({ smallStats }) => (
-	<Container fluid className='main-content-container px-4'>
-		<Row noGutters className='page-header py-4'>
-			<PageTitle
-				title='Your Current Spending Overview'
-				subtitle='Dashboard'
-				className='text-sm-left mb-3'
-			/>
-		</Row>
+const Overview = ({ smallStats }) => {
+	const [open, toggle] = useState(false);
 
-		<Row>
-			{smallStats.map((stats, idx) => (
-				<Col className='col-lg mb-4' key={idx} {...stats.attrs}>
-					<SmallStats
-						id={`small-stats-${idx}`}
-						variation='1'
-						chartData={stats.datasets}
-						chartLabels={stats.chartLabels}
-						label={stats.label}
-						value={stats.value}
-						percentage={stats.percentage}
-						increase={stats.increase}
-						decrease={stats.decrease}
+	useEffect(() => {
+		window.scrollTo(0, document.body.scrollHeight);
+	});
+
+	return (
+		<Fade in={true}>
+			<Container fluid className='main-content-container px-4'>
+				<Row noGutters className='page-header py-4'>
+					<PageTitle
+						title='Your Current Spending Overview'
+						subtitle='Dashboard'
+						className='text-sm-left mb-3'
 					/>
-				</Col>
-			))}
-		</Row>
+				</Row>
 
-		<Row>
-			<Col lg='8' md='12' sm='12' className='mb-4'>
-				<UsersOverview />
-			</Col>
+				<Row>
+					{smallStats.map((stats, idx) => (
+						<Col className='col-lg mb-4' key={idx} {...stats.attrs}>
+							<SmallStats
+								id={`small-stats-${idx}`}
+								variation='1'
+								chartData={stats.datasets}
+								chartLabels={stats.chartLabels}
+								label={stats.label}
+								value={stats.value}
+								percentage={stats.percentage}
+								increase={stats.increase}
+								decrease={stats.decrease}
+							/>
+						</Col>
+					))}
+				</Row>
 
-			<Col lg='4' md='6' sm='12' className='mb-4'>
-				<UsersByDevice />
-			</Col>
-		</Row>
-	</Container>
-);
+				<Row>
+					<Col lg='8' md='12' sm='12' className='mb-4'>
+						<UsersOverview />
+					</Col>
+
+					<Col lg='4' md='6' sm='12' className='mb-4'>
+						<UsersByDevice />
+					</Col>
+				</Row>
+				<Button
+					onClick={() => toggle(!open)}
+					style={{ position: 'absolute', top: '100px', right: '50px' }}
+				>
+					{/* <NavigationIcon className={classes.extendedIcon} /> */}
+					Advanced Search
+				</Button>
+				<Modal open={open} toggle={() => toggle(!open)}>
+					<ModalHeader>Advanced Search</ModalHeader>
+					<ModalBody>
+						<Form>
+							<FormGroup>
+								<label htmlFor='username'>Input</label>
+								<FormInput id='username' />
+								<label htmlFor='username'>Input</label>
+								<FormInput id='username' />
+								<label htmlFor='username'>Input</label>
+								<FormInput id='username' />
+								<label htmlFor='username'>Input</label>
+								<FormInput id='username' />
+								<label htmlFor='username'>Input</label>
+								<FormInput id='username' />
+								<label htmlFor='username'>Input</label>
+								<FormInput id='username' />
+								<label htmlFor='username'>Input</label>
+								<FormInput id='username' />
+							</FormGroup>
+						</Form>
+					</ModalBody>
+					<ModalFooter>
+						<Button>Search</Button>
+					</ModalFooter>
+				</Modal>
+
+				<Row>
+					<Col lg='12' md='12' sm='12' className='mb-4'>
+						<Link to='/iteration2/comparison'>
+							<Button style={{ width: '100%' }} theme='danger'>
+								I think this is too much !!! I want to save money and time!
+							</Button>
+						</Link>
+					</Col>
+				</Row>
+			</Container>
+		</Fade>
+	);
+};
 
 Overview.propTypes = {
 	smallStats: PropTypes.array

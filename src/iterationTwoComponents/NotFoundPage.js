@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-	Card,
-	CardHeader,
-	ListGroup,
-	ListGroupItem,
-	FormInput,
-	Button
-} from 'shards-react';
+import { Card, CardHeader } from 'shards-react';
 
 const NotFoundPage = () => {
 	return (

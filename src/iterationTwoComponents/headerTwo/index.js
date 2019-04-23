@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import header from '../../resources/img/header.jpg';
 import QuestionBox from './QuestionBox.js';
-import Navigation from './Nav/Navigation.js';
 import Grid from '@material-ui/core/Grid';
 import withWidth from '@material-ui/core/withWidth';
 
@@ -13,7 +12,7 @@ class index extends Component {
 		};
 		var bgStyle = {
 			width: '100vw',
-			height: '90vh',
+			height: 'calc(100vh - 65px)',
 			backgroundImage: `url(${header})`,
 			backgroundSize: 'cover',
 			position: 'relative'

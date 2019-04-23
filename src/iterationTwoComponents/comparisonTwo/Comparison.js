@@ -4,7 +4,6 @@ import { Container, Row, Col } from 'shards-react';
 
 import PageTitle from '../components/common/PageTitle';
 import SmallStats from '../components/common/SmallStats';
-import UsersOverview from '../components/blog/UsersOverview';
 import UsersByDevice from '../components/blog/UsersByDevice';
 
 import MapContainer from './MapContainer';

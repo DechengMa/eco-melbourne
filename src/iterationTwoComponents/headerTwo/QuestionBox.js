@@ -4,7 +4,6 @@ import {
 	CardHeader,
 	ListGroup,
 	ListGroupItem,
-	FormInput,
 	Button
 } from 'shards-react';
 import { GoogleApiWrapper } from 'google-maps-react';
@@ -96,10 +95,10 @@ class QuestionBox extends Component {
 			// routingPreference: TransitRoutePreference
 		};
 
-		const drivingOptions = {
-			departureTime: new Date('April 23, 2019 8:00:00'),
-			trafficModel: 'bestguess'
-		};
+		// const drivingOptions = {
+		// 	departureTime: new Date('April 23, 2019 8:00:00'),
+		// 	trafficModel: 'bestguess'
+		// };
 
 		var service = new google.maps.DistanceMatrixService();
 		service.getDistanceMatrix(
