@@ -14,13 +14,13 @@ import {
 	FormGroup,
 	Fade
 } from 'shards-react';
-// import { Fab } from '@material-ui/core';
-import { Link } from 'react-router-dom';
+
+import LearnMoreCard from '../utils/LearnMoreCard';
 
 import PageTitle from './../components/common/PageTitle';
 import SmallStats from './../components/common/SmallStats';
 import UsersOverview from './../components/blog/UsersOverview';
-import UsersByDevice from './../components/blog/UsersByDevice';
+// import UsersByDevice from './../components/blog/UsersByDevice';
 
 const Overview = ({ smallStats }) => {
 	const [open, toggle] = useState(false);
@@ -33,11 +33,21 @@ const Overview = ({ smallStats }) => {
 		<Fade in={true}>
 			<Container fluid className='main-content-container px-4'>
 				<Row noGutters className='page-header py-4'>
-					<PageTitle
-						title='Your Current Spending Overview'
-						subtitle='Dashboard'
-						className='text-sm-left mb-3'
-					/>
+					<Col lg='10' md='12' sm='12'>
+						<PageTitle
+							title='Your Current Spending Overview'
+							subtitle='Dashboard'
+							className='text-sm-left '
+						/>
+					</Col>
+					<Col
+						lg='2'
+						md='12'
+						sm='10'
+						style={{ marginTop: '20px', textAlign: 'right' }}
+					>
+						<Button onClick={() => toggle(!open)}>Advanced Search</Button>
+					</Col>
 				</Row>
 
 				<Row>
@@ -64,16 +74,19 @@ const Overview = ({ smallStats }) => {
 					</Col>
 
 					<Col lg='4' md='6' sm='12' className='mb-4'>
-						<UsersByDevice />
+						{/* <UsersByDevice /> */}
+						<LearnMoreCard
+							cardHeader='Want a way to stop this?'
+							title='Make Change'
+							img='https://s23705.pcdn.co/wp-content/uploads/2019/02/Insurance.jpg'
+							text='Save up to $1000 by changing the way your travel'
+							buttonText='Learn More &rarr;'
+							btnTheme='warning'
+							to='/iteration2/comparison'
+						/>
 					</Col>
 				</Row>
-				<Button
-					onClick={() => toggle(!open)}
-					style={{ position: 'absolute', top: '100px', right: '50px' }}
-				>
-					{/* <NavigationIcon className={classes.extendedIcon} /> */}
-					Advanced Search
-				</Button>
+
 				<Modal open={open} toggle={() => toggle(!open)}>
 					<ModalHeader>Advanced Search</ModalHeader>
 					<ModalBody>
@@ -100,16 +113,6 @@ const Overview = ({ smallStats }) => {
 						<Button>Search</Button>
 					</ModalFooter>
 				</Modal>
-
-				<Row>
-					<Col lg='12' md='12' sm='12' className='mb-4'>
-						<Link to='/iteration2/comparison'>
-							<Button style={{ width: '100%' }} theme='danger'>
-								I think this is too much !!! I want to save money and time!
-							</Button>
-						</Link>
-					</Col>
-				</Row>
 			</Container>
 		</Fade>
 	);

@@ -1,24 +1,30 @@
 import React from 'react';
-import { Card, CardHeader } from 'shards-react';
+import { Card, CardImg, CardBody, Container, Col, Row } from 'shards-react';
+import NotFoundImg from '../resources/img/404NotFound.png';
 
 const NotFoundPage = () => {
 	return (
 		<div style={{ width: '100%', height: '90vh' }}>
-			<Card
-				style={{
-					width: '500px',
-					height: '200px',
-					marginLeft: 'auto',
-					marginRight: 'auto',
-					textAlign: 'center',
-					marginTop: '10vh'
-				}}
-			>
-				<CardHeader>
-					<h3 className='m-0'>404 Not Found</h3>
-				</CardHeader>
-				<strong>The page you are looking for doesn't exist</strong>
-			</Card>
+			<Container>
+				<Row>
+					<Col sm={{ size: 8, order: 2, offset: 2 }}>
+						<Card
+							style={{
+								height: '70vh',
+								marginLeft: 'auto',
+								marginRight: 'auto',
+								textAlign: 'center',
+								marginTop: '10vh'
+							}}
+						>
+							<CardImg top src={NotFoundImg} style={{ height: '85%' }} />
+							<CardBody>
+								<p>The page you are looking for doesn't exist</p>
+							</CardBody>
+						</Card>
+					</Col>
+				</Row>
+			</Container>
 		</div>
 	);
 };

@@ -16,8 +16,8 @@ import Calculator from './iterationOneComponents/calculator';
 import HeaderTwo from './iterationTwoComponents/headerTwo';
 import CalculatorTwo from './iterationTwoComponents/calculatorTwo';
 import ComparisonTwo from './iterationTwoComponents/comparisonTwo';
-import Navigation from './iterationTwoComponents/headerTwo/Nav/Navigation';
-import PriceComparison from './iterationTwoComponents/PriceComparison';
+// import Navigation from './iterationTwoComponents/headerTwo/Nav/Navigation';
+// import PriceComparison from './iterationTwoComponents/PriceComparison';
 import Iteration2 from './iterationTwoComponents';
 import NotFoundPage from './iterationTwoComponents/NotFoundPage';
 

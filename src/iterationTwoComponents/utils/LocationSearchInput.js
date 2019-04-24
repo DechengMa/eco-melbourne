@@ -1,14 +1,9 @@
 import React from 'react';
 import PlacesAutocomplete from 'react-places-autocomplete';
-
-import { TextField, MenuItem, FormHelperText } from '@material-ui/core';
 import {
-	Card,
-	CardHeader,
 	ListGroup,
 	ListGroupItem,
 	FormInput,
-	Button,
 	FormGroup,
 	FormFeedback
 } from 'shards-react';
