@@ -12,6 +12,8 @@ import CustomSelect from '../components/components-overview/CustomSelect';
 import LocationSearchInput from '../utils/LocationSearchInput';
 import { connect } from 'react-redux';
 import { fetchDefaultResult } from '../actions';
+import { get_next_weekday } from '../utils/Variables';
+import { withRouter } from 'react-router-dom';
 
 class QuestionBox extends Component {
 	state = {
@@ -87,18 +89,20 @@ class QuestionBox extends Component {
 
 	getDistance = (baseLocation, targetLocation) => {
 		const { google } = this.props;
-
+		var dptTime = get_next_weekday();
+		console.log('dptTime');
+		console.log(dptTime);
 		const transitOptions = {
 			// arrivalTime: Date,
-			departureTime: new Date('April 23, 2019 9:00:00'),
+			departureTime: dptTime,
 			modes: ['TRAM', 'TRAIN']
 			// routingPreference: TransitRoutePreference
 		};
 
-		// const drivingOptions = {
-		// 	departureTime: new Date('April 23, 2019 8:00:00'),
-		// 	trafficModel: 'bestguess'
-		// };
+		const drivingOptions = {
+			departureTime: dptTime,
+			trafficModel: 'bestguess'
+		};
 
 		var service = new google.maps.DistanceMatrixService();
 		service.getDistanceMatrix(
@@ -106,9 +110,9 @@ class QuestionBox extends Component {
 				origins: [baseLocation],
 				destinations: [targetLocation],
 				// trafficModel: "TRANSIT", "BICYCLING", "WALKING","DRIVING"
-				travelMode: 'TRANSIT',
-				transitOptions: transitOptions
-				// drivingOptions: drivingOptions
+				travelMode: 'DRIVING',
+				// transitOptions: transitOptions
+				drivingOptions: drivingOptions
 				// unitSystem: UnitSystem,
 				// avoidHighways: true,
 				// avoidTolls: true
@@ -119,10 +123,21 @@ class QuestionBox extends Component {
 					console.log(status);
 				} else {
 					console.log(response);
+					var data = response.rows[0].elements[0];
 					// console.log(response.rows[0].elements[0].distance.text);
-					// var distance = response.rows[0].elements[0].distance.text;
-					// distance = distance.substring(0, distance.length - 2);
-					// return;
+					var distance = data.distance.text.substring(
+						0,
+						data.distance.text.length - 2
+					);
+					var delayTime =
+						(data.duration_in_traffic.value - data.duration.value) / 60;
+					this.props.fetchDefaultResult(
+						distance,
+						this.state.daysWork,
+						delayTime,
+						'Month',
+						this.props.history
+					);
 				}
 			}
 		);
@@ -203,16 +218,9 @@ class QuestionBox extends Component {
 	}
 }
 
-function mapStateToProps({ currentInfo }) {
-	console.log('mapStateToProps');
-	console.log(currentInfo);
+const mapStateToProps = ({ currentInfo }) => {
 	return { currentInfo: currentInfo };
-}
-
-// export default connect(
-// 	mapStateToProps,
-// 	{ fetchDefaultResult }
-// )(QuestionBox);
+};
 
 export default connect(
 	mapStateToProps,
@@ -220,5 +228,5 @@ export default connect(
 )(
 	GoogleApiWrapper({
 		apiKey: GOOGLEMAPAPI
-	})(QuestionBox)
+	})(withRouter(QuestionBox))
 );

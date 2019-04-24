@@ -20,14 +20,75 @@ import LearnMoreCard from '../utils/LearnMoreCard';
 import PageTitle from './../components/common/PageTitle';
 import SmallStats from './../components/common/SmallStats';
 import UsersOverview from './../components/blog/UsersOverview';
+import { connect } from 'react-redux';
 // import UsersByDevice from './../components/blog/UsersByDevice';
 
-const Overview = ({ smallStats }) => {
+const Overview = ({ smallStats, currentInfo }) => {
 	const [open, toggle] = useState(false);
+	if (currentInfo) {
+		console.log('currentInfo.price');
+		console.log(currentInfo);
+		smallStats = [
+			{
+				label: 'Time Wasted',
+				value: '2,390',
+				percentage: '4.7%',
+				increase: true,
+				chartLabels: [null, null, null, null, null, null, null],
+				attrs: { md: '6', sm: '6' },
+				datasets: [
+					{
+						label: 'Today',
+						fill: 'start',
+						borderWidth: 1.5,
+						backgroundColor: 'rgba(0, 184, 216, 0.1)',
+						borderColor: 'rgb(0, 184, 216)',
+						data: [1, 2, 1, 3, 5, 4, 7]
+					}
+				]
+			},
+			{
+				label: 'Spending',
+				value: currentInfo.price ? currentInfo.price.priceMonth : '2,390',
+				percentage: '4.7%',
+				increase: true,
+				chartLabels: [null, null, null, null, null, null, null],
+				attrs: { md: '6', sm: '6' },
+				datasets: [
+					{
+						label: 'Today',
+						fill: 'start',
+						borderWidth: 1.5,
+						backgroundColor: 'rgba(0, 184, 216, 0.1)',
+						borderColor: 'rgb(0, 184, 216)',
+						data: [1, 2, 1, 3, 5, 4, 7]
+					}
+				]
+			},
+			{
+				label: 'Time Wasted',
+				value: '2,390',
+				percentage: '4.7%',
+				increase: true,
+				chartLabels: [null, null, null, null, null, null, null],
+				attrs: { md: '6', sm: '6' },
+				datasets: [
+					{
+						label: 'Today',
+						fill: 'start',
+						borderWidth: 1.5,
+						backgroundColor: 'rgba(0, 184, 216, 0.1)',
+						borderColor: 'rgb(0, 184, 216)',
+						data: [1, 2, 1, 3, 5, 4, 7]
+					}
+				]
+			}
+		];
+	}
 
-	useEffect(() => {
-		window.scrollTo(0, document.body.scrollHeight);
-	});
+	// useEffect(() => {
+	// 	window.scrollTo(0, document.body.scrollHeight);
+	// });
 
 	return (
 		<Fade in={true}>
@@ -220,4 +281,16 @@ Overview.defaultProps = {
 	]
 };
 
-export default Overview;
+const mapStateToProps = ({ info }) => {
+	console.log('Overview mapStateToProps price');
+	// console.log(props);
+	console.log(info);
+	console.log(info.currentInfo);
+	// const { currentInfo } = info;
+	// const { price, Environment, Savings } = currentInfo;
+	return {
+		currentInfo: info.currentInfo
+	};
+};
+
+export default connect(mapStateToProps)(Overview);
