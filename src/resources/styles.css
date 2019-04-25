@@ -45,7 +45,7 @@ body {
         HEADER
 ======================*/
 
-/* header {
+header {
 	padding: 10px 0px;
 	transition: all 300ms ease-in;
 }
@@ -62,4 +62,4 @@ header .header_logo_venue {
 header .header_logo_title {
 	color: black;
 	text-transform: uppercase;
-} */
+}

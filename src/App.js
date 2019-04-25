@@ -1,7 +1,12 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Element } from 'react-scroll';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import {
+	BrowserRouter as Router,
+	Route,
+	Switch,
+	Redirect
+} from 'react-router-dom';
 
 import './resources/styles.css';
 
@@ -20,9 +25,16 @@ import ComparisonTwo from './iterationTwoComponents/comparisonTwo';
 // import PriceComparison from './iterationTwoComponents/PriceComparison';
 import Iteration2 from './iterationTwoComponents';
 import NotFoundPage from './iterationTwoComponents/NotFoundPage';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
-class App extends Component {
-	iteration1 = () => (
+const App = () => {
+	const [spinner, setSpinner] = useState(true);
+
+	useEffect(() => {
+		setTimeout(() => setSpinner(false), 1000);
+	}, []);
+
+	const iteration1 = () => (
 		<div className='App'>
 			<Header />
 			<div style={{ marginTop: '88px' }}>
@@ -41,37 +53,37 @@ class App extends Component {
 	);
 
 	// Iteration 2 Components
-	iteration2HomePage = () => <HeaderTwo />;
-	iteration2Calculator = () => <CalculatorTwo />;
-	comparisonTwo = () => <ComparisonTwo />;
+	const iteration2HomePage = () => <HeaderTwo />;
+	const iteration2Calculator = () => <CalculatorTwo />;
+	const comparisonTwo = () => <ComparisonTwo />;
 
 	// End of iteration 2 Components
 
-	render() {
-		return (
-			<Router>
-				<Route path='/iteration1' component={this.iteration1} />
+	return spinner ? (
+		<div style={{ display: 'flex', justifyContent: 'center', height: '100vh' }}>
+			<CircularProgress style={{ position: 'absolute', top: '40%' }} />
+		</div>
+	) : (
+		<Router>
+			<Switch>
+				<Route path='/iteration1' component={iteration1} />
 				<Iteration2>
-					<Switch>
-						<Route
-							path='/iteration2'
-							exact
-							component={this.iteration2HomePage}
-						/>
-						<Route
-							path='/iteration2/calculator'
-							component={this.iteration2Calculator}
-						/>
-						<Route
-							path='/iteration2/comparison'
-							component={this.comparisonTwo}
-						/>
-						<Route exact component={NotFoundPage} />
-					</Switch>
+					<Route exact path='/iteration2' component={iteration2HomePage} />
+					<Route
+						exact
+						path='/iteration2/calculator'
+						component={iteration2Calculator}
+					/>
+					<Route
+						exact
+						path='/iteration2/comparison'
+						component={comparisonTwo}
+					/>
 				</Iteration2>
-			</Router>
-		);
-	}
-}
+				<Route component={NotFoundPage} />
+			</Switch>
+		</Router>
+	);
+};
 
 export default App;
