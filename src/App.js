@@ -75,7 +75,7 @@ const App = () => {
 		console.log(event.target.value);
 		console.log(process.env.PASSWORD);
 		console.log(process.env.REACT_APP_PASSWORD);
-		if (event.target.value == process.env.PASSWORD) {
+		if (event.target.value === process.env.REACT_APP_PASSWORD) {
 			setShowContent(true);
 		}
 	};
