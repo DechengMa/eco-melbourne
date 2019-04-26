@@ -7,6 +7,16 @@ import {
 	Switch,
 	Redirect
 } from 'react-router-dom';
+import {
+	Button,
+	Modal,
+	ModalBody,
+	ModalHeader,
+	InputGroup,
+	InputGroupAddon,
+	FormInput,
+	InputGroupText
+} from 'shards-react';
 
 import './resources/styles.css';
 
@@ -29,6 +39,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 const App = () => {
 	const [spinner, setSpinner] = useState(true);
+	const [showContent, setShowContent] = useState(false);
 
 	useEffect(() => {
 		setTimeout(() => setSpinner(false), 1000);
@@ -59,31 +70,91 @@ const App = () => {
 
 	// End of iteration 2 Components
 
-	return spinner ? (
-		<div style={{ display: 'flex', justifyContent: 'center', height: '100vh' }}>
-			<CircularProgress style={{ position: 'absolute', top: '40%' }} />
-		</div>
-	) : (
-		<Router>
-			<Switch>
-				<Route path='/iteration1' component={iteration1} />
-				<Iteration2>
-					<Route exact path='/iteration2' component={iteration2HomePage} />
-					<Route
-						exact
-						path='/iteration2/calculator'
-						component={iteration2Calculator}
-					/>
-					<Route
-						exact
-						path='/iteration2/comparison'
-						component={comparisonTwo}
-					/>
-				</Iteration2>
-				<Route component={NotFoundPage} />
-			</Switch>
-		</Router>
+	// Password
+	const inputPassword = event => {
+		console.log(event.target.value);
+		if (event.target.value === process.env.PASSWORD) {
+			setShowContent(true);
+		}
+	};
+
+	const PasswordModal = () => (
+		<Modal open={true}>
+			<ModalHeader>Password</ModalHeader>
+			<ModalBody>
+				<InputGroup size='mb-2'>
+					<InputGroupAddon type='prepend'>
+						<InputGroupText>Password</InputGroupText>
+					</InputGroupAddon>
+					<FormInput onChange={inputPassword} />
+				</InputGroup>
+			</ModalBody>
+		</Modal>
 	);
+
+	if (spinner) {
+		return (
+			<div
+				style={{ display: 'flex', justifyContent: 'center', height: '100vh' }}
+			>
+				<CircularProgress style={{ position: 'absolute', top: '40%' }} />
+			</div>
+		);
+	} else {
+		if (showContent) {
+			return (
+				<Router>
+					<Switch>
+						<Route path='/iteration1' component={iteration1} />
+						<Iteration2>
+							<Route exact path='/iteration2' component={iteration2HomePage} />
+							<Route
+								exact
+								path='/iteration2/calculator'
+								component={iteration2Calculator}
+							/>
+							<Route
+								exact
+								path='/iteration2/comparison'
+								component={comparisonTwo}
+							/>
+						</Iteration2>
+						<Route component={NotFoundPage} />
+					</Switch>
+				</Router>
+			);
+		} else {
+			return <PasswordModal />;
+		}
+	}
+
+	// return spinner ? (
+	// 	<div style={{ display: 'flex', justifyContent: 'center', height: '100vh' }}>
+	// 		<CircularProgress style={{ position: 'absolute', top: '40%' }} />
+	// 	</div>
+	// ) : (
+	// 	<PasswordModal />
+
+	// 	<Router>
+	// 		<Switch>
+	// 			<Route path='/iteration1' component={iteration1} />
+	// 			<Iteration2>
+	// 				<Route exact path='/iteration2' component={iteration2HomePage} />
+	// 				<Route
+	// 					exact
+	// 					path='/iteration2/calculator'
+	// 					component={iteration2Calculator}
+	// 				/>
+	// 				<Route
+	// 					exact
+	// 					path='/iteration2/comparison'
+	// 					component={comparisonTwo}
+	// 				/>
+	// 			</Iteration2>
+	// 			<Route component={NotFoundPage} />
+	// 		</Switch>
+	// 	</Router>
+	// );
 };
 
 export default App;

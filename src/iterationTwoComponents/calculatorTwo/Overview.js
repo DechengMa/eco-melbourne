@@ -31,7 +31,9 @@ const Overview = ({ smallStats, currentInfo }) => {
 		smallStats = [
 			{
 				label: 'Time Wasted',
-				value: '2,390',
+				value: currentInfo.Savings
+					? currentInfo.Savings.TimewasteMonth
+					: '2,390',
 				percentage: '4.7%',
 				increase: true,
 				chartLabels: [null, null, null, null, null, null, null],
