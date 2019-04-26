@@ -73,7 +73,9 @@ const App = () => {
 	// Password
 	const inputPassword = event => {
 		console.log(event.target.value);
-		if (event.target.value === process.env.PASSWORD) {
+		console.log(process.env.PASSWORD);
+		console.log(process.env.REACT_APP_PASSWORD);
+		if (event.target.value == process.env.PASSWORD) {
 			setShowContent(true);
 		}
 	};
