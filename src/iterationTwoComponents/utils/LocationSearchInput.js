@@ -60,7 +60,17 @@ class LocationSearchInput extends React.Component {
 							/>
 							<FormFeedback>{this.props.errorMsg}</FormFeedback>
 						</FormGroup>
-						<div className='autocomplete-dropdown-container'>
+						<div
+							style={{
+								position: 'absolute',
+								zIndex: '1000',
+								border: 'solid',
+								borderWidth: '1px',
+								borderColor: '#e1e5ea',
+								borderRadius: '5px'
+							}}
+							className='autocomplete-dropdown-container'
+						>
 							{loading && <ListGroupItem>Loading...</ListGroupItem>}
 
 							{suggestions.map(suggestion => {
@@ -69,7 +79,10 @@ class LocationSearchInput extends React.Component {
 									: 'suggestion-item';
 
 								const style = suggestion.active
-									? { backgroundColor: '#fafafa', cursor: 'pointer' }
+									? {
+											backgroundColor: '#fafafa',
+											cursor: 'pointer'
+									  }
 									: { backgroundColor: '#ffffff', cursor: 'pointer' };
 								return (
 									<ListGroup

@@ -58,17 +58,24 @@ const MapWithADirectionsRenderer = compose(
 
 export class MapContainer extends Component {
 	render() {
+		console.log('MapContainer Render Function');
+		console.log(
+			'origin, destination',
+			this.props.origin,
+			this.props.destination,
+			this.props.travelMode
+		);
 		return (
 			<Card small className='h-100'>
 				<CardHeader className='border-bottom'>
-					<h6 className='m-0'>Map</h6>
+					<h6 className='m-0'>Route </h6>
 				</CardHeader>
 				<CardBody className='pt-0'>
 					<div style={{ width: '100%', height: '500px' }}>
 						<MapWithADirectionsRenderer
-							origin='Carnegie VIC, Australia'
-							destination='Box Hill VIC, Australia'
-							travelMode='TRANSIT'
+							origin={this.props.origin}
+							destination={this.props.destination}
+							travelMode={this.props.travelMode}
 						/>
 						{/* <Map
 							style={{ width: '95%', height: '500px' }}

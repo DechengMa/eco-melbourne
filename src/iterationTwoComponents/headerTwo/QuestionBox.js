@@ -6,12 +6,18 @@ import {
 	ListGroupItem,
 	Button
 } from 'shards-react';
+import { CircularProgress } from '@material-ui/core';
 import { GoogleApiWrapper } from 'google-maps-react';
 import { GOOGLEMAPAPI } from '../../config/keys';
 import CustomSelect from '../components/components-overview/CustomSelect';
 import LocationSearchInput from '../utils/LocationSearchInput';
 import { connect } from 'react-redux';
-import { fetchDefaultResult } from '../actions';
+import {
+	fetchDefaultResult,
+	setCurrentValue,
+	fetchComparsionResult,
+	setDefaultLoading
+} from '../actions';
 import { get_next_weekday } from '../utils/Variables';
 import { withRouter } from 'react-router-dom';
 
@@ -20,11 +26,18 @@ class QuestionBox extends Component {
 		livingSuburb: '',
 		workingSuburb: '',
 		vehicle: '',
-		daysWork: '1',
 		fuelType: '',
 		fuelConsumption: 0,
-		distance: '',
 		period: 'Week',
+		postParams: {
+			bicycleTime: '',
+			walkingTime: '',
+			ptvTime: '',
+			distance: '',
+			daysWork: '1',
+			congestion: '',
+			period: 'Month'
+		},
 		loading: false,
 		errorOrNot: false,
 		error: {}
@@ -43,13 +56,16 @@ class QuestionBox extends Component {
 	};
 
 	handleChange = event => {
-		this.setState({ [event.target.name]: event.target.value, error: {} });
+		this.setState({
+			postParams: { [event.target.name]: event.target.value },
+			error: {}
+		});
 	};
 
 	handleClick = () => {
 		var hasError = false;
-		const { livingSuburb, workingSuburb, daysWork } = this.state;
-
+		const { livingSuburb, workingSuburb } = this.state;
+		const { daysWork } = this.state.postParams;
 		if (livingSuburb === '') {
 			this.setState(prevState => ({
 				error: {
@@ -105,42 +121,180 @@ class QuestionBox extends Component {
 		};
 
 		var service = new google.maps.DistanceMatrixService();
+
+		this.props.setDefaultLoading(true);
+
 		service.getDistanceMatrix(
 			{
 				origins: [baseLocation],
 				destinations: [targetLocation],
-				// trafficModel: "TRANSIT", "BICYCLING", "WALKING","DRIVING"
 				travelMode: 'DRIVING',
-				// transitOptions: transitOptions
 				drivingOptions: drivingOptions
-				// unitSystem: UnitSystem,
-				// avoidHighways: true,
-				// avoidTolls: true
 			},
 			(response, status) => {
 				if (status !== 'OK') {
 					console.log('ERROR!');
 					console.log(status);
 				} else {
-					console.log(response);
-					var data = response.rows[0].elements[0];
+					const data = response.rows[0].elements[0];
 					// console.log(response.rows[0].elements[0].distance.text);
-					var distance = data.distance.text.substring(
+					const distance = data.distance.text.substring(
 						0,
 						data.distance.text.length - 2
 					);
-					var delayTime =
+
+					const congestion =
 						(data.duration_in_traffic.value - data.duration.value) / 60;
-					this.props.fetchDefaultResult(
-						distance,
-						this.state.daysWork,
-						delayTime,
-						'Month',
-						this.props.history
-					);
+
+					const carTime = data.duration_in_traffic.value / 60;
+
+					this.setState(prevState => ({
+						postParams: {
+							...prevState.postParams,
+							distance: distance,
+							congestion: congestion,
+							carTime: carTime,
+							period: 'Month'
+						}
+					}));
+					this.fetchResultFromBackEnd();
 				}
 			}
 		);
+
+		service.getDistanceMatrix(
+			{
+				origins: [baseLocation],
+				destinations: [targetLocation],
+				travelMode: 'TRANSIT'
+			},
+			(response, status) => {
+				if (status !== 'OK') {
+					console.log('ERROR!');
+					console.log(status);
+				} else {
+					const data = response.rows[0].elements[0];
+					// console.log(response.rows[0].elements[0].distance.text);
+					const distance = data.distance.text.substring(
+						0,
+						data.distance.text.length - 2
+					);
+
+					const ptvTime = data.duration.value / 60;
+
+					this.setState(prevState => ({
+						postParams: {
+							...prevState.postParams,
+							ptvTime: ptvTime
+						}
+					}));
+					this.fetchResultFromBackEnd();
+				}
+			}
+		);
+
+		service.getDistanceMatrix(
+			{
+				origins: [baseLocation],
+				destinations: [targetLocation],
+				travelMode: 'BICYCLING'
+			},
+			(response, status) => {
+				if (status !== 'OK') {
+					console.log('ERROR!');
+					console.log(status);
+				} else {
+					const data = response.rows[0].elements[0];
+					const bicycleTime = data.duration.value / 60;
+					this.setState(prevState => ({
+						postParams: {
+							...prevState.postParams,
+							bicycleTime: bicycleTime
+						}
+					}));
+					this.fetchResultFromBackEnd();
+				}
+			}
+		);
+
+		service.getDistanceMatrix(
+			{
+				origins: [baseLocation],
+				destinations: [targetLocation],
+				travelMode: 'WALKING'
+			},
+			(response, status) => {
+				if (status !== 'OK') {
+					console.log('ERROR!');
+					console.log(status);
+				} else {
+					const data = response.rows[0].elements[0];
+					const walkingTime = data.duration.value / 60;
+					this.setState(prevState => ({
+						postParams: {
+							...prevState.postParams,
+							walkingTime: walkingTime
+						}
+					}));
+					this.fetchResultFromBackEnd();
+				}
+			}
+		);
+	};
+
+	fetchResultFromBackEnd = () => {
+		const {
+			carTime,
+			bicycleTime,
+			walkingTime,
+			ptvTime,
+			distance,
+			congestion,
+			daysWork,
+			period
+		} = this.state.postParams;
+		const { livingSuburb, workingSuburb } = this.state;
+
+		if (
+			(bicycleTime !== '' && walkingTime !== '',
+			ptvTime !== '',
+			distance !== '',
+			congestion !== '')
+		) {
+			this.props.fetchDefaultResult(
+				distance,
+				daysWork,
+				congestion,
+				period,
+				carTime,
+				bicycleTime,
+				walkingTime,
+				ptvTime,
+				this.props.history
+			);
+			this.props.fetchComparsionResult(
+				distance,
+				daysWork,
+				congestion,
+				period,
+				carTime,
+				bicycleTime,
+				walkingTime,
+				ptvTime
+			);
+			this.props.setCurrentValue(
+				livingSuburb,
+				workingSuburb,
+				distance,
+				daysWork,
+				congestion,
+				period,
+				carTime,
+				bicycleTime,
+				walkingTime,
+				ptvTime
+			);
+		}
 	};
 
 	getDirectionRoute = () => {
@@ -207,10 +361,16 @@ class QuestionBox extends Component {
 						</strong>
 						<CustomSelect
 							name='daysWork'
-							value={this.state.daysWork}
+							value={this.state.postParams.daysWork}
 							handleChange={this.handleChange}
 						/>
-						<Button onClick={this.handleClick}>Search</Button>
+						<Button style={{ height: '35px' }} onClick={this.handleClick}>
+							{this.props.loading ? (
+								<CircularProgress size={20} style={{ color: '#fff' }} />
+							) : (
+								'Search'
+							)}
+						</Button>
 					</ListGroupItem>
 				</ListGroup>
 			</Card>
@@ -218,13 +378,19 @@ class QuestionBox extends Component {
 	}
 }
 
-const mapStateToProps = ({ currentInfo }) => {
-	return { currentInfo: currentInfo };
+const mapStateToProps = ({ loading }) => {
+	console.log('loading', loading);
+	return { loading: loading.fetchDefaultloading };
 };
 
 export default connect(
 	mapStateToProps,
-	{ fetchDefaultResult }
+	{
+		fetchDefaultResult,
+		fetchComparsionResult,
+		setCurrentValue,
+		setDefaultLoading
+	}
 )(
 	GoogleApiWrapper({
 		apiKey: GOOGLEMAPAPI

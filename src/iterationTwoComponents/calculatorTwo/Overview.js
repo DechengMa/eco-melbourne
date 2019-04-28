@@ -4,38 +4,113 @@ import {
 	Container,
 	Row,
 	Col,
-	Button,
-	Modal,
-	ModalBody,
-	ModalHeader,
-	ModalFooter,
-	FormInput,
-	Form,
-	FormGroup,
 	Fade
+	// Dropdown,
+	// DropdownToggle,
+	// DropdownMenu,
+	// DropdownItem
 } from 'shards-react';
+import { FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
 
 import LearnMoreCard from '../utils/LearnMoreCard';
-
 import PageTitle from './../components/common/PageTitle';
 import SmallStats from './../components/common/SmallStats';
 import UsersOverview from './../components/blog/UsersOverview';
 import { connect } from 'react-redux';
+import { fetchDefaultResult } from '../actions';
 // import UsersByDevice from './../components/blog/UsersByDevice';
 
-const Overview = ({ smallStats, currentInfo }) => {
+const Overview = ({
+	smallStats,
+	currentInfo,
+	currentParam,
+	fetchDefaultResult
+}) => {
 	const [open, toggle] = useState(false);
+	const [dropdownOpen, dropdownToggle] = useState(false);
+	const [period, setPeriod] = useState('Month');
+	// const [period, ]
+	// var dropdownOpen = false;
+
+	var chartData = {
+		// labels: Array.from(new Array(10), (_, i) => (i === 0 ? 1 : i)),
+		labels: [
+			'2019',
+			'2020',
+			'2021',
+			'2022',
+			'2023',
+			'2024',
+			'2025',
+			'2026',
+			'2027',
+			'2028',
+			'2029',
+			'2030'
+		],
+		datasets: [
+			{
+				label: 'Time Wasted',
+				fill: 'start',
+				data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+				backgroundColor: 'rgba(0,123,255,0.1)',
+				borderColor: 'rgba(0,123,255,1)',
+				pointBackgroundColor: '#ffffff',
+				pointHoverBackgroundColor: 'rgb(0,123,255)',
+				borderWidth: 1.5,
+				pointRadius: 0,
+				pointHoverRadius: 3
+			}
+		]
+	};
+
 	if (currentInfo) {
-		console.log('currentInfo.price');
-		console.log(currentInfo);
+		chartData = {
+			// labels: Array.from(new Array(10), (_, i) => (i === 0 ? 1 : i)),
+			labels: [
+				'2019',
+				'2020',
+				'2021',
+				'2022',
+				'2023',
+				'2024',
+				'2025',
+				'2026',
+				'2027',
+				'2028',
+				'2029',
+				'2030'
+			],
+			datasets: [
+				{
+					label: 'Time Wasted',
+					fill: 'start',
+					numberDesc:
+						'This data presents how many minutes user wasted during a week/month/year.',
+					data: currentInfo.timeDelay.timeDelay
+						? currentInfo.timeDelay.timeDelay
+						: [0, 0, 0, 0, 0, 0],
+					backgroundColor: 'rgba(255,65,105,0.1)',
+					borderColor: 'rgba(255,65,105,1)',
+					pointBackgroundColor: '#ffffff',
+					pointHoverBackgroundColor: 'rgba(255,65,105,1)',
+					borderDash: [3, 3],
+					borderWidth: 1,
+					pointRadius: 0,
+					pointHoverRadius: 2,
+					pointBorderColor: 'rgba(255,65,105,1)'
+				}
+			]
+		};
+
 		smallStats = [
 			{
 				label: 'Time Wasted',
-				value: currentInfo.Savings
-					? currentInfo.Savings.TimewasteMonth
-					: '2,390',
-				percentage: '4.7%',
+				value: currentInfo.environment
+					? currentInfo.environment.timeWaste
+					: '0',
 				increase: true,
+				unit: 'Mins',
 				chartLabels: [null, null, null, null, null, null, null],
 				attrs: { md: '6', sm: '6' },
 				datasets: [
@@ -51,8 +126,10 @@ const Overview = ({ smallStats, currentInfo }) => {
 			},
 			{
 				label: 'Spending',
-				value: currentInfo.price ? currentInfo.price.priceMonth : '2,390',
-				percentage: '4.7%',
+				value: currentInfo.price ? currentInfo.price.totalMoneySpent : '0',
+				numberDesc:
+					'This data presents how much money user spend during a week/month/year.',
+				unit: '$',
 				increase: true,
 				chartLabels: [null, null, null, null, null, null, null],
 				attrs: { md: '6', sm: '6' },
@@ -68,29 +145,80 @@ const Overview = ({ smallStats, currentInfo }) => {
 				]
 			},
 			{
-				label: 'Time Wasted',
-				value: '2,390',
-				percentage: '4.7%',
-				increase: true,
+				label: 'Carbon Dioxide',
+				value: currentInfo.environment
+					? currentInfo.environment.carCarbon
+					: '0',
+				numberDesc:
+					'This data presents how many carbon dioxide are created by using current travel method during a week/month/year.',
+				unit: 'Kg CO2e',
+
+				increase: false,
+				decrease: true,
 				chartLabels: [null, null, null, null, null, null, null],
-				attrs: { md: '6', sm: '6' },
+				attrs: { md: '4', sm: '6' },
 				datasets: [
 					{
 						label: 'Today',
 						fill: 'start',
 						borderWidth: 1.5,
-						backgroundColor: 'rgba(0, 184, 216, 0.1)',
-						borderColor: 'rgb(0, 184, 216)',
-						data: [1, 2, 1, 3, 5, 4, 7]
+						backgroundColor: 'rgba(255,180,0,0.1)',
+						borderColor: 'rgb(255,180,0)',
+						data: [0, 0, 0, 0, 0, 0, 0]
+					}
+				]
+			},
+			{
+				label: 'Trees Needed',
+				value: currentInfo.environment
+					? currentInfo.environment.treesRequired
+					: '0',
+				numberDesc:
+					'This data presents how many trees are needed to absorb those created carbon dioxide during a week/month/year.',
+				unit: 'Num Of Trees',
+				increase: false,
+				decrease: true,
+				chartLabels: [null, null, null, null, null, null, null],
+				attrs: { md: '4', sm: '6' },
+				datasets: [
+					{
+						label: 'Today',
+						fill: 'start',
+						borderWidth: 1.5,
+						backgroundColor: 'rgba(255,65,105,0.1)',
+						borderColor: 'rgb(255,65,105)',
+						data: [0, 0, 0, 0, 0, 0, 0]
 					}
 				]
 			}
 		];
 	}
 
-	// useEffect(() => {
-	// 	window.scrollTo(0, document.body.scrollHeight);
-	// });
+	const fetchDataFromBackEnd = period => {
+		if (currentParam && currentParam.distance) {
+			const {
+				distance,
+				days,
+				congestion,
+				carTime,
+				bicycleTime,
+				walkingTime,
+				ptvTime
+			} = currentParam;
+
+			fetchDefaultResult(
+				distance,
+				days,
+				congestion,
+				period,
+				carTime,
+				bicycleTime,
+				walkingTime,
+				ptvTime,
+				null
+			);
+		}
+	};
 
 	return (
 		<Fade in={true}>
@@ -100,17 +228,40 @@ const Overview = ({ smallStats, currentInfo }) => {
 						<PageTitle
 							title='Your Current Spending Overview'
 							subtitle='Dashboard'
-							className='text-sm-left '
+							className='text-sm-left mb-12'
 						/>
 					</Col>
 					<Col
 						lg='2'
 						md='12'
-						sm='10'
+						sm='12'
+						xs='12'
+						style={{ marginTop: '20px', textAlign: 'right' }}
+					>
+						<FormControl variant='outlined'>
+							<InputLabel>Period</InputLabel>
+							<Select
+								value={period}
+								onChange={event => {
+									fetchDataFromBackEnd(event.target.value);
+									setPeriod(event.target.value);
+								}}
+							>
+								<MenuItem value={'Week'}>Weekly</MenuItem>
+								<MenuItem value={'Month'}>Monthly</MenuItem>
+								<MenuItem value={'Year'}>Yearly</MenuItem>
+							</Select>
+						</FormControl>
+					</Col>
+					{/* <Col
+						lg='2'
+						md='6'
+						sm='6'
+						xs='6'
 						style={{ marginTop: '20px', textAlign: 'right' }}
 					>
 						<Button onClick={() => toggle(!open)}>Advanced Search</Button>
-					</Col>
+					</Col> */}
 				</Row>
 
 				<Row>
@@ -119,9 +270,11 @@ const Overview = ({ smallStats, currentInfo }) => {
 							<SmallStats
 								id={`small-stats-${idx}`}
 								variation='1'
+								numberDesc={stats.numberDesc}
 								chartData={stats.datasets}
 								chartLabels={stats.chartLabels}
 								label={stats.label}
+								unit={stats.unit}
 								value={stats.value}
 								percentage={stats.percentage}
 								increase={stats.increase}
@@ -133,7 +286,7 @@ const Overview = ({ smallStats, currentInfo }) => {
 
 				<Row>
 					<Col lg='8' md='12' sm='12' className='mb-4'>
-						<UsersOverview />
+						<UsersOverview chartData={chartData} />
 					</Col>
 
 					<Col lg='4' md='6' sm='12' className='mb-4'>
@@ -150,7 +303,7 @@ const Overview = ({ smallStats, currentInfo }) => {
 					</Col>
 				</Row>
 
-				<Modal open={open} toggle={() => toggle(!open)}>
+				{/* <Modal open={open} toggle={() => toggle(!open)}>
 					<ModalHeader>Advanced Search</ModalHeader>
 					<ModalBody>
 						<Form>
@@ -175,7 +328,7 @@ const Overview = ({ smallStats, currentInfo }) => {
 					<ModalFooter>
 						<Button>Search</Button>
 					</ModalFooter>
-				</Modal>
+				</Modal> */}
 			</Container>
 		</Fade>
 	);
@@ -189,8 +342,10 @@ Overview.defaultProps = {
 	smallStats: [
 		{
 			label: 'Time Wasted',
-			value: '2,390',
-			percentage: '4.7%',
+			value: '0',
+			unit: 'Mins',
+			numberDesc:
+				'This data presents how many minutes user wasted during a week/month/year.',
 			increase: true,
 			chartLabels: [null, null, null, null, null, null, null],
 			attrs: { md: '6', sm: '6' },
@@ -201,14 +356,17 @@ Overview.defaultProps = {
 					borderWidth: 1.5,
 					backgroundColor: 'rgba(0, 184, 216, 0.1)',
 					borderColor: 'rgb(0, 184, 216)',
-					data: [1, 2, 1, 3, 5, 4, 7]
+					data: [0, 0, 0, 0, 0, 0, 0]
 				}
 			]
 		},
 		{
 			label: 'Spending',
-			value: '182',
-			percentage: '12.4%',
+			value: '0',
+			unit: '$Aud',
+			numberDesc:
+				'This data presents how much money user spend during a week/month/year.',
+
 			increase: true,
 			chartLabels: [null, null, null, null, null, null, null],
 			attrs: { md: '6', sm: '6' },
@@ -219,14 +377,16 @@ Overview.defaultProps = {
 					borderWidth: 1.5,
 					backgroundColor: 'rgba(23,198,113,0.1)',
 					borderColor: 'rgb(23,198,113)',
-					data: [1, 2, 3, 3, 3, 4, 4]
+					data: [0, 0, 0, 0, 0, 0, 0]
 				}
 			]
 		},
 		{
-			label: 'Comments',
-			value: '8,147',
-			percentage: '3.8%',
+			label: 'Carbon Dioxide',
+			value: '0',
+			unit: 'Kg CO2e',
+			numberDesc:
+				'This data presents how many carbon dioxide are created by using current travel method during a week/month/year.',
 			increase: false,
 			decrease: true,
 			chartLabels: [null, null, null, null, null, null, null],
@@ -238,14 +398,16 @@ Overview.defaultProps = {
 					borderWidth: 1.5,
 					backgroundColor: 'rgba(255,180,0,0.1)',
 					borderColor: 'rgb(255,180,0)',
-					data: [2, 3, 3, 3, 4, 3, 3]
+					data: [0, 0, 0, 0, 0, 0, 0]
 				}
 			]
 		},
 		{
-			label: 'New Customers',
-			value: '29',
-			percentage: '2.71%',
+			label: 'Trees Needed',
+			value: '0',
+			unit: 'Num Of Trees',
+			numberDesc:
+				'This data presents how many trees are needed to absorb those created carbon dioxide during a week/month/year.',
 			increase: false,
 			decrease: true,
 			chartLabels: [null, null, null, null, null, null, null],
@@ -257,26 +419,7 @@ Overview.defaultProps = {
 					borderWidth: 1.5,
 					backgroundColor: 'rgba(255,65,105,0.1)',
 					borderColor: 'rgb(255,65,105)',
-					data: [1, 7, 1, 3, 1, 4, 8]
-				}
-			]
-		},
-		{
-			label: 'Subscribers',
-			value: '17,281',
-			percentage: '2.4%',
-			increase: false,
-			decrease: true,
-			chartLabels: [null, null, null, null, null, null, null],
-			attrs: { md: '4', sm: '6' },
-			datasets: [
-				{
-					label: 'Today',
-					fill: 'start',
-					borderWidth: 1.5,
-					backgroundColor: 'rgb(0,123,255,0.1)',
-					borderColor: 'rgb(0,123,255)',
-					data: [3, 2, 3, 2, 4, 5, 4]
+					data: [0, 0, 0, 0, 0, 0, 0]
 				}
 			]
 		}
@@ -284,15 +427,13 @@ Overview.defaultProps = {
 };
 
 const mapStateToProps = ({ info }) => {
-	console.log('Overview mapStateToProps price');
-	// console.log(props);
-	console.log(info);
-	console.log(info.currentInfo);
-	// const { currentInfo } = info;
-	// const { price, Environment, Savings } = currentInfo;
 	return {
-		currentInfo: info.currentInfo
+		currentInfo: info.currentInfo,
+		currentParam: info.currentParam
 	};
 };
 
-export default connect(mapStateToProps)(Overview);
+export default connect(
+	mapStateToProps,
+	{ fetchDefaultResult }
+)(Overview);

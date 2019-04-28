@@ -12,6 +12,10 @@ class UsersOverview extends React.Component {
 		this.canvasRef = React.createRef();
 	}
 
+	state = {
+		chartData: this.props.chartData
+	};
+
 	componentDidMount() {
 		const chartOptions = {
 			...{
@@ -32,19 +36,12 @@ class UsersOverview extends React.Component {
 					xAxes: [
 						{
 							gridLines: false
-							// ,
-							// ticks: {
-							// 	callback(tick, index) {
-							// 		// Jump every 7 values on the X axis labels to avoid clutter.
-							// 		return index % 7 !== 0 ? '' : tick;
-							// 	}
-							// }
 						}
 					],
 					yAxes: [
 						{
 							ticks: {
-								suggestedMax: 45,
+								suggestedMax: 5,
 								callback(tick) {
 									if (tick === 0) {
 										return tick;
@@ -71,7 +68,7 @@ class UsersOverview extends React.Component {
 
 		const BlogUsersOverview = new Chart(this.canvasRef.current, {
 			type: 'LineWithLine',
-			data: this.props.chartData,
+			data: this.state.chartData,
 			options: chartOptions
 		});
 
@@ -79,15 +76,25 @@ class UsersOverview extends React.Component {
 		const buoMeta = BlogUsersOverview.getDatasetMeta(0);
 		buoMeta.data[0]._model.radius = 0;
 		buoMeta.data[
-			this.props.chartData.datasets[0].data.length - 1
+			this.state.chartData.datasets[0].data.length - 1
 		]._model.radius = 0;
 
 		// Render the chart.
 		BlogUsersOverview.render();
 	}
 
+	componentWillReceiveProps(props) {
+		var canvas = document.getElementById('canvasId');
+		const context = canvas.getContext('2d');
+
+		context.clearRect(0, 0, canvas.width, canvas.height);
+		this.setState({ chartData: props.chartData });
+		this.componentDidMount();
+	}
+
 	render() {
 		const { title } = this.props;
+
 		return (
 			<Card small className='h-100'>
 				<CardHeader className='border-bottom'>
@@ -95,9 +102,10 @@ class UsersOverview extends React.Component {
 				</CardHeader>
 				<CardBody className='pt-0'>
 					<Row className='border-bottom py-2 bg-light'>
-						<Col sm='6' className='d-flex mb-2 mb-sm-0'>
+						<Col sm='9' className='d-flex mb-2 mb-sm-0'>
 							{/* <RangeDatePicker /> */}
-							RangeDatePicker
+							Data Source: Vicroads, Average delay on the monitored network by
+							time period.
 						</Col>
 						<Col>
 							<Button
@@ -108,10 +116,14 @@ class UsersOverview extends React.Component {
 							</Button>
 						</Col>
 					</Row>
+
 					<canvas
-						height='120'
+						id='canvasId'
+						height='130'
 						ref={this.canvasRef}
-						style={{ maxWidth: '100% !important' }}
+						style={{
+							maxWidth: '100% !important'
+						}}
 					/>
 				</CardBody>
 			</Card>
@@ -135,15 +147,28 @@ UsersOverview.propTypes = {
 };
 
 UsersOverview.defaultProps = {
-	title: 'Users Overview',
+	title: 'Congestion Time Prediction Daily (Mins)',
 	chartData: {
 		// labels: Array.from(new Array(10), (_, i) => (i === 0 ? 1 : i)),
-		labels: ['2019', '2020', '2021', '2022', '2023', '2024'],
+		labels: [
+			'2019',
+			'2020',
+			'2021',
+			'2022',
+			'2023',
+			'2024',
+			'2025',
+			'2026',
+			'2027',
+			'2028',
+			'2029',
+			'2030'
+		],
 		datasets: [
 			{
-				label: 'Travel Time',
+				label: 'Time Wasted',
 				fill: 'start',
-				data: [50, 52, 55, 56, 57, 60],
+				data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 				backgroundColor: 'rgba(0,123,255,0.1)',
 				borderColor: 'rgba(0,123,255,1)',
 				pointBackgroundColor: '#ffffff',
@@ -151,21 +176,22 @@ UsersOverview.defaultProps = {
 				borderWidth: 1.5,
 				pointRadius: 0,
 				pointHoverRadius: 3
-			},
-			{
-				label: 'Time Wasted',
-				fill: 'start',
-				data: [25, 26, 28, 30, 31, 32],
-				backgroundColor: 'rgba(255,65,105,0.1)',
-				borderColor: 'rgba(255,65,105,1)',
-				pointBackgroundColor: '#ffffff',
-				pointHoverBackgroundColor: 'rgba(255,65,105,1)',
-				borderDash: [3, 3],
-				borderWidth: 1,
-				pointRadius: 0,
-				pointHoverRadius: 2,
-				pointBorderColor: 'rgba(255,65,105,1)'
 			}
+			// ,
+			// {
+			// 	label: 'Time Wasted',
+			// 	fill: 'start',
+			// 	data: [25, 26, 28, 30, 31, 32],
+			// 	backgroundColor: 'rgba(255,65,105,0.1)',
+			// 	borderColor: 'rgba(255,65,105,1)',
+			// 	pointBackgroundColor: '#ffffff',
+			// 	pointHoverBackgroundColor: 'rgba(255,65,105,1)',
+			// 	borderDash: [3, 3],
+			// 	borderWidth: 1,
+			// 	pointRadius: 0,
+			// 	pointHoverRadius: 2,
+			// 	pointBorderColor: 'rgba(255,65,105,1)'
+			// }
 		]
 	}
 };
