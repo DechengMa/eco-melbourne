@@ -36,7 +36,7 @@ class QuestionBox extends Component {
 			distance: '',
 			daysWork: '1',
 			congestion: '',
-			period: 'Month'
+			period: 'Week'
 		},
 		loading: false,
 		errorOrNot: false,
@@ -154,7 +154,7 @@ class QuestionBox extends Component {
 							distance: distance,
 							congestion: congestion,
 							carTime: carTime,
-							period: 'Month'
+							period: 'Week'
 						}
 					}));
 					this.fetchResultFromBackEnd();

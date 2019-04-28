@@ -4,9 +4,20 @@ import classNames from 'classnames';
 import shortid from 'shortid';
 import { Card, CardBody } from 'shards-react';
 import Tooltip from '@material-ui/core/Tooltip';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 import { HelpOutline } from '@material-ui/icons';
 import Chart from '../../utils/chart';
+
+const theme = createMuiTheme({
+	overrides: {
+		MuiTooltip: {
+			tooltip: {
+				fontSize: '1.2em'
+			}
+		}
+	}
+});
 
 class SmallStats extends React.Component {
 	constructor(props) {
@@ -167,16 +178,18 @@ class SmallStats extends React.Component {
 						className={`stats-small-${shortid()}`}
           			/> */}
 				</CardBody>
-				<Tooltip title={numberDesc ? numberDesc : ''}>
-					<HelpOutline
-						style={{
-							position: 'absolute',
-							left: '10px',
-							bottom: '10px',
-							color: '#838ea1'
-						}}
-					/>
-				</Tooltip>
+				<MuiThemeProvider theme={theme}>
+					<Tooltip title={numberDesc ? numberDesc : ''}>
+						<HelpOutline
+							style={{
+								position: 'absolute',
+								left: '10px',
+								bottom: '10px',
+								color: '#838ea1'
+							}}
+						/>
+					</Tooltip>
+				</MuiThemeProvider>
 			</Card>
 		);
 	}

@@ -18,7 +18,7 @@ const Comparison = ({
 	currentParam,
 	fetchComparsionResult
 }) => {
-	const [period, setPeriod] = useState('Month');
+	const [period, setPeriod] = useState('Week');
 	const chartOptions = {
 		scales: {
 			xAxes: [
@@ -57,23 +57,24 @@ const Comparison = ({
 	if (comparisonInfo) {
 		const numOfWay = Object.keys(comparisonInfo).length;
 		if (numOfWay === 1) {
-			if (modeOfTransit !== comparisonInfo.Alternate.Mode_of_transit) {
-				changeMode(comparisonInfo.Alternate.Mode_of_transit);
+			if (modeOfTransit !== comparisonInfo.Alternate.modeOfTransit) {
+				changeMode(comparisonInfo.Alternate.modeOfTransit);
 			}
 
 			data = {
 				labels: ['Car', 'PTV'],
 				datasets: [
 					{
-						label: 'Travel Time (mins)',
+						label: 'Money Spent $',
 						backgroundColor: 'rgb(23,198,113)',
 						borderColor: 'rgb(23,198,113)',
+
 						borderWidth: 1,
 						hoverBackgroundColor: 'rgb(23,198,113)',
 						hoverBorderColor: 'rgb(23,198,113)',
 						data: [
-							comparisonInfo.Alternate.carTime,
-							comparisonInfo.Alternate.ptvTime
+							comparisonInfo.Alternate.carMoney,
+							comparisonInfo.Alternate.ptvMoney
 						]
 					}
 				]
@@ -81,7 +82,7 @@ const Comparison = ({
 
 			smallStats = [
 				{
-					label: 'Time Save',
+					label: 'Time Difference',
 					value: comparisonInfo.Alternate
 						? comparisonInfo.Alternate.timeDifferencePTV
 						: '0',
@@ -90,6 +91,8 @@ const Comparison = ({
 						: '0',
 					increase: comparisonInfo.Alternate.timePercentage < 0 ? false : true,
 					unit: 'Mins',
+					numberDesc:
+						'This data presents how many minutes user wasted due to traffic congestion',
 					chartLabels: [null, null, null, null, null, null, null],
 					attrs: { md: '6', sm: '6' },
 					datasets: [
@@ -107,9 +110,10 @@ const Comparison = ({
 					label: 'Money Saved',
 					value: comparisonInfo ? comparisonInfo.Alternate.moneySaved : '0',
 					percentage: comparisonInfo.Alternate
-						? `${comparisonInfo.Alternate.moneyPrecentage}%`
+						? `${comparisonInfo.Alternate.moneyPercentage}%`
 						: '0',
-					increase: comparisonInfo.Alternate.moneyPrecentage < 0 ? false : true,
+					increase: comparisonInfo.Alternate.moneyPercentage < 0 ? false : true,
+					numberDesc: 'This data presents how much money user saved.',
 					unit: '$',
 					chartLabels: [null, null, null, null, null, null, null],
 					attrs: { md: '6', sm: '6' },
@@ -127,38 +131,39 @@ const Comparison = ({
 			];
 		} else if (numOfWay === 2) {
 			if (
-				modeOfTransit !== comparisonInfo.Alternate_1.Mode_of_transit &&
-				modeOfTransit !== comparisonInfo.Alternate_2.Mode_of_transit
+				modeOfTransit !== comparisonInfo.Alternate_1.modeOfTransit &&
+				modeOfTransit !== comparisonInfo.Alternate_2.modeOfTransit
 			) {
-				changeMode(comparisonInfo.Alternate_1.Mode_of_transit);
+				changeMode(comparisonInfo.Alternate_1.modeOfTransit);
 			}
 			if (modeOfTransit === 'CYCLING') {
 				data = {
 					labels: ['Car', 'Bicycle'],
 					datasets: [
 						{
-							label: 'Travel Time (mins)',
+							label: 'Money Spent $',
 							backgroundColor: 'rgb(23,198,113)',
 							borderColor: 'rgb(23,198,113)',
 							borderWidth: 1,
 							hoverBackgroundColor: 'rgb(23,198,113)',
 							hoverBorderColor: 'rgb(23,198,113)',
 							data: [
-								comparisonInfo.Alternate_1.carTime,
-								comparisonInfo.Alternate_1.bicycleTime
+								comparisonInfo.Alternate_1.carMoney,
+								comparisonInfo.Alternate_1.bicycleMoney
 							]
 						}
 					]
 				};
 				smallStats = [
 					{
-						label: 'Time Save',
+						label: 'Time Difference',
 						value: comparisonInfo.Alternate_1
 							? comparisonInfo.Alternate_1.timeDifferenceCycling
 							: '0',
 						percentage: comparisonInfo.Alternate_1
 							? `${comparisonInfo.Alternate_1.timePercentage}%`
 							: '0',
+						numberDesc: 'This data presents how many minutes user saved',
 						increase:
 							comparisonInfo.Alternate_1.timePercentage < 0 ? false : true,
 						unit: 'Mins',
@@ -179,10 +184,11 @@ const Comparison = ({
 						label: 'Money Saved',
 						value: comparisonInfo ? comparisonInfo.Alternate_1.moneySaved : '0',
 						percentage: comparisonInfo.Alternate_1
-							? `${comparisonInfo.Alternate_1.moneyPrecentage}%`
+							? `${comparisonInfo.Alternate_1.moneyPercentage}%`
 							: '0',
+						numberDesc: 'This data presents how much money user saved',
 						increase:
-							comparisonInfo.Alternate_1.moneyPrecentage < 0 ? false : true,
+							comparisonInfo.Alternate_1.moneyPercentage < 0 ? false : true,
 						unit: '$',
 						chartLabels: [null, null, null, null, null, null, null],
 						attrs: { md: '6', sm: '6' },
@@ -204,6 +210,8 @@ const Comparison = ({
 							: '0',
 
 						// unit: '$',
+						numberDesc:
+							'This data presents how many calories are consumed by using current travel method',
 						chartLabels: [null, null, null, null, null, null, null],
 						attrs: { md: '6', sm: '6' },
 						datasets: [
@@ -223,28 +231,29 @@ const Comparison = ({
 					labels: ['Car', 'Walking'],
 					datasets: [
 						{
-							label: 'Travel Time (mins)',
+							label: 'Money Spent $',
 							backgroundColor: 'rgb(23,198,113)',
 							borderColor: 'rgb(23,198,113)',
 							borderWidth: 1,
 							hoverBackgroundColor: 'rgb(23,198,113)',
 							hoverBorderColor: 'rgb(23,198,113)',
 							data: [
-								comparisonInfo.Alternate_2.carTime,
-								comparisonInfo.Alternate_2.walkingTime
+								comparisonInfo.Alternate_2.carMoney,
+								comparisonInfo.Alternate_2.bicycleMoney
 							]
 						}
 					]
 				};
 				smallStats = [
 					{
-						label: 'Time Save',
+						label: 'Time Difference',
 						value: comparisonInfo.Alternate_2
 							? comparisonInfo.Alternate_2.timeDifferenceWalking
 							: '0',
 						percentage: comparisonInfo.Alternate_2
 							? `${comparisonInfo.Alternate_2.timePercentage}%`
 							: '0',
+						numberDesc: 'This data presents how many minutes user saved',
 						increase:
 							comparisonInfo.Alternate_2.timePercentage < 0 ? false : true,
 						unit: 'Mins',
@@ -267,6 +276,7 @@ const Comparison = ({
 						percentage: comparisonInfo.Alternate_2
 							? `${comparisonInfo.Alternate_2.moneyPercantage}%`
 							: '0',
+						numberDesc: 'This data presents how much money user saved',
 						increase:
 							comparisonInfo.Alternate_2.moneyPercantage < 0 ? false : true,
 						unit: '$',
@@ -289,7 +299,8 @@ const Comparison = ({
 							? comparisonInfo.Alternate_2.caloriesBurnt
 							: '0',
 
-						// unit: '$',
+						numberDesc:
+							'This data presents how many calories are consumed by using current travel method',
 						chartLabels: [null, null, null, null, null, null, null],
 						attrs: { md: '6', sm: '6' },
 						datasets: [
@@ -390,7 +401,7 @@ const Comparison = ({
 								theme={modeOfTransit === 'CYCLING' ? 'success' : 'light'}
 								onClick={() => changeMode('CYCLING')}
 							>
-								Cyclying
+								Cycling
 							</Button>
 							Or
 							<Button
@@ -435,6 +446,7 @@ const Comparison = ({
 							id={`small-stats-${idx}`}
 							variation='1'
 							chartData={stats.datasets}
+							numberDesc={stats.numberDesc}
 							chartLabels={stats.chartLabels}
 							unit={stats.unit}
 							label={stats.label}
@@ -460,7 +472,16 @@ const Comparison = ({
 							width={60}
 							height={150}
 							options={{
-								maintainAspectRatio: false
+								maintainAspectRatio: false,
+								scales: {
+									yAxes: [
+										{
+											ticks: {
+												beginAtZero: true
+											}
+										}
+									]
+								}
 							}}
 						/>
 					</Card>
@@ -477,12 +498,13 @@ Comparison.propTypes = {
 Comparison.defaultProps = {
 	smallStats: [
 		{
-			label: 'Time saved',
+			label: 'Time Difference',
 			value: '0',
 			unit: 'Mins',
 			percentage: '0%',
 			increase: true,
 			chartLabels: [null, null, null, null, null, null, null],
+			numberDesc: 'This data presents how many minutes user saved',
 			attrs: { md: '6', sm: '6' },
 			datasets: [
 				{
@@ -500,6 +522,7 @@ Comparison.defaultProps = {
 			value: '0',
 			unit: '$',
 			percentage: '0%',
+			numberDesc: 'This data presents how much money user saved',
 			increase: true,
 			chartLabels: [null, null, null, null, null, null, null],
 			attrs: { md: '6', sm: '6' },

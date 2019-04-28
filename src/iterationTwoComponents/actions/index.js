@@ -48,13 +48,10 @@ export const fetchDefaultResult = (
 	ptvTime,
 	history
 ) => async dispatch => {
-	console.log('fetchDefaultResult');
-
 	var url = `https://cors-anywhere.herokuapp.com/https://ecomelbourneiteration2.azurewebsites.net/Compare/calculate?distance=${distance}&days=${days}&period=${period}&congestion=${congestion}&carTime=${carTime}&bicycleTime=${bicycleTime}&walkingTime=${walkingTime}&ptvTime=${ptvTime}`;
-	console.log(url);
+	console.log('fetchDefaultResult', url);
 	const response = await apis.post(url);
 	const defaultResult = response.data;
-	console.log(defaultResult);
 	dispatch({ type: FETCH_DEFAULT_RESULT, payload: defaultResult });
 	if (response && history) {
 		dispatch(setDefaultLoading(false));
@@ -73,6 +70,7 @@ export const fetchComparsionResult = (
 	ptvTime
 ) => async dispatch => {
 	var url = `https://cors-anywhere.herokuapp.com/https://ecomelbourneiteration2.azurewebsites.net/Compare/compare?distance=${distance}&days=${days}&period=${period}&congestion=${congestion}&carTime=${carTime}&bicycleTime=${bicycleTime}&walkingTime=${walkingTime}&ptvTime=${ptvTime}`;
+	console.log('fetchComparsionResult', url);
 	const response = await apis.post(url);
 	const comparsionResult = response.data;
 	dispatch({ type: FETCH_COMPARISON_RESULT, payload: comparsionResult });

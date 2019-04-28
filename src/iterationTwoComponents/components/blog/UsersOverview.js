@@ -98,23 +98,22 @@ class UsersOverview extends React.Component {
 		return (
 			<Card small className='h-100'>
 				<CardHeader className='border-bottom'>
-					<h6 className='m-0'>{title}</h6>
+					<h6 className='m-0'>Your Daily Average Delay Time Prediction </h6>
 				</CardHeader>
 				<CardBody className='pt-0'>
 					<Row className='border-bottom py-2 bg-light'>
 						<Col sm='9' className='d-flex mb-2 mb-sm-0'>
 							{/* <RangeDatePicker /> */}
-							Data Source: Vicroads, Average delay on the monitored network by
-							time period.
+							Here's how many minutes you'll be wasting on the road daily
 						</Col>
-						<Col>
+						{/* <Col>
 							<Button
 								size='sm'
 								className='d-flex btn-white ml-auto mr-auto ml-sm-auto mr-sm-0 mt-3 mt-sm-0'
 							>
 								View Full Report &rarr;
 							</Button>
-						</Col>
+						</Col> */}
 					</Row>
 
 					<canvas

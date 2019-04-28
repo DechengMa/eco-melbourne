@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import header from '../../resources/img/header.jpg';
+import header from '../../resources/img/header.JPG';
 import QuestionBox from './QuestionBox.js';
 import Grid from '@material-ui/core/Grid';
 import withWidth from '@material-ui/core/withWidth';
@@ -14,6 +14,7 @@ class index extends Component {
 			width: '100vw',
 			height: 'calc(100vh - 65px)',
 			backgroundImage: `url(${header})`,
+			// backgroundImage: `url(https://images.pexels.com/photos/310983/pexels-photo-310983.jpeg?cs=srgb&dl=action-adult-athletes-310983.jpg&fm=jpg)`,
 			backgroundSize: 'cover',
 			position: 'relative'
 		};

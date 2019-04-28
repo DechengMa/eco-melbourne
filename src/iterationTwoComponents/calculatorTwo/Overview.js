@@ -28,7 +28,7 @@ const Overview = ({
 }) => {
 	const [open, toggle] = useState(false);
 	const [dropdownOpen, dropdownToggle] = useState(false);
-	const [period, setPeriod] = useState('Month');
+	const [period, setPeriod] = useState('Week');
 	// const [period, ]
 	// var dropdownOpen = false;
 
@@ -52,6 +52,8 @@ const Overview = ({
 			{
 				label: 'Time Wasted',
 				fill: 'start',
+				numberDesc:
+					'This data presents how many minutes user wasted due to traffic congestion',
 				data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 				backgroundColor: 'rgba(0,123,255,0.1)',
 				borderColor: 'rgba(0,123,255,1)',
@@ -86,7 +88,7 @@ const Overview = ({
 					label: 'Time Wasted',
 					fill: 'start',
 					numberDesc:
-						'This data presents how many minutes user wasted during a week/month/year.',
+						'This data presents how many minutes user wasted due to traffic congestion',
 					data: currentInfo.timeDelay.timeDelay
 						? currentInfo.timeDelay.timeDelay
 						: [0, 0, 0, 0, 0, 0],
@@ -109,6 +111,8 @@ const Overview = ({
 				value: currentInfo.environment
 					? currentInfo.environment.timeWaste
 					: '0',
+				numberDesc:
+					'This data presents how many minutes user wasted due to traffic congestion',
 				increase: true,
 				unit: 'Mins',
 				chartLabels: [null, null, null, null, null, null, null],
@@ -127,8 +131,7 @@ const Overview = ({
 			{
 				label: 'Spending',
 				value: currentInfo.price ? currentInfo.price.totalMoneySpent : '0',
-				numberDesc:
-					'This data presents how much money user spend during a week/month/year.',
+				numberDesc: 'This data presents how much money you spend',
 				unit: '$',
 				increase: true,
 				chartLabels: [null, null, null, null, null, null, null],
@@ -145,12 +148,12 @@ const Overview = ({
 				]
 			},
 			{
-				label: 'Carbon Dioxide',
+				label: 'Carbon Footprint',
 				value: currentInfo.environment
 					? currentInfo.environment.carCarbon
 					: '0',
 				numberDesc:
-					'This data presents how many carbon dioxide are created by using current travel method during a week/month/year.',
+					'This data presents how many carbon dioxide are created by using current travel method.',
 				unit: 'Kg CO2e',
 
 				increase: false,
@@ -169,12 +172,12 @@ const Overview = ({
 				]
 			},
 			{
-				label: 'Trees Needed',
+				label: 'Environmental Impact',
 				value: currentInfo.environment
 					? currentInfo.environment.treesRequired
 					: '0',
 				numberDesc:
-					'This data presents how many trees are needed to absorb those created carbon dioxide during a week/month/year.',
+					'This data presents how many trees are needed to absorb those created carbon dioxide',
 				unit: 'Num Of Trees',
 				increase: false,
 				decrease: true,
@@ -345,7 +348,7 @@ Overview.defaultProps = {
 			value: '0',
 			unit: 'Mins',
 			numberDesc:
-				'This data presents how many minutes user wasted during a week/month/year.',
+				'This data presents how many minutes user wasted due to traffic congestion',
 			increase: true,
 			chartLabels: [null, null, null, null, null, null, null],
 			attrs: { md: '6', sm: '6' },
@@ -363,9 +366,8 @@ Overview.defaultProps = {
 		{
 			label: 'Spending',
 			value: '0',
-			unit: '$Aud',
-			numberDesc:
-				'This data presents how much money user spend during a week/month/year.',
+			unit: '$',
+			numberDesc: 'This data presents how much money you spend',
 
 			increase: true,
 			chartLabels: [null, null, null, null, null, null, null],
@@ -382,11 +384,11 @@ Overview.defaultProps = {
 			]
 		},
 		{
-			label: 'Carbon Dioxide',
+			label: 'Carbon Footprint',
 			value: '0',
 			unit: 'Kg CO2e',
 			numberDesc:
-				'This data presents how many carbon dioxide are created by using current travel method during a week/month/year.',
+				'This data presents how many carbon dioxide are created by using current travel method',
 			increase: false,
 			decrease: true,
 			chartLabels: [null, null, null, null, null, null, null],
@@ -403,11 +405,11 @@ Overview.defaultProps = {
 			]
 		},
 		{
-			label: 'Trees Needed',
+			label: 'Environmental Impact',
 			value: '0',
 			unit: 'Num Of Trees',
 			numberDesc:
-				'This data presents how many trees are needed to absorb those created carbon dioxide during a week/month/year.',
+				'This data presents how many trees are needed to absorb those created carbon dioxide',
 			increase: false,
 			decrease: true,
 			chartLabels: [null, null, null, null, null, null, null],
