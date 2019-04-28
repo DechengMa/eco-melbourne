@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import header from '../../resources/img/header.JPG';
+import header from '../../resources/img/header.jpg';
 import QuestionBox from './QuestionBox.js';
 import Grid from '@material-ui/core/Grid';
 import withWidth from '@material-ui/core/withWidth';
