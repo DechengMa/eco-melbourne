@@ -6,7 +6,7 @@ const LearnMoreCard = props => {
 	return (
 		<Card style={{ maxWidth: '450px', overflow: 'hidden' }}>
 			{/* <CardHeader>{props.cardHeader}</CardHeader> */}
-			<CardImg src={props.img} style={{ maxHeight: '300px' }} />
+			<CardImg src={props.img} style={{ maxHeight: '350px' }} />
 			<CardBody>
 				<CardTitle>{props.title}</CardTitle>
 				<p>{props.text}</p>

@@ -274,11 +274,11 @@ const Comparison = ({
 						label: 'Money Saved',
 						value: comparisonInfo ? comparisonInfo.Alternate_2.moneySaved : '0',
 						percentage: comparisonInfo.Alternate_2
-							? `${comparisonInfo.Alternate_2.moneyPercantage}%`
+							? `${comparisonInfo.Alternate_2.moneyPercentage}%`
 							: '0',
 						numberDesc: 'This data presents how much money user saved',
 						increase:
-							comparisonInfo.Alternate_2.moneyPercantage < 0 ? false : true,
+							comparisonInfo.Alternate_2.moneyPercentage < 0 ? false : true,
 						unit: '$',
 						chartLabels: [null, null, null, null, null, null, null],
 						attrs: { md: '6', sm: '6' },

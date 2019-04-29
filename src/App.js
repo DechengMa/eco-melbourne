@@ -1,14 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
 import { Element } from 'react-scroll';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import {
-	BrowserRouter as Router,
-	Route,
-	Switch,
-	Redirect
-} from 'react-router-dom';
-import {
-	Button,
 	Modal,
 	ModalBody,
 	ModalHeader,
@@ -72,9 +66,9 @@ const App = () => {
 
 	// Password
 	const inputPassword = event => {
-		if (process.env.NODE_ENV === 'development') {
-			setShowContent(true);
-		}
+		// if (process.env.NODE_ENV === 'development') {
+		// 	setShowContent(true);
+		// }
 
 		if (event.target.value === process.env.REACT_APP_PASSWORD) {
 			setShowContent(true);
