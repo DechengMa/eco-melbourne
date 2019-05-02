@@ -71,9 +71,9 @@ const App = () => {
 
 	// Password
 	const inputPassword = event => {
-		if (process.env.NODE_ENV === 'development') {
-			setShowContent(true);
-		}
+		// if (process.env.NODE_ENV === 'development') {
+		// 	setShowContent(true);
+		// }
 
 		if (event.target.value === process.env.REACT_APP_PASSWORD) {
 			setShowContent(true);
