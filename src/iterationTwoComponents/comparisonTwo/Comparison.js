@@ -8,6 +8,7 @@ import { fetchComparsionResult } from '../actions';
 import PageTitle from '../components/common/PageTitle';
 import SmallStats from '../components/common/SmallStats';
 import UsersByDevice from '../components/blog/UsersByDevice';
+import Navigation from '../headerTwo/Nav/Navigation';
 import { Bar } from 'react-chartjs-2';
 
 import MapContainer from './MapContainer';
@@ -34,16 +35,40 @@ const Comparison = ({
 			]
 		}
 	};
+
+	var moneySpentBarStyle = {
+		// label: 'Money Spend ($)',
+		backgroundColor: 'rgba(255,128,64,1)',
+		borderColor: 'rgba(255,128,64,1)',
+		borderWidth: 1,
+		hoverBackgroundColor: 'rgba(255,128,64,1)',
+		hoverBorderColor: 'rgba(255,128,64,1)'
+	};
+	var travelTimeBarStyle = {
+		// label: 'Travel Time (mins)',
+		backgroundColor: 'rgb(40,125,246)',
+		borderColor: 'rgb(40,125,246)',
+		borderWidth: 1,
+		hoverBackgroundColor: 'rgb(40,85,265)',
+		hoverBorderColor: 'rgb(40,85,265)'
+	};
+
 	var data = {
-		labels: ['Car', 'PTV', 'Bicycle'],
+		labels: ['Money Spent', 'Travel Time'],
 		datasets: [
 			{
-				label: 'Travel Time (mins)',
-				backgroundColor: 'rgb(23,198,113)',
-				borderColor: 'rgb(23,198,113)',
-				borderWidth: 1,
-				hoverBackgroundColor: 'rgb(23,198,113)',
-				hoverBorderColor: 'rgb(23,198,113)',
+				label: 'Car',
+				...moneySpentBarStyle,
+				data: [0, 0, 0]
+			},
+			{
+				label: 'PTV',
+				...travelTimeBarStyle,
+				data: [0, 0, 0]
+			},
+			{
+				label: 'Bicycle',
+				...travelTimeBarStyle,
 				data: [0, 0, 0]
 			}
 		]
@@ -62,19 +87,22 @@ const Comparison = ({
 			}
 
 			data = {
-				labels: ['Car', 'PTV'],
+				labels: ['Money Spend $', 'Travel Time (mins)'],
 				datasets: [
 					{
-						label: 'Money Spent $',
-						backgroundColor: 'rgb(23,198,113)',
-						borderColor: 'rgb(23,198,113)',
-
-						borderWidth: 1,
-						hoverBackgroundColor: 'rgb(23,198,113)',
-						hoverBorderColor: 'rgb(23,198,113)',
+						label: 'Car',
+						...moneySpentBarStyle,
 						data: [
 							comparisonInfo.Alternate.carMoney,
-							comparisonInfo.Alternate.ptvMoney
+							comparisonInfo.Alternate.carTime
+						]
+					},
+					{
+						label: 'PTV',
+						...travelTimeBarStyle,
+						data: [
+							comparisonInfo.Alternate.ptvMoney,
+							comparisonInfo.Alternate.ptvTime
 						]
 					}
 				]
@@ -138,18 +166,22 @@ const Comparison = ({
 			}
 			if (modeOfTransit === 'CYCLING') {
 				data = {
-					labels: ['Car', 'Bicycle'],
+					labels: ['Money Spend $', 'Travel Time (mins)'],
 					datasets: [
 						{
-							label: 'Money Spent $',
-							backgroundColor: 'rgb(23,198,113)',
-							borderColor: 'rgb(23,198,113)',
-							borderWidth: 1,
-							hoverBackgroundColor: 'rgb(23,198,113)',
-							hoverBorderColor: 'rgb(23,198,113)',
+							label: 'Car',
+							...moneySpentBarStyle,
 							data: [
 								comparisonInfo.Alternate_1.carMoney,
-								comparisonInfo.Alternate_1.bicycleMoney
+								comparisonInfo.Alternate_1.carTime
+							]
+						},
+						{
+							label: 'Bicycle',
+							...travelTimeBarStyle,
+							data: [
+								comparisonInfo.Alternate_1.bicycleMoney,
+								comparisonInfo.Alternate_1.bicycleTime
 							]
 						}
 					]
@@ -228,18 +260,22 @@ const Comparison = ({
 				];
 			} else if (modeOfTransit === 'WALKING') {
 				data = {
-					labels: ['Car', 'Walking'],
+					labels: ['Money Spend $', 'Travel Time (mins)'],
 					datasets: [
 						{
-							label: 'Money Spent $',
-							backgroundColor: 'rgb(23,198,113)',
-							borderColor: 'rgb(23,198,113)',
-							borderWidth: 1,
-							hoverBackgroundColor: 'rgb(23,198,113)',
-							hoverBorderColor: 'rgb(23,198,113)',
+							label: 'Car',
+							...moneySpentBarStyle,
 							data: [
 								comparisonInfo.Alternate_2.carMoney,
-								comparisonInfo.Alternate_2.bicycleMoney
+								comparisonInfo.Alternate_2.carTime
+							]
+						},
+						{
+							label: 'Walking',
+							...travelTimeBarStyle,
+							data: [
+								comparisonInfo.Alternate_2.walkingMoney,
+								comparisonInfo.Alternate_2.walkingTime
 							]
 						}
 					]
@@ -371,123 +407,125 @@ const Comparison = ({
 	};
 
 	return (
-		<Container fluid className='main-content-container px-4'>
-			<Row noGutters className='page-header py-4'>
-				{/* <PageTitle
-					title='Comparison'
-					subtitle='Dashboard'
-					className='text-sm-left mb-3'
-				/> */}
-				<Col
-					lg='10'
-					md='12'
-					sm='12'
-					style={{ fontSize: '1.6rem' }}
-					className='text-sm-left mb-3'
-				>
-					Have you ever think of travel by{' '}
-					{modeOfTransit === 'PTV' ? (
-						<Button
-							style={{ margin: '5px', fontSize: '1.2rem' }}
-							pill
-							theme='success'
-						>
-							Public Transportation
-						</Button>
-					) : (
-						<>
+		<>
+			<Navigation />
+			<Container fluid className='main-content-container px-4'>
+				<Row noGutters className='page-header py-4'>
+					<Col
+						lg='10'
+						md='12'
+						sm='12'
+						style={{ fontSize: '1.6rem' }}
+						className='text-sm-left mb-3'
+					>
+						Have you ever think of travel by{' '}
+						{modeOfTransit === 'PTV' ? (
 							<Button
 								style={{ margin: '5px', fontSize: '1.2rem' }}
-								theme={modeOfTransit === 'CYCLING' ? 'success' : 'light'}
-								onClick={() => changeMode('CYCLING')}
+								theme='success'
 							>
-								Cycling
+								Public Transportation
 							</Button>
-							Or
-							<Button
-								style={{ margin: '5px', fontSize: '1.2rem' }}
-								theme={modeOfTransit === 'WALKING' ? 'success' : 'light'}
-								onClick={() => changeMode('WALKING')}
-							>
-								Walking
-							</Button>
-						</>
-					)}
-					? This is the difference!
-				</Col>
-				<Col
-					lg='2'
-					md='12'
-					sm='12'
-					xs='12'
-					style={{ marginTop: '20px', textAlign: 'right' }}
-				>
-					<FormControl variant='outlined'>
-						<InputLabel>Period</InputLabel>
-						<Select
-							value={period}
-							onChange={event => {
-								fetchDataFromBackEnd(event.target.value);
-								setPeriod(event.target.value);
-							}}
-						>
-							<MenuItem value={'Week'}>Weekly</MenuItem>
-							<MenuItem value={'Month'}>Monthly</MenuItem>
-							<MenuItem value={'Year'}>Yearly</MenuItem>
-						</Select>
-					</FormControl>
-				</Col>
-			</Row>
-
-			<Row>
-				{smallStats.map((stats, idx) => (
-					<Col className='col-lg mb-4' key={idx} {...stats.attrs}>
-						<SmallStats
-							id={`small-stats-${idx}`}
-							variation='1'
-							chartData={stats.datasets}
-							numberDesc={stats.numberDesc}
-							chartLabels={stats.chartLabels}
-							unit={stats.unit}
-							label={stats.label}
-							value={stats.value}
-							percentage={stats.percentage}
-							increase={stats.increase}
-							decrease={stats.decrease}
-						/>
+						) : (
+							<>
+								<Button
+									style={{ margin: '5px', fontSize: '1.2rem' }}
+									theme={modeOfTransit === 'CYCLING' ? 'success' : 'secondary'}
+									onClick={() => changeMode('CYCLING')}
+								>
+									Cycling
+								</Button>
+								Or
+								<Button
+									style={{ margin: '5px', fontSize: '1.2rem' }}
+									theme={modeOfTransit === 'WALKING' ? 'success' : 'secondary'}
+									onClick={() => changeMode('WALKING')}
+								>
+									Walking
+								</Button>
+							</>
+						)}
+						? This is the difference!
 					</Col>
-				))}
-			</Row>
+					<Col
+						lg='2'
+						md='12'
+						sm='12'
+						xs='12'
+						style={{ marginTop: '20px', textAlign: 'right' }}
+					>
+						<FormControl variant='outlined'>
+							<InputLabel>Period</InputLabel>
+							<Select
+								value={period}
+								onChange={event => {
+									fetchDataFromBackEnd(event.target.value);
+									setPeriod(event.target.value);
+								}}
+							>
+								<MenuItem value={'Week'}>Weekly</MenuItem>
+								<MenuItem value={'Month'}>Monthly</MenuItem>
+								<MenuItem value={'Year'}>Yearly</MenuItem>
+							</Select>
+						</FormControl>
+					</Col>
+				</Row>
 
-			<Row>
-				<Col lg='8' md='12' sm='12' className='mb-4'>
-					{renderMap()}
-					{/* <MapContainer travelMode={} origin={origin} destination={destination} /> */}
-				</Col>
+				<Row>
+					{smallStats.map((stats, idx) => (
+						<Col className='col-lg mb-4' key={idx} {...stats.attrs}>
+							<SmallStats
+								id={`small-stats-${idx}`}
+								variation='1'
+								chartData={stats.datasets}
+								numberDesc={stats.numberDesc}
+								chartLabels={stats.chartLabels}
+								unit={stats.unit}
+								label={stats.label}
+								value={stats.value}
+								percentage={stats.percentage}
+								increase={stats.increase}
+								decrease={stats.decrease}
+							/>
+						</Col>
+					))}
+				</Row>
 
-				<Col lg='4' md='6' sm='12' className='mb-4'>
-					<Card style={{ height: '100%', padding: '10px' }}>
-						<Bar
-							data={data}
-							width={60}
-							height={150}
-							options={{
-								maintainAspectRatio: false,
-								scales: {
-									yAxes: [
-										{
-											ticks: {
-												beginAtZero: true
+				<Row>
+					<Col lg='8' md='12' sm='12' className='mb-4'>
+						{renderMap()}
+						{/* <MapContainer travelMode={} origin={origin} destination={destination} /> */}
+					</Col>
+
+					<Col lg='4' md='6' sm='12' className='mb-4'>
+						<Card style={{ height: '100%', padding: '10px' }}>
+							<Bar
+								data={data}
+								width={60}
+								height={150}
+								options={{
+									maintainAspectRatio: false,
+									scales: {
+										xAxes: [
+											{
+												maxBarThickness: 40
 											}
-										}
-									]
-								}
-							}}
-						/>
-					</Card>
-				</Col>
-			</Row>
-		</Container>
+										],
+										yAxes: [
+											{
+												ticks: {
+													beginAtZero: true
+												}
+											}
+										]
+									}
+								}}
+							/>
+						</Card>
+					</Col>
+				</Row>
+			</Container>
+		</>
 	);
 };
 

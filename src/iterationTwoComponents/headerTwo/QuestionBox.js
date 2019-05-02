@@ -322,7 +322,9 @@ class QuestionBox extends Component {
 		return (
 			<Card small style={{ padding: '15px' }}>
 				<CardHeader className='border-bottom'>
-					<h5 className='m-0'>Change the way you travel, from today</h5>
+					<h5 className='m-0' style={{ textTransform: 'uppercase' }}>
+						Change the way you travel
+					</h5>
 				</CardHeader>
 
 				<ListGroup flush>
@@ -368,7 +370,7 @@ class QuestionBox extends Component {
 							{this.props.loading ? (
 								<CircularProgress size={20} style={{ color: '#fff' }} />
 							) : (
-								'Search'
+								'GET STARTED'
 							)}
 						</Button>
 					</ListGroupItem>

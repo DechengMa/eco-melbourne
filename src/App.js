@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
 import { Element } from 'react-scroll';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import {
+	BrowserRouter as Router,
+	Route,
+	Switch,
+	Redirect
+} from 'react-router-dom';
 import {
 	Modal,
 	ModalBody,
@@ -66,9 +71,9 @@ const App = () => {
 
 	// Password
 	const inputPassword = event => {
-		// if (process.env.NODE_ENV === 'development') {
-		// 	setShowContent(true);
-		// }
+		if (process.env.NODE_ENV === 'development') {
+			setShowContent(true);
+		}
 
 		if (event.target.value === process.env.REACT_APP_PASSWORD) {
 			setShowContent(true);
@@ -103,19 +108,21 @@ const App = () => {
 				<Router>
 					<Switch>
 						<Route path='/iteration1' component={iteration1} />
-						<Iteration2>
-							<Route exact path='/iteration2' component={iteration2HomePage} />
-							<Route
-								exact
-								path='/iteration2/calculator'
-								component={iteration2Calculator}
-							/>
-							<Route
-								exact
-								path='/iteration2/comparison'
-								component={comparisonTwo}
-							/>
-						</Iteration2>
+						{/* <Iteration2> */}
+						<Route exact path='/' component={iteration2HomePage} />
+						<Route exact path='/iteration2' component={iteration2HomePage} />
+						<Route
+							exact
+							path='/iteration2/calculator'
+							component={iteration2Calculator}
+						/>
+						<Route
+							exact
+							path='/iteration2/comparison'
+							component={comparisonTwo}
+						/>
+						{/* </Iteration2> */}
+
 						<Route component={NotFoundPage} />
 					</Switch>
 				</Router>

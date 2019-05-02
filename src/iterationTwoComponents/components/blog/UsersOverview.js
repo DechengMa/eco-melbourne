@@ -102,7 +102,7 @@ class UsersOverview extends React.Component {
 				</CardHeader>
 				<CardBody className='pt-0'>
 					<Row className='border-bottom py-2 bg-light'>
-						<Col sm='9' className='d-flex mb-2 mb-sm-0'>
+						<Col sm='12' className='d-flex mb-2 mb-sm-0'>
 							{/* <RangeDatePicker /> */}
 							Here's how many minutes you'll be wasting on the road daily
 						</Col>
@@ -118,7 +118,7 @@ class UsersOverview extends React.Component {
 
 					<canvas
 						id='canvasId'
-						height='130'
+						height='160'
 						ref={this.canvasRef}
 						style={{
 							maxWidth: '100% !important'

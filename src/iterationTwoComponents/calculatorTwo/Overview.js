@@ -18,6 +18,7 @@ import SmallStats from './../components/common/SmallStats';
 import UsersOverview from './../components/blog/UsersOverview';
 import { connect } from 'react-redux';
 import { fetchDefaultResult } from '../actions';
+import Navigation from '../headerTwo/Nav/Navigation';
 // import UsersByDevice from './../components/blog/UsersByDevice';
 
 const Overview = ({
@@ -159,7 +160,7 @@ const Overview = ({
 				increase: false,
 				decrease: true,
 				chartLabels: [null, null, null, null, null, null, null],
-				attrs: { md: '4', sm: '6' },
+				attrs: { md: '6', sm: '6' },
 				datasets: [
 					{
 						label: 'Today',
@@ -182,7 +183,7 @@ const Overview = ({
 				increase: false,
 				decrease: true,
 				chartLabels: [null, null, null, null, null, null, null],
-				attrs: { md: '4', sm: '6' },
+				attrs: { md: '6', sm: '6' },
 				datasets: [
 					{
 						label: 'Today',
@@ -223,14 +224,23 @@ const Overview = ({
 		}
 	};
 
+	console.log('currentParam', currentParam);
+
+	const subtitle = currentParam
+		? `From ${currentParam.livingSuburb} to ${
+				currentParam.workingSuburb
+		  }, The distance is ${currentParam.distance} km`
+		: '';
+
 	return (
 		<Fade in={true}>
+			<Navigation />
 			<Container fluid className='main-content-container px-4'>
 				<Row noGutters className='page-header py-4'>
 					<Col lg='10' md='12' sm='12'>
 						<PageTitle
-							title='Your Current Spending Overview'
-							subtitle='Dashboard'
+							title='Here Is Your Current Spending Overview'
+							subtitle={subtitle}
 							className='text-sm-left mb-12'
 						/>
 					</Col>
@@ -288,7 +298,7 @@ const Overview = ({
 				</Row>
 
 				<Row>
-					<Col lg='8' md='12' sm='12' className='mb-4'>
+					<Col lg='8' md='6' sm='12' className='mb-4'>
 						<UsersOverview chartData={chartData} />
 					</Col>
 
@@ -298,7 +308,7 @@ const Overview = ({
 							cardHeader='Want a way to stop this?'
 							title='Make Change'
 							img='https://s23705.pcdn.co/wp-content/uploads/2019/02/Insurance.jpg'
-							text='Save up to $1000 by changing the way your travel'
+							text='Save up to $1000 yearly by changing the way your travel'
 							buttonText='Learn More &rarr;'
 							btnTheme='warning'
 							to='/iteration2/comparison'

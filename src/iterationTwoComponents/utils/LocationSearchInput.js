@@ -7,11 +7,31 @@ import {
 	FormGroup,
 	FormFeedback
 } from 'shards-react';
+import axios from 'axios';
+import { GoogleApiWrapper } from 'google-maps-react';
+import { GOOGLEMAPAPI } from '../../config/keys';
 
 class LocationSearchInput extends React.Component {
 	state = {
-		address: this.props.value
+		address: this.props.value,
+		bounds: []
 	};
+
+	componentDidMount() {
+		// axios
+		// 	.get(
+		// 		'https://cors-anywhere.herokuapp.com/http://polygons.openstreetmap.fr/get_geojson.py?id=4246124&params=0'
+		// 	)
+		// 	.then(response => {
+		// 		console.log();
+		// 		const coordinatesArr = response.data.geometries[0].coordinates[0];
+		// 		coordinatesArr.forEach(element => {
+		// 			element.forEach(el => {
+		// 				console.log(el[0], el[1]);
+		// 			});
+		// 		});
+		// 	});
+	}
 
 	handleChange = address => {
 		this.setState({ address });
@@ -35,9 +55,20 @@ class LocationSearchInput extends React.Component {
 	}
 
 	render() {
+		const { google } = this.props;
+		var defaultBounds = new google.maps.LatLngBounds(
+			new google.maps.LatLng(-38.444781, 144.507981),
+			new google.maps.LatLng(-37.428945, 145.509429)
+		);
+
 		var options = {
 			// types: ['(cities)'],
-			componentRestrictions: { country: 'au' }
+			// componentRestrictions: { country: 'au' },
+			bounds: defaultBounds,
+			restriction: {
+				latLngBounds: defaultBounds,
+				strictBounds: true
+			}
 		};
 
 		return (
@@ -103,4 +134,6 @@ class LocationSearchInput extends React.Component {
 	}
 }
 
-export default LocationSearchInput;
+export default GoogleApiWrapper({
+	apiKey: GOOGLEMAPAPI
+})(LocationSearchInput);
