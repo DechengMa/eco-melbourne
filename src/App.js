@@ -30,11 +30,13 @@ import Calculator from './iterationOneComponents/calculator';
 import HeaderTwo from './iterationTwoComponents/headerTwo';
 import CalculatorTwo from './iterationTwoComponents/calculatorTwo';
 import ComparisonTwo from './iterationTwoComponents/comparisonTwo';
-// import Navigation from './iterationTwoComponents/headerTwo/Nav/Navigation';
-// import PriceComparison from './iterationTwoComponents/PriceComparison';
-import Iteration2 from './iterationTwoComponents';
 import NotFoundPage from './iterationTwoComponents/NotFoundPage';
 import CircularProgress from '@material-ui/core/CircularProgress';
+
+// Iteration 3
+import HeaderThree from './iterationThreeComponents/headerThree';
+import CalculatorThree from './iterationThreeComponents/calculatorThree';
+import ComparisonThree from './iterationThreeComponents/comparisonThree';
 
 const App = () => {
 	const [spinner, setSpinner] = useState(true);
@@ -65,15 +67,22 @@ const App = () => {
 	// Iteration 2 Components
 	const iteration2HomePage = () => <HeaderTwo />;
 	const iteration2Calculator = () => <CalculatorTwo />;
-	const comparisonTwo = () => <ComparisonTwo />;
+	const iteration2Comparison = () => <ComparisonTwo />;
 
 	// End of iteration 2 Components
 
+	// Iteration 3 Components
+	const iteration3HomePage = () => <HeaderThree />;
+	const iteration3Calculator = () => <CalculatorThree />;
+	const iteration3Comparison = () => <ComparisonThree />;
+
+	// End of iteration 3 Components
+
 	// Password
 	const inputPassword = event => {
-		// if (process.env.NODE_ENV === 'development') {
-		// 	setShowContent(true);
-		// }
+		if (process.env.NODE_ENV === 'development') {
+			setShowContent(true);
+		}
 
 		if (event.target.value === process.env.REACT_APP_PASSWORD) {
 			setShowContent(true);
@@ -107,8 +116,11 @@ const App = () => {
 			return (
 				<Router>
 					<Switch>
+						{/* iteration 1 */}
 						<Route path='/iteration1' component={iteration1} />
-						{/* <Iteration2> */}
+						{/* iteration 1 */}
+
+						{/* iteration 2 */}
 						<Route exact path='/' component={iteration2HomePage} />
 						<Route exact path='/iteration2' component={iteration2HomePage} />
 						<Route
@@ -119,9 +131,24 @@ const App = () => {
 						<Route
 							exact
 							path='/iteration2/comparison'
-							component={comparisonTwo}
+							component={iteration2Comparison}
 						/>
-						{/* </Iteration2> */}
+						{/* iteration 2 */}
+
+						{/* iteration 3 */}
+						<Route exact path='/' component={iteration3HomePage} />
+						<Route exact path='/iteration3' component={iteration3HomePage} />
+						<Route
+							exact
+							path='/iteration3/calculator'
+							component={iteration3Calculator}
+						/>
+						<Route
+							exact
+							path='/iteration3/comparison'
+							component={iteration3Comparison}
+						/>
+						{/* iteration 3 */}
 
 						<Route component={NotFoundPage} />
 					</Switch>

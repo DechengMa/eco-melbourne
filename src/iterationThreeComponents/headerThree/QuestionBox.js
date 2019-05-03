@@ -17,7 +17,7 @@ import {
 	setCurrentValue,
 	fetchComparsionResult,
 	setDefaultLoading
-} from '../actions';
+} from '../../actions';
 import { get_next_weekday } from '../utils/Variables';
 import { withRouter } from 'react-router-dom';
 
