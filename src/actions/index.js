@@ -7,6 +7,7 @@ import {
 } from './types';
 
 export const setDefaultLoading = isLoading => dispatch => {
+	console.log('setDefaultLoading', isLoading);
 	dispatch({ type: FETCH_LOADING, payload: isLoading });
 };
 
@@ -49,7 +50,6 @@ export const fetchDefaultResult = (
 	history
 ) => async dispatch => {
 	var url = `https://cors-anywhere.herokuapp.com/https://ecomelbourneiteration2.azurewebsites.net/Compare/calculate?distance=${distance}&days=${days}&period=${period}&congestion=${congestion}&carTime=${carTime}&bicycleTime=${bicycleTime}&walkingTime=${walkingTime}&ptvTime=${ptvTime}`;
-	console.log('fetchDefaultResult', url);
 	const response = await apis.post(url);
 	const defaultResult = response.data;
 	dispatch({ type: FETCH_DEFAULT_RESULT, payload: defaultResult });

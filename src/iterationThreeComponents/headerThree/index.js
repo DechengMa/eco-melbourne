@@ -4,48 +4,26 @@ import QuestionBox from './QuestionBox.js';
 import Grid from '@material-ui/core/Grid';
 import withWidth from '@material-ui/core/withWidth';
 import Typography from '@material-ui/core/Typography';
-import {
-	Link,
-	Element,
-	Events,
-	animateScroll as scroll,
-	scrollSpy,
-	scroller
-} from 'react-scroll';
+import { animateScroll as scroll } from 'react-scroll';
 
 import { Button } from 'shards-react';
-// const textBoxStyle = {
-// 	position: absolute,
-// 	top: 40%,
-// 	left: 50%,
-// 	transform: translate(-50%, -50%);
-// 	text-align: center;
-// }
 
 class index extends Component {
 	renderQuestionBox = () => {
-		console.log(this.props.width);
 		var containerStyle = {
 			height: '100%'
 		};
-		var bgStyle = {
-			width: '100vw',
-			height: 'calc(100vh - 65px)',
-			backgroundImage: `url(${header})`,
-			// backgroundImage: `url(https://images.pexels.com/photos/310983/pexels-photo-310983.jpeg?cs=srgb&dl=action-adult-athletes-310983.jpg&fm=jpg)`,
-			backgroundSize: 'cover',
-			position: 'relative'
-		};
 
 		return (
-			// <div style={bgStyle}>
 			<>
 				<div
 					style={{
 						height: '100vh',
 						backgroundSize: 'cover',
+						// backgroundImage:
+						// 	'url(https://images.unsplash.com/photo-1494481524892-b1bf38423fd1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80)'
 						backgroundImage:
-							'url(https://images.unsplash.com/photo-1494481524892-b1bf38423fd1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80)'
+							'url(https://images.unsplash.com/photo-1421091242698-34f6ad7fc088?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1949&q=80)'
 					}}
 				>
 					<div
@@ -67,9 +45,7 @@ class index extends Component {
 								textTransform: 'uppercase'
 							}}
 						>
-							{/* <p style={{ fontSize: '2rem' }}> */}
 							Find a better way to travel to work everyday
-							{/* </p> */}
 						</Typography>
 						<Typography
 							style={{
@@ -81,9 +57,7 @@ class index extends Component {
 								textTransform: 'uppercase'
 							}}
 						>
-							{/* <p style={{ fontSize: '1.4rem' }}> */}
 							Save money & get fit - Leave your car at home
-							{/* </p> */}
 						</Typography>
 
 						<Button
@@ -93,7 +67,7 @@ class index extends Component {
 							style={{ marginTop: '3.5rem' }}
 							size='lg'
 						>
-							Learn More
+							Get Started
 						</Button>
 					</div>
 				</div>
@@ -129,7 +103,6 @@ class index extends Component {
 									Using our calculator, find out how much you’re wasting on the
 									road. We will also help you find a better way to travel.{' '}
 								</p>
-								{/* <h4>Get started on the left.</h4> */}
 							</Typography>
 						</Grid>
 					</Grid>

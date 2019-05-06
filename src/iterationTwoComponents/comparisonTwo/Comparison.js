@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Container, Row, Col, Button, Card, CardBody } from 'shards-react';
 import { FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
-import { fetchComparsionResult } from '../actions';
+import { fetchComparsionResult } from '../../actions';
 
 import PageTitle from '../components/common/PageTitle';
 import SmallStats from '../components/common/SmallStats';

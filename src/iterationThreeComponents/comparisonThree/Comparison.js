@@ -2,8 +2,16 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Container, Row, Col, Button, Card, CardBody } from 'shards-react';
-import { FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
+import {
+	FormControl,
+	InputLabel,
+	Select,
+	MenuItem,
+	Fab
+} from '@material-ui/core';
+import { Home } from '@material-ui/icons';
 import { fetchComparsionResult } from '../../actions';
+import { Link } from 'react-router-dom';
 
 import PageTitle from '../components/common/PageTitle';
 import SmallStats from '../components/common/SmallStats';
@@ -409,7 +417,11 @@ const Comparison = ({
 	return (
 		<>
 			<Navigation />
-			<Container fluid className='main-content-container px-4'>
+			<Container
+				style={{ position: 'relative' }}
+				fluid
+				className='main-content-container px-4'
+			>
 				<Row noGutters className='page-header py-4'>
 					<Col
 						lg='10'
@@ -524,6 +536,19 @@ const Comparison = ({
 						</Card>
 					</Col>
 				</Row>
+				<Link to='/iteration3'>
+					<Fab
+						color='primary'
+						style={{
+							position: 'absolute',
+							right: '20px',
+							bottom: '20px',
+							zIndex: '1000'
+						}}
+					>
+						<Home />
+					</Fab>
+				</Link>
 			</Container>
 		</>
 	);

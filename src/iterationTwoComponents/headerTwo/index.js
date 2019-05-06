@@ -93,7 +93,7 @@ class index extends Component {
 							style={{ marginTop: '3.5rem' }}
 							size='lg'
 						>
-							Learn More
+							Get Started
 						</Button>
 					</div>
 				</div>

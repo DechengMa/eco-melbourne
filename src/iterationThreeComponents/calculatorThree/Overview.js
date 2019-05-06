@@ -1,25 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { Container, Row, Col, Fade } from 'shards-react';
 import {
-	Container,
-	Row,
-	Col,
-	Fade
-	// Dropdown,
-	// DropdownToggle,
-	// DropdownMenu,
-	// DropdownItem
-} from 'shards-react';
-import { FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
-
+	FormControl,
+	InputLabel,
+	Select,
+	MenuItem,
+	Fab
+} from '@material-ui/core';
+import { Home } from '@material-ui/icons';
 import LearnMoreCard from '../utils/LearnMoreCard';
+import { Link } from 'react-router-dom';
 import PageTitle from './../components/common/PageTitle';
 import SmallStats from './../components/common/SmallStats';
 import UsersOverview from './../components/blog/UsersOverview';
 import { connect } from 'react-redux';
-import { fetchDefaultResult } from '../../iterationTwoComponents/actions';
+import { fetchDefaultResult } from '../../actions';
 import Navigation from '../headerThree/Nav/Navigation';
-// import UsersByDevice from './../components/blog/UsersByDevice';
 
 const Overview = ({
 	smallStats,
@@ -30,8 +27,6 @@ const Overview = ({
 	const [open, toggle] = useState(false);
 	const [dropdownOpen, dropdownToggle] = useState(false);
 	const [period, setPeriod] = useState('Week');
-	// const [period, ]
-	// var dropdownOpen = false;
 
 	var chartData = {
 		// labels: Array.from(new Array(10), (_, i) => (i === 0 ? 1 : i)),
@@ -54,7 +49,7 @@ const Overview = ({
 				label: 'Time Wasted',
 				fill: 'start',
 				numberDesc:
-					'This data presents how many minutes user wasted due to traffic congestion',
+					'This data represents the total delay time for one week/month/year. In other words, how many minutes was the user wasted on the way to and from work during this time.',
 				data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 				backgroundColor: 'rgba(0,123,255,0.1)',
 				borderColor: 'rgba(0,123,255,1)',
@@ -89,7 +84,7 @@ const Overview = ({
 					label: 'Time Wasted',
 					fill: 'start',
 					numberDesc:
-						'This data presents how many minutes user wasted due to traffic congestion',
+						'This data represents the total delay time for one week/month/year. In other words, how many minutes was the user wasted on the way to and from work during this time.',
 					data: currentInfo.timeDelay.timeDelay
 						? currentInfo.timeDelay.timeDelay
 						: [0, 0, 0, 0, 0, 0],
@@ -113,7 +108,7 @@ const Overview = ({
 					? currentInfo.environment.timeWaste
 					: '0',
 				numberDesc:
-					'This data presents how many minutes user wasted due to traffic congestion',
+					'This data represents the total delay time for one week/month/year. In other words, how many minutes was the user wasted on the way to and from work during this time.',
 				increase: true,
 				unit: 'Mins',
 				chartLabels: [null, null, null, null, null, null, null],
@@ -132,7 +127,8 @@ const Overview = ({
 			{
 				label: 'Spending',
 				value: currentInfo.price ? currentInfo.price.totalMoneySpent : '0',
-				numberDesc: 'This data presents how much money you spend',
+				numberDesc:
+					'This data shows the amount the user spent on the car during one week/month/year. This fee includes fuel price, insurance price and maintenance services price.',
 				unit: '$',
 				increase: true,
 				chartLabels: [null, null, null, null, null, null, null],
@@ -154,7 +150,7 @@ const Overview = ({
 					? currentInfo.environment.carCarbon
 					: '0',
 				numberDesc:
-					'This data presents how many carbon dioxide are created by using current travel method.',
+					'This data presents how many carbon dioxide are created by using current travel method during a week/month/year. Cars emit a lot of Carbon dioxide, which aggravates the greenhouse effect. (The industrialization of the world has led to a sharp increase in atmospheric carbon dioxide, of which 30% comes from automobile exhaust.)',
 				unit: 'Kg CO2e',
 
 				increase: false,
@@ -223,9 +219,6 @@ const Overview = ({
 			);
 		}
 	};
-
-	console.log('currentParam', currentParam);
-
 	const subtitle = currentParam
 		? `From ${currentParam.livingSuburb} to ${
 				currentParam.workingSuburb
@@ -235,7 +228,11 @@ const Overview = ({
 	return (
 		<Fade in={true}>
 			<Navigation />
-			<Container fluid className='main-content-container px-4'>
+			<Container
+				style={{ position: 'relative' }}
+				fluid
+				className='main-content-container px-4'
+			>
 				<Row noGutters className='page-header py-4'>
 					<Col lg='10' md='12' sm='12'>
 						<PageTitle
@@ -311,7 +308,7 @@ const Overview = ({
 							text='Save up to $1000 yearly by changing the way your travel'
 							buttonText='Learn More &rarr;'
 							btnTheme='warning'
-							to='/iteration2/comparison'
+							to='/iteration3/comparison'
 						/>
 					</Col>
 				</Row>
@@ -342,6 +339,19 @@ const Overview = ({
 						<Button>Search</Button>
 					</ModalFooter>
 				</Modal> */}
+				<Link to='/iteration3'>
+					<Fab
+						color='primary'
+						style={{
+							position: 'absolute',
+							right: '20px',
+							bottom: '20px',
+							zIndex: '1000'
+						}}
+					>
+						<Home />
+					</Fab>
+				</Link>
 			</Container>
 		</Fade>
 	);

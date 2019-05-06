@@ -4,12 +4,14 @@ import {
 	CardHeader,
 	ListGroup,
 	ListGroupItem,
-	Button
+	Button,
+	Container,
+	Row,
+	Col
 } from 'shards-react';
 import { CircularProgress } from '@material-ui/core';
 import { GoogleApiWrapper } from 'google-maps-react';
 import { GOOGLEMAPAPI } from '../../config/keys';
-import CustomSelect from '../components/components-overview/CustomSelect';
 import LocationSearchInput from '../utils/LocationSearchInput';
 import { connect } from 'react-redux';
 import {
@@ -20,6 +22,9 @@ import {
 } from '../../actions';
 import { get_next_weekday } from '../utils/Variables';
 import { withRouter } from 'react-router-dom';
+import 'rc-time-picker/assets/index.css';
+import moment from 'moment';
+import TimePicker from 'rc-time-picker';
 
 class QuestionBox extends Component {
 	state = {
@@ -40,29 +45,35 @@ class QuestionBox extends Component {
 			congestion: '',
 			period: 'Week'
 		},
+		timeGoToWalk: {
+			hour: 0,
+			mins: 0
+		},
+		timeLeaveWalk: {
+			hour: 0,
+			mins: 0
+		},
 		loading: false,
 		errorOrNot: false,
 		error: {}
 	};
 
-	componentDidMount() {
-		this.getDirectionRoute();
-	}
-
 	handleLivingSelect = address => {
-		this.setState({
+		this.setState(prevState => ({
+			...prevState,
 			livingSuburb: address,
-			postParams: { livingSuburb: address },
+			postParams: { ...prevState.postParams, livingSuburb: address },
 			error: { livingSuburb: '' }
-		});
+		}));
 	};
 
 	handleWorkingSelect = address => {
-		this.setState({
+		this.setState(prevState => ({
+			...prevState,
 			workingSuburb: address,
-			postParams: { workingSuburb: address },
+			postParams: { ...prevState.postParams, workingSuburb: address },
 			error: { workingSuburb: '' }
-		});
+		}));
 	};
 
 	handleChange = event => {
@@ -74,81 +85,56 @@ class QuestionBox extends Component {
 
 	handleClick = () => {
 		var hasError = false;
-		const { livingSuburb, workingSuburb } = this.state.postParams;
-		console.log('suburb', livingSuburb, workingSuburb);
-		const { daysWork } = this.state.postParams;
-		if (livingSuburb === '') {
-			this.setState(prevState => ({
-				error: {
-					...prevState.error,
-					livingSuburb: 'Please select a valid suburb'
-				}
-			}));
-			hasError = true;
-		}
-		if (workingSuburb === '') {
-			this.setState(prevState => ({
-				error: {
-					...prevState.error,
-					workingSuburb: 'Please select a valid suburb'
-				}
-			}));
-			hasError = true;
-		}
-		if (daysWork === '') {
-			this.setState(prevState => ({
-				error: {
-					...prevState.error,
-					daysWork: 'Please select a how many days you work weekly'
-				}
-			}));
-			hasError = true;
-		}
+		const { livingSuburb, workingSuburb, daysWork } = this.state.postParams;
+		const validArr = [livingSuburb, workingSuburb, daysWork];
+		const validaArrName = ['livingSuburb', 'workingSuburb', 'daysWork'];
+		const validMsg = [
+			'Please select a valid suburb',
+			'Please select a valid suburb',
+			'Please select a how many days you work weekly'
+		];
+		validArr.forEach((e, index) => {
+			if (e === '') {
+				this.setState(prevState => ({
+					error: {
+						...prevState.error,
+						[validaArrName[index]]: validMsg[index]
+					}
+				}));
+				hasError = true;
+			}
+		});
 
 		if (hasError) {
 			return;
 		}
-
-		console.log(this.state);
-		// this.props.fetchDefaultResult(20, 5, 5);
 		this.getDistance(livingSuburb, workingSuburb);
 	};
 
 	getDistance = (baseLocation, targetLocation) => {
 		const { google } = this.props;
 		var dptTime = get_next_weekday();
-		console.log('dptTime');
-		console.log(dptTime);
-		const transitOptions = {
-			// arrivalTime: Date,
-			departureTime: dptTime,
-			modes: ['TRAM', 'TRAIN']
-			// routingPreference: TransitRoutePreference
-		};
-
-		const drivingOptions = {
-			departureTime: dptTime,
-			trafficModel: 'bestguess'
-		};
 
 		var service = new google.maps.DistanceMatrixService();
 
 		this.props.setDefaultLoading(true);
 
+		const originsAndDest = {
+			origins: [baseLocation],
+			destinations: [targetLocation]
+		};
+
 		service.getDistanceMatrix(
 			{
-				origins: [baseLocation],
-				destinations: [targetLocation],
+				...originsAndDest,
 				travelMode: 'DRIVING',
-				drivingOptions: drivingOptions
+				drivingOptions: { departureTime: dptTime, trafficModel: 'bestguess' }
 			},
 			(response, status) => {
 				if (status !== 'OK') {
-					console.log('ERROR!');
-					console.log(status);
+					console.log('ERROR!', status);
 				} else {
 					const data = response.rows[0].elements[0];
-					// console.log(response.rows[0].elements[0].distance.text);
 					const distance = data.distance.text.substring(
 						0,
 						data.distance.text.length - 2
@@ -173,84 +159,46 @@ class QuestionBox extends Component {
 			}
 		);
 
-		service.getDistanceMatrix(
-			{
-				origins: [baseLocation],
-				destinations: [targetLocation],
-				travelMode: 'TRANSIT'
-			},
-			(response, status) => {
-				if (status !== 'OK') {
-					console.log('ERROR!');
-					console.log(status);
-				} else {
-					const data = response.rows[0].elements[0];
-					// console.log(response.rows[0].elements[0].distance.text);
-					const distance = data.distance.text.substring(
-						0,
-						data.distance.text.length - 2
-					);
+		const travelModeArr = ['TRANSIT', 'BICYCLING', 'WALKING'];
+		const travelModePostParams = ['ptvTime', 'bicycleTime', 'walkingTime'];
 
-					const ptvTime = data.duration.value / 60;
-
-					this.setState(prevState => ({
-						postParams: {
-							...prevState.postParams,
-							ptvTime: ptvTime
+		travelModeArr.forEach((e, index) => {
+			service.getDistanceMatrix(
+				{
+					...originsAndDest,
+					travelMode: e,
+					transitOptions: { departureTime: dptTime }
+				},
+				(res, status) => {
+					if (status !== 'OK') {
+						console.log('ERROR!', status);
+					} else {
+						const data = res.rows[0].elements[0];
+						if (!(data && data.duration && data.duration.value)) {
+							this.props.setDefaultLoading(false);
+							this.setState(prevState => ({
+								error: {
+									...prevState.error,
+									livingSuburb:
+										'Invalid address, please only input address inside Melbourne',
+									workingSuburb:
+										'Invalid address, please only input address inside Melbourne'
+								}
+							}));
 						}
-					}));
-					this.fetchResultFromBackEnd();
-				}
-			}
-		);
+						const name = travelModePostParams[index];
+						this.setState(prevState => ({
+							postParams: {
+								...prevState.postParams,
+								[name]: data.duration.value / 60
+							}
+						}));
 
-		service.getDistanceMatrix(
-			{
-				origins: [baseLocation],
-				destinations: [targetLocation],
-				travelMode: 'BICYCLING'
-			},
-			(response, status) => {
-				if (status !== 'OK') {
-					console.log('ERROR!');
-					console.log(status);
-				} else {
-					const data = response.rows[0].elements[0];
-					const bicycleTime = data.duration.value / 60;
-					this.setState(prevState => ({
-						postParams: {
-							...prevState.postParams,
-							bicycleTime: bicycleTime
-						}
-					}));
-					this.fetchResultFromBackEnd();
+						this.fetchResultFromBackEnd();
+					}
 				}
-			}
-		);
-
-		service.getDistanceMatrix(
-			{
-				origins: [baseLocation],
-				destinations: [targetLocation],
-				travelMode: 'WALKING'
-			},
-			(response, status) => {
-				if (status !== 'OK') {
-					console.log('ERROR!');
-					console.log(status);
-				} else {
-					const data = response.rows[0].elements[0];
-					const walkingTime = data.duration.value / 60;
-					this.setState(prevState => ({
-						postParams: {
-							...prevState.postParams,
-							walkingTime: walkingTime
-						}
-					}));
-					this.fetchResultFromBackEnd();
-				}
-			}
-		);
+			);
+		});
 	};
 
 	fetchResultFromBackEnd = () => {
@@ -308,28 +256,17 @@ class QuestionBox extends Component {
 		}
 	};
 
-	getDirectionRoute = () => {
-		const { google } = this.props;
-
-		var directionService = new google.maps.DirectionsService();
-		directionService.route(
-			{
-				origin: 'Carnegie VIC, Australia',
-				destination: 'Box Hill VIC, Australia',
-				travelMode: 'TRANSIT'
-			},
-			(rep, status) => {
-				if (status !== 'OK') {
-					console.log('ERROR!');
-					console.log(status);
-				} else {
-					console.log(rep);
-				}
-			}
-		);
+	onChange = value => {
+		console.log(value && value.format('h:mm a'));
 	};
 
 	render() {
+		const format = 'h:mm a';
+
+		const now = moment()
+			.hour(0)
+			.minute(0);
+
 		return (
 			<Card small style={{ padding: '15px' }}>
 				<CardHeader className='border-bottom'>
@@ -354,12 +291,11 @@ class QuestionBox extends Component {
 									: ''
 							}
 						/>
-
 						<strong className='text-muted d-block mb-2'>
 							Where do you work?
 						</strong>
 						<LocationSearchInput
-							value={this.state.livingSuburb}
+							value={this.state.workingSuburb}
 							error={this.state.error.workingSuburb ? true : false}
 							name='Working Suburb'
 							handleSelect={this.handleWorkingSelect}
@@ -370,14 +306,54 @@ class QuestionBox extends Component {
 							}
 						/>
 						<strong className='text-muted d-block mb-2'>
+							When do you go to and leave work?
+						</strong>
+						<Container style={{ padding: '0' }}>
+							<Row noGutters={true}>
+								<Col sm='12' md='6' lg='6'>
+									<div style={{ width: '100%' }}>
+										<span className='text-muted d-block'>Go:</span>
+										<TimePicker
+											showSecond={false}
+											defaultValue={now}
+											onChange={this.onChange}
+											format={format}
+											use12Hours
+											inputReadOnly
+											style={{ maxWidth: '200px' }}
+										/>
+									</div>
+								</Col>
+
+								<Col sm='12' md='6' lg='6'>
+									<div style={{ width: '100%' }}>
+										<span className='text-muted d-block'>Leave:</span>
+										<TimePicker
+											showSecond={false}
+											defaultValue={now}
+											onChange={this.onChange}
+											format={format}
+											use12Hours
+											inputReadOnly
+										/>
+									</div>
+								</Col>
+							</Row>
+						</Container>
+
+						{/* <strong className='text-muted d-block mb-2'>
 							How many days do you work weekly?
 						</strong>
 						<CustomSelect
 							name='daysWork'
 							value={this.state.postParams.daysWork}
 							handleChange={this.handleChange}
-						/>
-						<Button style={{ height: '35px' }} onClick={this.handleClick}>
+						/> */}
+						<br />
+						<Button
+							style={{ height: '35px', marginTop: '10px' }}
+							onClick={this.handleClick}
+						>
 							{this.props.loading ? (
 								<CircularProgress size={20} style={{ color: '#fff' }} />
 							) : (

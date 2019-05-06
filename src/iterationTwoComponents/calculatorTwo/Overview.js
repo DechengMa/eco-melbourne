@@ -1,15 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import {
-	Container,
-	Row,
-	Col,
-	Fade
-	// Dropdown,
-	// DropdownToggle,
-	// DropdownMenu,
-	// DropdownItem
-} from 'shards-react';
+import { Container, Row, Col, Fade } from 'shards-react';
 import { FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
 
 import LearnMoreCard from '../utils/LearnMoreCard';
@@ -17,7 +8,7 @@ import PageTitle from './../components/common/PageTitle';
 import SmallStats from './../components/common/SmallStats';
 import UsersOverview from './../components/blog/UsersOverview';
 import { connect } from 'react-redux';
-import { fetchDefaultResult } from '../actions';
+import { fetchDefaultResult } from '../../actions';
 import Navigation from '../headerTwo/Nav/Navigation';
 // import UsersByDevice from './../components/blog/UsersByDevice';
 
@@ -51,7 +42,7 @@ const Overview = ({
 		],
 		datasets: [
 			{
-				label: 'Time Wasted',
+				label: 'Time Wasted in Traffic',
 				fill: 'start',
 				numberDesc:
 					'This data presents how many minutes user wasted due to traffic congestion',
@@ -86,7 +77,7 @@ const Overview = ({
 			],
 			datasets: [
 				{
-					label: 'Time Wasted',
+					label: 'Time Wasted in Traffic',
 					fill: 'start',
 					numberDesc:
 						'This data presents how many minutes user wasted due to traffic congestion',
@@ -108,7 +99,7 @@ const Overview = ({
 
 		smallStats = [
 			{
-				label: 'Time Wasted',
+				label: 'Time Wasted in Traffic',
 				value: currentInfo.environment
 					? currentInfo.environment.timeWaste
 					: '0',
@@ -132,7 +123,8 @@ const Overview = ({
 			{
 				label: 'Spending',
 				value: currentInfo.price ? currentInfo.price.totalMoneySpent : '0',
-				numberDesc: 'This data presents how much money you spend',
+				numberDesc:
+					'This data shows the amount the user spent on the car during one week/month/year. This fee includes fuel price, insurance price and maintenance services price.	',
 				unit: '$',
 				increase: true,
 				chartLabels: [null, null, null, null, null, null, null],
@@ -224,8 +216,6 @@ const Overview = ({
 		}
 	};
 
-	console.log('currentParam', currentParam);
-
 	const subtitle = currentParam
 		? `From ${currentParam.livingSuburb} to ${
 				currentParam.workingSuburb
@@ -234,6 +224,9 @@ const Overview = ({
 
 	return (
 		<Fade in={true}>
+			{/* <Fab color='primary' aria-label='Home'>
+				<Home />
+			</Fab> */}
 			<Navigation />
 			<Container fluid className='main-content-container px-4'>
 				<Row noGutters className='page-header py-4'>
@@ -354,7 +347,7 @@ Overview.propTypes = {
 Overview.defaultProps = {
 	smallStats: [
 		{
-			label: 'Time Wasted',
+			label: 'Time Wasted in Traffic',
 			value: '0',
 			unit: 'Mins',
 			numberDesc:
@@ -377,8 +370,8 @@ Overview.defaultProps = {
 			label: 'Spending',
 			value: '0',
 			unit: '$',
-			numberDesc: 'This data presents how much money you spend',
-
+			numberDesc:
+				'This data shows the amount the user spent on the car during one week/month/year. This fee includes fuel price, insurance price and maintenance services price.',
 			increase: true,
 			chartLabels: [null, null, null, null, null, null, null],
 			attrs: { md: '6', sm: '6' },

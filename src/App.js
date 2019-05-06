@@ -40,7 +40,7 @@ import ComparisonThree from './iterationThreeComponents/comparisonThree';
 
 const App = () => {
 	const [spinner, setSpinner] = useState(true);
-	const [showContent, setShowContent] = useState(false);
+	const [showContent, setShowContent] = useState(true);
 
 	useEffect(() => {
 		setTimeout(() => setSpinner(false), 1000);
@@ -121,7 +121,7 @@ const App = () => {
 						{/* iteration 1 */}
 
 						{/* iteration 2 */}
-						<Route exact path='/' component={iteration2HomePage} />
+
 						<Route exact path='/iteration2' component={iteration2HomePage} />
 						<Route
 							exact
