@@ -16,3 +16,68 @@ export const get_next_weekday = (hour, mins) => {
 		.hour(hour ? hour : 8)
 		.minutes(mins ? mins : 0)._d;
 };
+
+export const get_next_week_arr = (morningHour, afternoonHour, mins) => {
+	return [
+		moment(new Date())
+			.nextBusinessDay()
+			.hour(morningHour ? morningHour : 8)
+			.minutes(mins ? mins : 0)._d,
+		moment(new Date())
+			.nextBusinessDay()
+			.hour(afternoonHour ? afternoonHour : 8)
+			.minutes(mins ? mins : 0)._d,
+		moment(new Date())
+			.nextBusinessDay()
+			.nextBusinessDay()
+			.hour(morningHour ? morningHour : 8)
+			.minutes(mins ? mins : 0)._d,
+		moment(new Date())
+			.nextBusinessDay()
+			.nextBusinessDay()
+			.hour(afternoonHour ? afternoonHour : 8)
+			.minutes(mins ? mins : 0)._d,
+		moment(new Date())
+			.nextBusinessDay()
+			.nextBusinessDay()
+			.nextBusinessDay()
+			.hour(morningHour ? morningHour : 8)
+			.minutes(mins ? mins : 0)._d,
+		moment(new Date())
+			.nextBusinessDay()
+			.nextBusinessDay()
+			.nextBusinessDay()
+			.hour(afternoonHour ? afternoonHour : 8)
+			.minutes(mins ? mins : 0)._d,
+		moment(new Date())
+			.nextBusinessDay()
+			.nextBusinessDay()
+			.nextBusinessDay()
+			.nextBusinessDay()
+			.hour(morningHour ? morningHour : 8)
+			.minutes(mins ? mins : 0)._d,
+		moment(new Date())
+			.nextBusinessDay()
+			.nextBusinessDay()
+			.nextBusinessDay()
+			.nextBusinessDay()
+			.hour(afternoonHour ? afternoonHour : 8)
+			.minutes(mins ? mins : 0)._d,
+		moment(new Date())
+			.nextBusinessDay()
+			.nextBusinessDay()
+			.nextBusinessDay()
+			.nextBusinessDay()
+			.nextBusinessDay()
+			.hour(morningHour ? morningHour : 8)
+			.minutes(mins ? mins : 0)._d,
+		moment(new Date())
+			.nextBusinessDay()
+			.nextBusinessDay()
+			.nextBusinessDay()
+			.nextBusinessDay()
+			.nextBusinessDay()
+			.hour(afternoonHour ? afternoonHour : 8)
+			.minutes(mins ? mins : 0)._d
+	];
+};

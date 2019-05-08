@@ -20,7 +20,7 @@ import {
 	fetchComparsionResult,
 	setDefaultLoading
 } from '../../actions';
-import { get_next_weekday } from '../utils/Variables';
+import { get_next_weekday, get_next_week_arr } from '../utils/Variables';
 import { withRouter } from 'react-router-dom';
 import 'rc-time-picker/assets/index.css';
 import moment from 'moment';
@@ -30,9 +30,6 @@ class QuestionBox extends Component {
 	state = {
 		livingSuburb: '',
 		workingSuburb: '',
-		vehicle: '',
-		fuelType: '',
-		fuelConsumption: 0,
 		period: 'Week',
 		postParams: {
 			livingSuburb: '',
@@ -43,20 +40,18 @@ class QuestionBox extends Component {
 			distance: '',
 			daysWork: '1',
 			congestion: '',
-			period: 'Week'
-		},
-		timeGoToWalk: {
-			hour: 0,
-			mins: 0
-		},
-		timeLeaveWalk: {
-			hour: 0,
-			mins: 0
+			period: 'Week',
+			timeGoToWork: get_next_weekday(8),
+			timeLeaveWork: get_next_weekday(17)
 		},
 		loading: false,
 		errorOrNot: false,
 		error: {}
 	};
+
+	componentDidMount() {
+		this.getNextFiveDaysPrediction();
+	}
 
 	handleLivingSelect = address => {
 		this.setState(prevState => ({
@@ -81,6 +76,33 @@ class QuestionBox extends Component {
 			postParams: { [event.target.name]: event.target.value },
 			error: {}
 		});
+	};
+
+	onChangeGoTo = value => {
+		const [hours, mins] = value.format('HH:mm').split(':');
+		const timeGoToWork = get_next_weekday(hours, mins);
+		this.setState(prevState => ({
+			...prevState,
+			timeGoToWork: [hours, mins],
+			postParams: {
+				...prevState.postParams,
+				timeGoToWork: timeGoToWork
+			}
+		}));
+	};
+
+	onChangeLeave = value => {
+		const [hours, mins] = value.format('HH:mm').split(':');
+		console.log(hours, mins);
+		const timeLeaveWork = get_next_weekday(hours, mins);
+		this.setState(prevState => ({
+			...prevState,
+			timeLeaveWork: [hours, mins],
+			postParams: {
+				...prevState.postParams,
+				timeLeaveWork: timeLeaveWork
+			}
+		}));
 	};
 
 	handleClick = () => {
@@ -109,6 +131,59 @@ class QuestionBox extends Component {
 			return;
 		}
 		this.getDistance(livingSuburb, workingSuburb);
+	};
+
+	getNextFiveDaysPrediction = (baseLocation, targetLocation) => {
+		// var predictData = [{ date: { travelTime: 12, tra_in_traffic: 15 } }];
+		const { google } = this.props;
+
+		var service = new google.maps.DistanceMatrixService();
+
+		const nextWeekArr = get_next_week_arr(8, 17, 0);
+
+		nextWeekArr.forEach(date => {
+			console.log(date);
+			// date.forEach(e => {
+			// 	this.setState(state)
+			// 	predictData.forEach(element => {
+			// 		if(e === date){
+			// 			// alrealdy have one predicton, just add another
+			// 			if(date.travelTime){
+			// 				date.travelTime = date.travelTime + travelTime
+			// 			}else {
+			// 				date.travelTime = travelTime
+			// 			}
+			// 			if(date.tra_in_traffic){
+			// 				date.tra_in_traffic = date.tra_in_traffic + tra_in_traffic
+			// 			}else {
+			// 				date.tra_in_traffic = tra_in_traffic
+			// 			}
+			// 		}
+			// 	});
+			// });
+		});
+
+		// service.getDistanceMatrix(
+		// 	{
+		// 		...originsAndDest,
+		// 		travelMode: 'DRIVING',
+		// 		drivingOptions: { departureTime: dptTime, trafficModel: 'bestguess' }
+		// 	},
+		// 	(response, status) => {
+		// 		if (status !== 'OK') {
+		// 			console.log('ERROR!', status);
+		// 		} else {
+		// 			const data = response.rows[0].elements[0];
+		// 			const duration_in_traffic = data.duration_in_traffic.value / 60;
+		// 			const carTime = data.duration_in_traffic.value / 60;
+
+		// 			this.setState(prevState => ({
+
+		// 			}));
+		// 			this.fetchResultFromBackEnd();
+		// 		}
+		// 	}
+		// );
 	};
 
 	getDistance = (baseLocation, targetLocation) => {
@@ -140,6 +215,20 @@ class QuestionBox extends Component {
 						data.distance.text.length - 2
 					);
 
+					if (distance > 300) {
+						this.props.setDefaultLoading(false);
+						this.setState(prevState => ({
+							error: {
+								...prevState.error,
+								livingSuburb:
+									'Invalid address, please only input address inside Melbourne',
+								workingSuburb:
+									'Invalid address, please only input address inside Melbourne'
+							}
+						}));
+						return;
+					}
+					// TODO use congestion for morning and afternoon
 					const congestion =
 						(data.duration_in_traffic.value - data.duration.value) / 60;
 
@@ -185,6 +274,7 @@ class QuestionBox extends Component {
 										'Invalid address, please only input address inside Melbourne'
 								}
 							}));
+							return;
 						}
 						const name = travelModePostParams[index];
 						this.setState(prevState => ({
@@ -256,15 +346,14 @@ class QuestionBox extends Component {
 		}
 	};
 
-	onChange = value => {
-		console.log(value && value.format('h:mm a'));
-	};
-
 	render() {
 		const format = 'h:mm a';
 
-		const now = moment()
-			.hour(0)
+		const timeGo = moment()
+			.hour(8)
+			.minute(0);
+		const timeLeave = moment()
+			.hour(17)
 			.minute(0);
 
 		return (
@@ -315,8 +404,8 @@ class QuestionBox extends Component {
 										<span className='text-muted d-block'>Go:</span>
 										<TimePicker
 											showSecond={false}
-											defaultValue={now}
-											onChange={this.onChange}
+											defaultValue={timeGo}
+											onChange={this.onChangeGoTo}
 											format={format}
 											use12Hours
 											inputReadOnly
@@ -330,8 +419,8 @@ class QuestionBox extends Component {
 										<span className='text-muted d-block'>Leave:</span>
 										<TimePicker
 											showSecond={false}
-											defaultValue={now}
-											onChange={this.onChange}
+											defaultValue={timeLeave}
+											onChange={this.onChangeLeave}
 											format={format}
 											use12Hours
 											inputReadOnly
@@ -340,15 +429,6 @@ class QuestionBox extends Component {
 								</Col>
 							</Row>
 						</Container>
-
-						{/* <strong className='text-muted d-block mb-2'>
-							How many days do you work weekly?
-						</strong>
-						<CustomSelect
-							name='daysWork'
-							value={this.state.postParams.daysWork}
-							handleChange={this.handleChange}
-						/> */}
 						<br />
 						<Button
 							style={{ height: '35px', marginTop: '10px' }}

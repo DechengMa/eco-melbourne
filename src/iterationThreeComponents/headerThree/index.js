@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import withWidth from '@material-ui/core/withWidth';
 import Typography from '@material-ui/core/Typography';
 import { animateScroll as scroll } from 'react-scroll';
+import Nav from './Nav/Navigation';
 
 import { Button } from 'shards-react';
 
@@ -16,7 +17,7 @@ class index extends Component {
 
 		return (
 			<>
-				<div
+				{/* <div
 					style={{
 						height: '100vh',
 						backgroundSize: 'cover',
@@ -70,11 +71,13 @@ class index extends Component {
 							Get Started
 						</Button>
 					</div>
-				</div>
+				</div> */}
+				<Nav />
 				<div
 					style={{
-						height: '100vh',
+						height: 'calc(100vh - 67px)',
 						backgroundSize: 'cover',
+						backgroundPosition: 'bottom',
 						backgroundImage:
 							'url(https://images.unsplash.com/photo-1507035895480-2b3156c31fc8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80)'
 					}}

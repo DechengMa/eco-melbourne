@@ -2,7 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import shortid from 'shortid';
-import { Card, CardBody } from 'shards-react';
+import {
+	Card,
+	CardBody,
+	CardFooter,
+	Button,
+	PopoverHeader,
+	PopoverBody,
+	Popover
+} from 'shards-react';
 import Tooltip from '@material-ui/core/Tooltip';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
@@ -32,72 +40,6 @@ class SmallStats extends React.Component {
 			open: !this.state.open
 		});
 	};
-
-	componentDidMount() {
-		const chartOptions = {
-			...{
-				maintainAspectRatio: true,
-				responsive: true,
-				legend: {
-					display: false
-				},
-				tooltips: {
-					enabled: false,
-					custom: false
-				},
-				elements: {
-					point: {
-						radius: 0
-					},
-					line: {
-						tension: 0.33
-					}
-				},
-				scales: {
-					xAxes: [
-						{
-							gridLines: false,
-							ticks: {
-								display: false
-							}
-						}
-					],
-					yAxes: [
-						{
-							gridLines: false,
-							scaleLabel: false,
-							ticks: {
-								display: false,
-								isplay: false,
-								// Avoid getting the graph line cut of at the top of the canvas.
-								// Chart.js bug link: https://github.com/chartjs/Chart.js/issues/4790
-								suggestedMax: Math.max(...this.props.chartData[0].data) + 1
-							}
-						}
-					]
-				}
-			},
-			...this.props.chartOptions
-		};
-
-		const chartConfig = {
-			...{
-				type: 'line',
-				data: {
-					...{
-						labels: this.props.chartLabels
-					},
-					...{
-						datasets: this.props.chartData
-					}
-				},
-				options: chartOptions
-			},
-			...this.props.chartConfig
-		};
-
-		// new Chart(this.canvasRef.current, chartConfig);
-	}
 
 	render() {
 		const {
@@ -153,7 +95,7 @@ class SmallStats extends React.Component {
 		const canvasHeight = variation === '1' ? 120 : 60;
 
 		return (
-			<Card small className={cardClasses}>
+			<Card large className={cardClasses}>
 				<CardBody className={cardBodyClasses}>
 					<div className={innerWrapperClasses}>
 						<div className={dataFieldClasses}>
@@ -172,13 +114,33 @@ class SmallStats extends React.Component {
 							<></>
 						)}
 					</div>
-					{/* <canvas
-						height={canvasHeight}
-						ref={this.canvasRef}
-						className={`stats-small-${shortid()}`}
-          			/> */}
 				</CardBody>
-				<MuiThemeProvider theme={theme}>
+				<Button
+					style={{
+						position: 'absolute',
+						right: '10px',
+						bottom: '10px'
+					}}
+					size='sm'
+					onClick={this.toggle}
+					id='popover-1'
+				>
+					V
+				</Button>
+				<Popover
+					target='#popover-1'
+					placement='bottom'
+					open={this.state.open}
+					toggle={this.toggle}
+				>
+					<PopoverHeader>Title here</PopoverHeader>
+					<PopoverBody>
+						Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus
+						terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer
+						labore wes anderson cred nesciunt sapiente ea proident.
+					</PopoverBody>
+				</Popover>
+				{/* <MuiThemeProvider theme={theme}>
 					<Tooltip title={numberDesc ? numberDesc : ''}>
 						<HelpOutline
 							style={{
@@ -189,7 +151,7 @@ class SmallStats extends React.Component {
 							}}
 						/>
 					</Tooltip>
-				</MuiThemeProvider>
+				</MuiThemeProvider> */}
 			</Card>
 		);
 	}

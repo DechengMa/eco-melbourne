@@ -416,127 +416,126 @@ const Comparison = ({
 
 	return (
 		<>
-			<Navigation />
-			<Container
+			{/* <Container
 				style={{ position: 'relative' }}
 				fluid
 				className='main-content-container px-4'
-			>
-				<Row noGutters className='page-header py-4'>
-					<Col
-						lg='10'
-						md='12'
-						sm='12'
-						style={{ fontSize: '1.6rem' }}
-						className='text-sm-left mb-3'
-					>
-						Have you ever think of travel by{' '}
-						{modeOfTransit === 'PTV' ? (
+			> */}
+			<Row noGutters className='page-header py-4'>
+				<Col
+					lg='10'
+					md='12'
+					sm='12'
+					style={{ fontSize: '1.6rem' }}
+					className='text-sm-left mb-3'
+				>
+					Have you ever thought of traveling by{' '}
+					{modeOfTransit === 'PTV' ? (
+						<Button
+							style={{ margin: '5px', fontSize: '1.2rem' }}
+							theme='success'
+						>
+							Public Transportation
+						</Button>
+					) : (
+						<>
 							<Button
 								style={{ margin: '5px', fontSize: '1.2rem' }}
-								theme='success'
+								theme={modeOfTransit === 'CYCLING' ? 'success' : 'secondary'}
+								onClick={() => changeMode('CYCLING')}
 							>
-								Public Transportation
+								Cycling
 							</Button>
-						) : (
-							<>
-								<Button
-									style={{ margin: '5px', fontSize: '1.2rem' }}
-									theme={modeOfTransit === 'CYCLING' ? 'success' : 'secondary'}
-									onClick={() => changeMode('CYCLING')}
-								>
-									Cycling
-								</Button>
-								Or
-								<Button
-									style={{ margin: '5px', fontSize: '1.2rem' }}
-									theme={modeOfTransit === 'WALKING' ? 'success' : 'secondary'}
-									onClick={() => changeMode('WALKING')}
-								>
-									Walking
-								</Button>
-							</>
-						)}
-						? This is the difference!
-					</Col>
-					<Col
-						lg='2'
-						md='12'
-						sm='12'
-						xs='12'
-						style={{ marginTop: '20px', textAlign: 'right' }}
-					>
-						<FormControl variant='outlined'>
-							<InputLabel>Period</InputLabel>
-							<Select
-								value={period}
-								onChange={event => {
-									fetchDataFromBackEnd(event.target.value);
-									setPeriod(event.target.value);
-								}}
+							Or
+							<Button
+								style={{ margin: '5px', fontSize: '1.2rem' }}
+								theme={modeOfTransit === 'WALKING' ? 'success' : 'secondary'}
+								onClick={() => changeMode('WALKING')}
 							>
-								<MenuItem value={'Week'}>Weekly</MenuItem>
-								<MenuItem value={'Month'}>Monthly</MenuItem>
-								<MenuItem value={'Year'}>Yearly</MenuItem>
-							</Select>
-						</FormControl>
+								Walking
+							</Button>
+						</>
+					)}
+					? This is the difference!
+				</Col>
+				<Col
+					lg='2'
+					md='12'
+					sm='12'
+					xs='12'
+					style={{ marginTop: '20px', textAlign: 'right' }}
+				>
+					<FormControl variant='outlined'>
+						<InputLabel>Period</InputLabel>
+						<Select
+							value={period}
+							onChange={event => {
+								fetchDataFromBackEnd(event.target.value);
+								setPeriod(event.target.value);
+							}}
+						>
+							<MenuItem value={'Week'}>Weekly</MenuItem>
+							<MenuItem value={'Month'}>Monthly</MenuItem>
+							<MenuItem value={'Year'}>Yearly</MenuItem>
+						</Select>
+					</FormControl>
+				</Col>
+			</Row>
+
+			<Row>
+				{smallStats.map((stats, idx) => (
+					<Col className='col-lg mb-4' key={idx} {...stats.attrs}>
+						<SmallStats
+							id={`small-stats-${idx}`}
+							variation='1'
+							chartData={stats.datasets}
+							numberDesc={stats.numberDesc}
+							chartLabels={stats.chartLabels}
+							unit={stats.unit}
+							label={stats.label}
+							value={stats.value}
+							percentage={stats.percentage}
+							increase={stats.increase}
+							decrease={stats.decrease}
+						/>
 					</Col>
-				</Row>
+				))}
+			</Row>
 
-				<Row>
-					{smallStats.map((stats, idx) => (
-						<Col className='col-lg mb-4' key={idx} {...stats.attrs}>
-							<SmallStats
-								id={`small-stats-${idx}`}
-								variation='1'
-								chartData={stats.datasets}
-								numberDesc={stats.numberDesc}
-								chartLabels={stats.chartLabels}
-								unit={stats.unit}
-								label={stats.label}
-								value={stats.value}
-								percentage={stats.percentage}
-								increase={stats.increase}
-								decrease={stats.decrease}
-							/>
-						</Col>
-					))}
-				</Row>
+			<Row>
+				<Col lg='8' md='12' sm='12' className='mb-4'>
+					{renderMap()}
+					{/* <MapContainer travelMode={} origin={origin} destination={destination} /> */}
+				</Col>
 
-				<Row>
-					<Col lg='8' md='12' sm='12' className='mb-4'>
-						{renderMap()}
-						{/* <MapContainer travelMode={} origin={origin} destination={destination} /> */}
-					</Col>
-
-					<Col lg='4' md='6' sm='12' className='mb-4'>
-						<Card style={{ height: '100%', padding: '10px' }}>
-							<Bar
-								data={data}
-								width={60}
-								height={150}
-								options={{
-									maintainAspectRatio: false,
-									scales: {
-										xAxes: [
-											{
-												maxBarThickness: 40
+				<Col lg='4' md='6' sm='12' className='mb-4'>
+					<Card style={{ height: '100%', padding: '10px' }}>
+						<Bar
+							data={data}
+							width={60}
+							height={150}
+							options={{
+								maintainAspectRatio: false,
+								scales: {
+									xAxes: [
+										{
+											maxBarThickness: 40
+										}
+									],
+									yAxes: [
+										{
+											ticks: {
+												beginAtZero: true
 											}
-										],
-										yAxes: [
-											{
-												ticks: {
-													beginAtZero: true
-												}
-											}
-										]
-									}
-								}}
-							/>
-						</Card>
-					</Col>
-				</Row>
-				<Link to='/iteration3'>
+										}
+									]
+								}
+							}}
+						/>
+					</Card>
+				</Col>
+			</Row>
+			{/* <Link to='/iteration3'>
 					<Fab
 						color='primary'
 						style={{
@@ -548,8 +547,8 @@ const Comparison = ({
 					>
 						<Home />
 					</Fab>
-				</Link>
-			</Container>
+				</Link> */}
+			{/* </Container> */}
 		</>
 	);
 };

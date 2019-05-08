@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col, Card, CardHeader, CardBody, Button } from 'shards-react';
+import RangeDatePicker from '../common/RangeDatePicker';
 
 // import RangeDatePicker from '../common/RangeDatePicker';
 import Chart from '../../utils/chart';
@@ -33,11 +34,18 @@ class UsersOverview extends React.Component {
 					}
 				},
 				scales: {
-					xAxes: [
-						{
-							gridLines: false
-						}
-					],
+					// xAxis: {
+					// 	labels: {
+					// 		align: 'right'
+					// 	},
+					// 	min: 100,
+					// 	gridLines: false
+					// },
+					// xAxes: [
+					// 	{
+					// 		gridLines: false
+					// 	}
+					// ],
 					yAxes: [
 						{
 							ticks: {
@@ -96,7 +104,7 @@ class UsersOverview extends React.Component {
 		const { title } = this.props;
 
 		return (
-			<Card small className='h-100'>
+			<Card small className='h-100' style={{ maxHeight: '400px !important' }}>
 				<CardHeader className='border-bottom'>
 					<h6 className='m-0'>Your Daily Average Delay Time Prediction </h6>
 				</CardHeader>
@@ -117,11 +125,11 @@ class UsersOverview extends React.Component {
 					</Row>
 
 					<canvas
-						id='canvasId'
-						height='160'
+						// height='120'
 						ref={this.canvasRef}
 						style={{
-							maxWidth: '100% !important'
+							// maxWidth: '100% !important',
+							maxHeight: '100% !important'
 						}}
 					/>
 				</CardBody>
@@ -143,56 +151,6 @@ UsersOverview.propTypes = {
 	 * The Chart.js options.
 	 */
 	chartOptions: PropTypes.object
-};
-
-UsersOverview.defaultProps = {
-	title: 'Congestion Time Prediction Daily (Mins)',
-	chartData: {
-		// labels: Array.from(new Array(10), (_, i) => (i === 0 ? 1 : i)),
-		labels: [
-			'2019',
-			'2020',
-			'2021',
-			'2022',
-			'2023',
-			'2024',
-			'2025',
-			'2026',
-			'2027',
-			'2028',
-			'2029',
-			'2030'
-		],
-		datasets: [
-			{
-				label: 'Time Wasted',
-				fill: 'start',
-				data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-				backgroundColor: 'rgba(0,123,255,0.1)',
-				borderColor: 'rgba(0,123,255,1)',
-				pointBackgroundColor: '#ffffff',
-				pointHoverBackgroundColor: 'rgb(0,123,255)',
-				borderWidth: 1.5,
-				pointRadius: 0,
-				pointHoverRadius: 3
-			}
-			// ,
-			// {
-			// 	label: 'Time Wasted',
-			// 	fill: 'start',
-			// 	data: [25, 26, 28, 30, 31, 32],
-			// 	backgroundColor: 'rgba(255,65,105,0.1)',
-			// 	borderColor: 'rgba(255,65,105,1)',
-			// 	pointBackgroundColor: '#ffffff',
-			// 	pointHoverBackgroundColor: 'rgba(255,65,105,1)',
-			// 	borderDash: [3, 3],
-			// 	borderWidth: 1,
-			// 	pointRadius: 0,
-			// 	pointHoverRadius: 2,
-			// 	pointBorderColor: 'rgba(255,65,105,1)'
-			// }
-		]
-	}
 };
 
 export default UsersOverview;

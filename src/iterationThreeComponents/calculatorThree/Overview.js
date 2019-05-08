@@ -17,6 +17,8 @@ import UsersOverview from './../components/blog/UsersOverview';
 import { connect } from 'react-redux';
 import { fetchDefaultResult } from '../../actions';
 import Navigation from '../headerThree/Nav/Navigation';
+import Comparison from '../comparisonThree/Comparison';
+import Bike from '../../resources/img/bicycle.png';
 
 const Overview = ({
 	smallStats,
@@ -24,37 +26,39 @@ const Overview = ({
 	currentParam,
 	fetchDefaultResult
 }) => {
-	const [open, toggle] = useState(false);
-	const [dropdownOpen, dropdownToggle] = useState(false);
+	// const [open, toggle] = useState(false);
+	// const [dropdownOpen, dropdownToggle] = useState(false);
 	const [period, setPeriod] = useState('Week');
 
 	var chartData = {
 		// labels: Array.from(new Array(10), (_, i) => (i === 0 ? 1 : i)),
-		labels: [
-			'2019',
-			'2020',
-			'2021',
-			'2022',
-			'2023',
-			'2024',
-			'2025',
-			'2026',
-			'2027',
-			'2028',
-			'2029',
-			'2030'
-		],
+		labels: ['08/05', '09/05', '10/05', '11/05', '12/05'],
 		datasets: [
 			{
-				label: 'Time Wasted',
+				label: 'Time without traffic',
 				fill: 'start',
 				numberDesc:
 					'This data represents the total delay time for one week/month/year. In other words, how many minutes was the user wasted on the way to and from work during this time.',
-				data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+				data: [0, 13, 24, 28, 32],
+
 				backgroundColor: 'rgba(0,123,255,0.1)',
 				borderColor: 'rgba(0,123,255,1)',
 				pointBackgroundColor: '#ffffff',
 				pointHoverBackgroundColor: 'rgb(0,123,255)',
+				borderWidth: 1.5,
+				pointRadius: 0,
+				pointHoverRadius: 3
+			},
+			{
+				label: 'Travel Time with Traffic',
+				fill: 'start',
+				numberDesc:
+					'This data represents the total delay time for one week/month/year. In other words, how many minutes was the user wasted on the way to and from work during this time.',
+				data: [0, 20, 30, 50, 60],
+				backgroundColor: 'rgba(255,65,105,0.1)',
+				borderColor: 'rgba(255,65,105,1)',
+				pointBackgroundColor: '#ffffff',
+				pointHoverBackgroundColor: 'rgba(255,65,105,1)',
 				borderWidth: 1.5,
 				pointRadius: 0,
 				pointHoverRadius: 3
@@ -64,39 +68,36 @@ const Overview = ({
 
 	if (currentInfo) {
 		chartData = {
-			// labels: Array.from(new Array(10), (_, i) => (i === 0 ? 1 : i)),
-			labels: [
-				'2019',
-				'2020',
-				'2021',
-				'2022',
-				'2023',
-				'2024',
-				'2025',
-				'2026',
-				'2027',
-				'2028',
-				'2029',
-				'2030'
-			],
+			labels: ['08/05', '09/05', '10/05', '11/05', '12/05'],
 			datasets: [
 				{
-					label: 'Time Wasted',
+					label: 'Time without traffic',
 					fill: 'start',
 					numberDesc:
 						'This data represents the total delay time for one week/month/year. In other words, how many minutes was the user wasted on the way to and from work during this time.',
-					data: currentInfo.timeDelay.timeDelay
-						? currentInfo.timeDelay.timeDelay
-						: [0, 0, 0, 0, 0, 0],
+					data: [0, 13, 24, 28, 32],
+
+					backgroundColor: 'rgba(0,123,255,0.1)',
+					borderColor: 'rgba(0,123,255,1)',
+					pointBackgroundColor: '#ffffff',
+					pointHoverBackgroundColor: 'rgb(0,123,255)',
+					borderWidth: 1.5,
+					pointRadius: 0,
+					pointHoverRadius: 3
+				},
+				{
+					label: 'Travel Time with Traffic',
+					fill: 'start',
+					numberDesc:
+						'This data represents the total delay time for one week/month/year. In other words, how many minutes was the user wasted on the way to and from work during this time.',
+					data: [0, 20, 30, 50, 60],
 					backgroundColor: 'rgba(255,65,105,0.1)',
 					borderColor: 'rgba(255,65,105,1)',
 					pointBackgroundColor: '#ffffff',
 					pointHoverBackgroundColor: 'rgba(255,65,105,1)',
-					borderDash: [3, 3],
-					borderWidth: 1,
+					borderWidth: 1.5,
 					pointRadius: 0,
-					pointHoverRadius: 2,
-					pointBorderColor: 'rgba(255,65,105,1)'
+					pointHoverRadius: 3
 				}
 			]
 		};
@@ -111,18 +112,7 @@ const Overview = ({
 					'This data represents the total delay time for one week/month/year. In other words, how many minutes was the user wasted on the way to and from work during this time.',
 				increase: true,
 				unit: 'Mins',
-				chartLabels: [null, null, null, null, null, null, null],
-				attrs: { md: '6', sm: '6' },
-				datasets: [
-					{
-						label: 'Today',
-						fill: 'start',
-						borderWidth: 1.5,
-						backgroundColor: 'rgba(0, 184, 216, 0.1)',
-						borderColor: 'rgb(0, 184, 216)',
-						data: [1, 2, 1, 3, 5, 4, 7]
-					}
-				]
+				attrs: { md: '6', sm: '6' }
 			},
 			{
 				label: 'Spending',
@@ -131,18 +121,7 @@ const Overview = ({
 					'This data shows the amount the user spent on the car during one week/month/year. This fee includes fuel price, insurance price and maintenance services price.',
 				unit: '$',
 				increase: true,
-				chartLabels: [null, null, null, null, null, null, null],
-				attrs: { md: '6', sm: '6' },
-				datasets: [
-					{
-						label: 'Today',
-						fill: 'start',
-						borderWidth: 1.5,
-						backgroundColor: 'rgba(0, 184, 216, 0.1)',
-						borderColor: 'rgb(0, 184, 216)',
-						data: [1, 2, 1, 3, 5, 4, 7]
-					}
-				]
+				attrs: { md: '6', sm: '6' }
 			},
 			{
 				label: 'Carbon Footprint',
@@ -155,18 +134,7 @@ const Overview = ({
 
 				increase: false,
 				decrease: true,
-				chartLabels: [null, null, null, null, null, null, null],
-				attrs: { md: '6', sm: '6' },
-				datasets: [
-					{
-						label: 'Today',
-						fill: 'start',
-						borderWidth: 1.5,
-						backgroundColor: 'rgba(255,180,0,0.1)',
-						borderColor: 'rgb(255,180,0)',
-						data: [0, 0, 0, 0, 0, 0, 0]
-					}
-				]
+				attrs: { md: '6', sm: '6' }
 			},
 			{
 				label: 'Environmental Impact',
@@ -178,18 +146,7 @@ const Overview = ({
 				unit: 'Num Of Trees',
 				increase: false,
 				decrease: true,
-				chartLabels: [null, null, null, null, null, null, null],
-				attrs: { md: '6', sm: '6' },
-				datasets: [
-					{
-						label: 'Today',
-						fill: 'start',
-						borderWidth: 1.5,
-						backgroundColor: 'rgba(255,65,105,0.1)',
-						borderColor: 'rgb(255,65,105)',
-						data: [0, 0, 0, 0, 0, 0, 0]
-					}
-				]
+				attrs: { md: '6', sm: '6' }
 			}
 		];
 	}
@@ -235,11 +192,15 @@ const Overview = ({
 			>
 				<Row noGutters className='page-header py-4'>
 					<Col lg='10' md='12' sm='12'>
-						<PageTitle
+						{/* <PageTitle
 							title='Here Is Your Current Spending Overview'
 							subtitle={subtitle}
 							className='text-sm-left mb-12'
-						/>
+						/> */}
+						<h6 style={{ fontSize: '1.6rem' }} className='text-sm-left mb-3'>
+							Here Is Your Current Spending Overview
+						</h6>
+						<p>{subtitle}</p>
 					</Col>
 					<Col
 						lg='2'
@@ -293,18 +254,38 @@ const Overview = ({
 						</Col>
 					))}
 				</Row>
+				{/* <Row>
+					{smallStatsRow2.map((stats, idx) => (
+						<Col className='col-lg mb-4' key={idx} {...stats.attrs}>
+							<SmallStats
+								id={`small-stats-${idx}`}
+								variation='1'
+								numberDesc={stats.numberDesc}
+								chartData={stats.datasets}
+								chartLabels={stats.chartLabels}
+								label={stats.label}
+								unit={stats.unit}
+								value={stats.value}
+								percentage={stats.percentage}
+								increase={stats.increase}
+								decrease={stats.decrease}
+							/>
+						</Col>
+					))}
+				</Row> */}
 
 				<Row>
-					<Col lg='8' md='6' sm='12' className='mb-4'>
+					<Col lg='8' md='12' sm='12' className='mb-4'>
 						<UsersOverview chartData={chartData} />
 					</Col>
 
 					<Col lg='4' md='6' sm='12' className='mb-4'>
-						{/* <UsersByDevice /> */}
 						<LearnMoreCard
 							cardHeader='Want a way to stop this?'
 							title='Make Change'
-							img='https://s23705.pcdn.co/wp-content/uploads/2019/02/Insurance.jpg'
+							img={Bike}
+							// img='https://images.pexels.com/photos/1769349/pexels-photo-1769349.jpeg?cs=srgb&dl=action-adult-bicycle-1769349.jpg&fm=jpg'
+							// img='https://s23705.pcdn.co/wp-content/uploads/2019/02/Insurance.jpg'
 							text='Save up to $1000 yearly by changing the way your travel'
 							buttonText='Learn More &rarr;'
 							btnTheme='warning'
@@ -370,18 +351,7 @@ Overview.defaultProps = {
 			numberDesc:
 				'This data presents how many minutes user wasted due to traffic congestion',
 			increase: true,
-			chartLabels: [null, null, null, null, null, null, null],
-			attrs: { md: '6', sm: '6' },
-			datasets: [
-				{
-					label: 'Today',
-					fill: 'start',
-					borderWidth: 1.5,
-					backgroundColor: 'rgba(0, 184, 216, 0.1)',
-					borderColor: 'rgb(0, 184, 216)',
-					data: [0, 0, 0, 0, 0, 0, 0]
-				}
-			]
+			attrs: { md: '6', sm: '6' }
 		},
 		{
 			label: 'Spending',
@@ -390,18 +360,7 @@ Overview.defaultProps = {
 			numberDesc: 'This data presents how much money you spend',
 
 			increase: true,
-			chartLabels: [null, null, null, null, null, null, null],
-			attrs: { md: '6', sm: '6' },
-			datasets: [
-				{
-					label: 'Today',
-					fill: 'start',
-					borderWidth: 1.5,
-					backgroundColor: 'rgba(23,198,113,0.1)',
-					borderColor: 'rgb(23,198,113)',
-					data: [0, 0, 0, 0, 0, 0, 0]
-				}
-			]
+			attrs: { md: '6', sm: '6' }
 		},
 		{
 			label: 'Carbon Footprint',
@@ -411,18 +370,7 @@ Overview.defaultProps = {
 				'This data presents how many carbon dioxide are created by using current travel method',
 			increase: false,
 			decrease: true,
-			chartLabels: [null, null, null, null, null, null, null],
-			attrs: { md: '4', sm: '6' },
-			datasets: [
-				{
-					label: 'Today',
-					fill: 'start',
-					borderWidth: 1.5,
-					backgroundColor: 'rgba(255,180,0,0.1)',
-					borderColor: 'rgb(255,180,0)',
-					data: [0, 0, 0, 0, 0, 0, 0]
-				}
-			]
+			attrs: { md: '6', sm: '6' }
 		},
 		{
 			label: 'Environmental Impact',
@@ -432,18 +380,7 @@ Overview.defaultProps = {
 				'This data presents how many trees are needed to absorb those created carbon dioxide',
 			increase: false,
 			decrease: true,
-			chartLabels: [null, null, null, null, null, null, null],
-			attrs: { md: '4', sm: '6' },
-			datasets: [
-				{
-					label: 'Today',
-					fill: 'start',
-					borderWidth: 1.5,
-					backgroundColor: 'rgba(255,65,105,0.1)',
-					borderColor: 'rgb(255,65,105)',
-					data: [0, 0, 0, 0, 0, 0, 0]
-				}
-			]
+			attrs: { md: '6', sm: '6' }
 		}
 	]
 };

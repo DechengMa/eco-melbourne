@@ -4,9 +4,18 @@ import { Link } from 'react-router-dom';
 
 const LearnMoreCard = props => {
 	return (
-		<Card small style={{ overflow: 'hidden' }}>
+		<Card
+			small
+			style={{
+				overflow: 'hidden',
+				// maxHeight: '400px !important',
+				height: '100%'
+			}}
+		>
 			{/* <CardHeader>{props.cardHeader}</CardHeader> */}
-			<CardImg src={props.img} style={{ maxHeight: '430px' }} />
+			{/* <div style={{ height: '70%' }}> */}
+			<CardImg src={props.img} style={{ width: '100%' }} />
+			{/* </div> */}
 			<CardBody>
 				<CardTitle>{props.title}</CardTitle>
 				<p>{props.text}</p>

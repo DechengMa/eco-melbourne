@@ -4386,7 +4386,8 @@ a.text-accent:hover, a.text-accent:focus {
       font-weight: 400; } }
 
 .stats-small {
-  min-height: 8.7rem;
+  /* min-height: 8.7rem; */
+  min-height:9rem;
   overflow: hidden !important; }
   .stats-small canvas {
     position: absolute;
