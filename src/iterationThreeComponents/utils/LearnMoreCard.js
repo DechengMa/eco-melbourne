@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, CardBody, CardTitle, Button, CardImg } from 'shards-react';
 import { Link } from 'react-router-dom';
+import Pulse from 'react-reveal/Pulse';
 
 const LearnMoreCard = props => {
 	return (
@@ -20,7 +21,9 @@ const LearnMoreCard = props => {
 				<CardTitle>{props.title}</CardTitle>
 				<p>{props.text}</p>
 				<Link to={props.to}>
-					<Button theme={props.btnTheme}>{props.buttonText}</Button>
+					<Pulse forever={true}>
+						<Button theme={props.btnTheme}>{props.buttonText}</Button>
+					</Pulse>
 				</Link>
 			</CardBody>
 		</Card>

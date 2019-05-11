@@ -34,9 +34,42 @@ const MapWithADirectionsRenderer = compose(
 					destination,
 					// travelMode: google.maps.TravelMode.TRANSIT
 					travelMode
+					// transitOptions: {
+					// 	departureTime: departureTime
+					// },
 				},
 				(result, status) => {
 					if (status === google.maps.DirectionsStatus.OK) {
+						console.log('=========== RESULT ===========', result);
+						this.setState({
+							directions: result
+						});
+					} else {
+						console.error(`error fetching directions ${result}`);
+					}
+				}
+			);
+		},
+		componentDidUpdate() {
+			const { google } = window;
+			const { origin, destination, travelMode } = this.props;
+
+			const DirectionsService = new google.maps.DirectionsService();
+
+			DirectionsService.route(
+				{
+					// origin: new google.maps.LatLng(41.85073, -87.65126),
+					origin,
+					destination,
+					// travelMode: google.maps.TravelMode.TRANSIT
+					travelMode
+					// transitOptions: {
+					// 	departureTime: departureTime
+					// },
+				},
+				(result, status) => {
+					if (status === google.maps.DirectionsStatus.OK) {
+						console.log('=========== RESULT ===========', result);
 						this.setState({
 							directions: result
 						});

@@ -14,31 +14,14 @@ import {
 } from 'react-scroll';
 
 import { Button } from 'shards-react';
-// const textBoxStyle = {
-// 	position: absolute,
-// 	top: 40%,
-// 	left: 50%,
-// 	transform: translate(-50%, -50%);
-// 	text-align: center;
-// }
 
 class index extends Component {
 	renderQuestionBox = () => {
-		console.log(this.props.width);
 		var containerStyle = {
 			height: '100%'
 		};
-		var bgStyle = {
-			width: '100vw',
-			height: 'calc(100vh - 65px)',
-			backgroundImage: `url(${header})`,
-			// backgroundImage: `url(https://images.pexels.com/photos/310983/pexels-photo-310983.jpeg?cs=srgb&dl=action-adult-athletes-310983.jpg&fm=jpg)`,
-			backgroundSize: 'cover',
-			position: 'relative'
-		};
 
 		return (
-			// <div style={bgStyle}>
 			<>
 				<div
 					style={{
@@ -81,9 +64,7 @@ class index extends Component {
 								textTransform: 'uppercase'
 							}}
 						>
-							{/* <p style={{ fontSize: '1.4rem' }}> */}
 							Save money & get fit - Leave your car at home
-							{/* </p> */}
 						</Typography>
 
 						<Button

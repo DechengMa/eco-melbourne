@@ -3,7 +3,8 @@ import {
 	FETCH_DEFAULT_RESULT,
 	SET_CURRENT_PARAM,
 	FETCH_COMPARISON_RESULT,
-	FETCH_LOADING
+	FETCH_LOADING,
+	FETCH_COMPARISON_RESULT_I3
 } from './types';
 
 export const setDefaultLoading = isLoading => dispatch => {
@@ -57,6 +58,51 @@ export const fetchDefaultResult = (
 		dispatch(setDefaultLoading(false));
 		history.push('/iteration2/calculator');
 	}
+};
+
+export const fetchDefaultResultIteration3 = (
+	distance,
+	days,
+	congestion,
+	period = 'Day',
+	carTime,
+	bicycleTime,
+	walkingTime,
+	ptvTime,
+	history
+) => async dispatch => {
+	console.log('fetchDefaultResultIteration3');
+	var url = `https://cors-anywhere.herokuapp.com/https://ecomelbourneiteration3.azurewebsites.net/Compare1/calculate?distance=${distance}&days=${days}&period=${period}&congestion=${congestion}&carTime=${carTime}&bicycleTime=${bicycleTime}&walkingTime=${walkingTime}&ptvTime=${ptvTime}`;
+	const response = await apis.post(url);
+	console.log('ACTION CREATOR RESP DATA', response.data);
+	const defaultResult = response.data;
+	dispatch({ type: FETCH_DEFAULT_RESULT, payload: defaultResult });
+	dispatch(setDefaultLoading(false));
+	if (response && history) {
+		dispatch(setDefaultLoading(false));
+		history.push('/iteration3/calculator');
+	}
+};
+
+export const fetchComparsionResultIteration3 = (
+	distance,
+	days,
+	congestion,
+	period = 'Day',
+	carTime,
+	bicycleTime,
+	walkingTime,
+	ptvTime,
+	ptvWalkingTime
+) => async dispatch => {
+	dispatch(setDefaultLoading(true));
+	var url = `https://cors-anywhere.herokuapp.com/https://ecomelbourneiteration3.azurewebsites.net/Compare1/compare?distance=${distance}&days=${days}&period=${period}&congestion=${congestion}&carTime=${carTime}&bicycleTime=${bicycleTime}&walkingTime=${walkingTime}&ptvTime=${ptvTime}&ptvWalkingTime=${ptvWalkingTime}`;
+	console.log('fetchComparsionResultIteration3', url);
+	const response = await apis.post(url);
+	const comparsionResult = response.data;
+	console.log('response ', comparsionResult);
+	dispatch(setDefaultLoading(false));
+	dispatch({ type: FETCH_COMPARISON_RESULT, payload: comparsionResult });
 };
 
 export const fetchComparsionResult = (

@@ -6,110 +6,113 @@ import {
 	InputLabel,
 	Select,
 	MenuItem,
-	Fab
+	Fab,
+	CircularProgress
 } from '@material-ui/core';
 import { Home } from '@material-ui/icons';
 import LearnMoreCard from '../utils/LearnMoreCard';
 import { Link } from 'react-router-dom';
-import PageTitle from './../components/common/PageTitle';
 import SmallStats from './../components/common/SmallStats';
-import UsersOverview from './../components/blog/UsersOverview';
 import { connect } from 'react-redux';
-import { fetchDefaultResult } from '../../actions';
+import {
+	fetchDefaultResult,
+	fetchDefaultResultIteration3,
+	setDefaultLoading
+} from '../../actions';
 import Navigation from '../headerThree/Nav/Navigation';
-import Comparison from '../comparisonThree/Comparison';
 import Bike from '../../resources/img/bicycle.png';
 
 const Overview = ({
 	smallStats,
 	currentInfo,
 	currentParam,
-	fetchDefaultResult
+	fetchDefaultResultIteration3,
+	setDefaultLoading,
+	loading
 }) => {
-	// const [open, toggle] = useState(false);
-	// const [dropdownOpen, dropdownToggle] = useState(false);
-	const [period, setPeriod] = useState('Week');
+	const [period, setPeriod] = useState('Day');
 
-	var chartData = {
-		// labels: Array.from(new Array(10), (_, i) => (i === 0 ? 1 : i)),
-		labels: ['08/05', '09/05', '10/05', '11/05', '12/05'],
-		datasets: [
-			{
-				label: 'Time without traffic',
-				fill: 'start',
-				numberDesc:
-					'This data represents the total delay time for one week/month/year. In other words, how many minutes was the user wasted on the way to and from work during this time.',
-				data: [0, 13, 24, 28, 32],
+	// var chartData = {
+	// 	// labels: Array.from(new Array(10), (_, i) => (i === 0 ? 1 : i)),
+	// 	labels: ['08/05', '09/05', '10/05', '11/05', '12/05'],
+	// 	datasets: [
+	// 		{
+	// 			label: 'Time without traffic',
+	// 			fill: 'start',
+	// 			numberDesc:
+	// 				'This data represents the total delay time for one week/month/year. In other words, how many minutes was the user wasted on the way to and from work during this time.',
+	// 			data: [20, 13, 24, 28, 32],
 
-				backgroundColor: 'rgba(0,123,255,0.1)',
-				borderColor: 'rgba(0,123,255,1)',
-				pointBackgroundColor: '#ffffff',
-				pointHoverBackgroundColor: 'rgb(0,123,255)',
-				borderWidth: 1.5,
-				pointRadius: 0,
-				pointHoverRadius: 3
-			},
-			{
-				label: 'Travel Time with Traffic',
-				fill: 'start',
-				numberDesc:
-					'This data represents the total delay time for one week/month/year. In other words, how many minutes was the user wasted on the way to and from work during this time.',
-				data: [0, 20, 30, 50, 60],
-				backgroundColor: 'rgba(255,65,105,0.1)',
-				borderColor: 'rgba(255,65,105,1)',
-				pointBackgroundColor: '#ffffff',
-				pointHoverBackgroundColor: 'rgba(255,65,105,1)',
-				borderWidth: 1.5,
-				pointRadius: 0,
-				pointHoverRadius: 3
-			}
-		]
-	};
+	// 			backgroundColor: 'rgba(0,123,255,0.1)',
+	// 			borderColor: 'rgba(0,123,255,1)',
+	// 			pointBackgroundColor: '#ffffff',
+	// 			pointHoverBackgroundColor: 'rgb(0,123,255)',
+	// 			borderWidth: 1.5,
+	// 			pointRadius: 0,
+	// 			pointHoverRadius: 3
+	// 		},
+	// 		{
+	// 			label: 'Travel Time with Traffic',
+	// 			fill: 'start',
+	// 			numberDesc:
+	// 				'This data represents the total delay time for one week/month/year. In other words, how many minutes was the user wasted on the way to and from work during this time.',
+	// 			data: [22, 20, 30, 50, 60],
+	// 			backgroundColor: 'rgba(255,65,105,0.1)',
+	// 			borderColor: 'rgba(255,65,105,1)',
+	// 			pointBackgroundColor: '#ffffff',
+	// 			pointHoverBackgroundColor: 'rgba(255,65,105,1)',
+	// 			borderWidth: 1.5,
+	// 			pointRadius: 0,
+	// 			pointHoverRadius: 3
+	// 		}
+	// 	]
+	// };
 
 	if (currentInfo) {
-		chartData = {
-			labels: ['08/05', '09/05', '10/05', '11/05', '12/05'],
-			datasets: [
-				{
-					label: 'Time without traffic',
-					fill: 'start',
-					numberDesc:
-						'This data represents the total delay time for one week/month/year. In other words, how many minutes was the user wasted on the way to and from work during this time.',
-					data: [0, 13, 24, 28, 32],
+		// chartData = {
+		// 	labels: ['08/05', '09/05', '10/05', '11/05', '12/05'],
+		// 	datasets: [
+		// 		{
+		// 			label: 'Time without traffic',
+		// 			fill: 'start',
+		// 			numberDesc:
+		// 				'This data represents the total delay time for one week/month/year. In other words, how many minutes was the user wasted on the way to and from work during this time.',
+		// 			data: [0, 13, 24, 28, 32],
 
-					backgroundColor: 'rgba(0,123,255,0.1)',
-					borderColor: 'rgba(0,123,255,1)',
-					pointBackgroundColor: '#ffffff',
-					pointHoverBackgroundColor: 'rgb(0,123,255)',
-					borderWidth: 1.5,
-					pointRadius: 0,
-					pointHoverRadius: 3
-				},
-				{
-					label: 'Travel Time with Traffic',
-					fill: 'start',
-					numberDesc:
-						'This data represents the total delay time for one week/month/year. In other words, how many minutes was the user wasted on the way to and from work during this time.',
-					data: [0, 20, 30, 50, 60],
-					backgroundColor: 'rgba(255,65,105,0.1)',
-					borderColor: 'rgba(255,65,105,1)',
-					pointBackgroundColor: '#ffffff',
-					pointHoverBackgroundColor: 'rgba(255,65,105,1)',
-					borderWidth: 1.5,
-					pointRadius: 0,
-					pointHoverRadius: 3
-				}
-			]
-		};
+		// 			backgroundColor: 'rgba(0,123,255,0.1)',
+		// 			borderColor: 'rgba(0,123,255,1)',
+		// 			pointBackgroundColor: '#ffffff',
+		// 			pointHoverBackgroundColor: 'rgb(0,123,255)',
+		// 			borderWidth: 1.5,
+		// 			pointRadius: 0,
+		// 			pointHoverRadius: 3
+		// 		},
+		// 		{
+		// 			label: 'Travel Time with Traffic',
+		// 			fill: 'start',
+		// 			numberDesc:
+		// 				'This data represents the total delay time for one week/month/year. In other words, how many minutes was the user wasted on the way to and from work during this time.',
+		// 			data: [0, 20, 30, 50, 60],
+		// 			backgroundColor: 'rgba(255,65,105,0.1)',
+		// 			borderColor: 'rgba(255,65,105,1)',
+		// 			pointBackgroundColor: '#ffffff',
+		// 			pointHoverBackgroundColor: 'rgba(255,65,105,1)',
+		// 			borderWidth: 1.5,
+		// 			pointRadius: 0,
+		// 			pointHoverRadius: 3
+		// 		}
+		// 	]
+		// };
 
 		smallStats = [
 			{
-				label: 'Time Wasted',
+				label: 'Time waste in traffic',
 				value: currentInfo.environment
 					? currentInfo.environment.timeWaste
 					: '0',
-				numberDesc:
-					'This data represents the total delay time for one week/month/year. In other words, how many minutes was the user wasted on the way to and from work during this time.',
+				numberDesc: `This is the time you’re wasting in a day (or, week / month / year, depending on the selected period).
+					 Time Wasted = Total Travel Time in Peak Hours - Total Travel Time in Off - Peak Hours
+					 *Data Source: Google API`,
 				increase: true,
 				unit: 'Mins',
 				attrs: { md: '6', sm: '6' }
@@ -117,8 +120,9 @@ const Overview = ({
 			{
 				label: 'Spending',
 				value: currentInfo.price ? currentInfo.price.totalMoneySpent : '0',
-				numberDesc:
-					'This data shows the amount the user spent on the car during one week/month/year. This fee includes fuel price, insurance price and maintenance services price.',
+				numberDesc: `This is the money you’re spending in a day (or, week / month / year, depending on the selected period). 
+					Money Spent =  Fuel Price + Average Insurance Price + Average Maintenance Price 
+					*Please note that the average insurance and maintenance prices were taken from a report published by the Australian Automobile Association in 2018`,
 				unit: '$',
 				increase: true,
 				attrs: { md: '6', sm: '6' }
@@ -128,8 +132,8 @@ const Overview = ({
 				value: currentInfo.environment
 					? currentInfo.environment.carCarbon
 					: '0',
-				numberDesc:
-					'This data presents how many carbon dioxide are created by using current travel method during a week/month/year. Cars emit a lot of Carbon dioxide, which aggravates the greenhouse effect. (The industrialization of the world has led to a sharp increase in atmospheric carbon dioxide, of which 30% comes from automobile exhaust.)',
+				numberDesc: `This is your carbon footprint, i.e. how much carbon dioxide your car emits in a day (or, week / month / year, depending on the selected period) 
+					*Please note that this is an average value, actual levels may vary`,
 				unit: 'Kg CO2e',
 
 				increase: false,
@@ -141,8 +145,8 @@ const Overview = ({
 				value: currentInfo.environment
 					? currentInfo.environment.treesRequired
 					: '0',
-				numberDesc:
-					'This data presents how many trees are needed to absorb those created carbon dioxide',
+				numberDesc: `This is how many trees it would take to undo your carbon footprint, 
+					i.e. to absorb the carbon dioxide your car generated in a day (or, week / month / year, depending on the selected period).`,
 				unit: 'Num Of Trees',
 				increase: false,
 				decrease: true,
@@ -163,7 +167,9 @@ const Overview = ({
 				ptvTime
 			} = currentParam;
 
-			fetchDefaultResult(
+			setDefaultLoading(true);
+
+			fetchDefaultResultIteration3(
 				distance,
 				days,
 				congestion,
@@ -176,6 +182,7 @@ const Overview = ({
 			);
 		}
 	};
+
 	const subtitle = currentParam
 		? `From ${currentParam.livingSuburb} to ${
 				currentParam.workingSuburb
@@ -184,7 +191,6 @@ const Overview = ({
 
 	return (
 		<Fade in={true}>
-			<Navigation />
 			<Container
 				style={{ position: 'relative' }}
 				fluid
@@ -192,11 +198,6 @@ const Overview = ({
 			>
 				<Row noGutters className='page-header py-4'>
 					<Col lg='10' md='12' sm='12'>
-						{/* <PageTitle
-							title='Here Is Your Current Spending Overview'
-							subtitle={subtitle}
-							className='text-sm-left mb-12'
-						/> */}
 						<h6 style={{ fontSize: '1.6rem' }} className='text-sm-left mb-3'>
 							Here Is Your Current Spending Overview
 						</h6>
@@ -218,74 +219,88 @@ const Overview = ({
 									setPeriod(event.target.value);
 								}}
 							>
+								<MenuItem value={'Day'}>Daily</MenuItem>
 								<MenuItem value={'Week'}>Weekly</MenuItem>
 								<MenuItem value={'Month'}>Monthly</MenuItem>
 								<MenuItem value={'Year'}>Yearly</MenuItem>
 							</Select>
 						</FormControl>
 					</Col>
-					{/* <Col
-						lg='2'
-						md='6'
-						sm='6'
-						xs='6'
-						style={{ marginTop: '20px', textAlign: 'right' }}
-					>
-						<Button onClick={() => toggle(!open)}>Advanced Search</Button>
-					</Col> */}
 				</Row>
 
 				<Row>
-					{smallStats.map((stats, idx) => (
-						<Col className='col-lg mb-4' key={idx} {...stats.attrs}>
-							<SmallStats
-								id={`small-stats-${idx}`}
-								variation='1'
-								numberDesc={stats.numberDesc}
-								chartData={stats.datasets}
-								chartLabels={stats.chartLabels}
-								label={stats.label}
-								unit={stats.unit}
-								value={stats.value}
-								percentage={stats.percentage}
-								increase={stats.increase}
-								decrease={stats.decrease}
+					{loading ? (
+						<Col lg='8' md='6' sm='12' className='mb-4'>
+							<CircularProgress
+								style={{ position: 'absolute', left: '50%', top: '40%' }}
 							/>
 						</Col>
-					))}
-				</Row>
-				{/* <Row>
-					{smallStatsRow2.map((stats, idx) => (
-						<Col className='col-lg mb-4' key={idx} {...stats.attrs}>
-							<SmallStats
-								id={`small-stats-${idx}`}
-								variation='1'
-								numberDesc={stats.numberDesc}
-								chartData={stats.datasets}
-								chartLabels={stats.chartLabels}
-								label={stats.label}
-								unit={stats.unit}
-								value={stats.value}
-								percentage={stats.percentage}
-								increase={stats.increase}
-								decrease={stats.decrease}
-							/>
-						</Col>
-					))}
-				</Row> */}
-
-				<Row>
-					<Col lg='8' md='12' sm='12' className='mb-4'>
-						<UsersOverview chartData={chartData} />
-					</Col>
+					) : (
+						<>
+							<Col lg='4' md='12' sm='12' className='mb-4'>
+								{smallStats.map((stats, idx) =>
+									idx < 2 ? (
+										<Col
+											style={{ height: '50%' }}
+											className='col-lg mb-4'
+											key={idx}
+											{...stats.attrs}
+										>
+											<SmallStats
+												id={`small-stats-${idx}`}
+												variation='1'
+												numberDesc={stats.numberDesc}
+												chartData={stats.datasets}
+												chartLabels={stats.chartLabels}
+												label={stats.label}
+												unit={stats.unit}
+												value={stats.value}
+												percentage={stats.percentage}
+												increase={stats.increase}
+												decrease={stats.decrease}
+											/>
+										</Col>
+									) : (
+										<></>
+									)
+								)}
+							</Col>
+							<Col lg='4' md='12' sm='12' className='mb-4'>
+								{smallStats.map((stats, idx) =>
+									idx >= 2 ? (
+										<Col
+											style={{ height: '50%' }}
+											className='col-lg mb-4'
+											key={idx}
+											{...stats.attrs}
+										>
+											<SmallStats
+												id={`small-stats-${idx}`}
+												variation='1'
+												numberDesc={stats.numberDesc}
+												chartData={stats.datasets}
+												chartLabels={stats.chartLabels}
+												label={stats.label}
+												unit={stats.unit}
+												value={stats.value}
+												percentage={stats.percentage}
+												increase={stats.increase}
+												decrease={stats.decrease}
+											/>
+										</Col>
+									) : (
+										<></>
+									)
+								)}
+							</Col>
+						</>
+					)}
 
 					<Col lg='4' md='6' sm='12' className='mb-4'>
 						<LearnMoreCard
 							cardHeader='Want a way to stop this?'
 							title='Make Change'
 							img={Bike}
-							// img='https://images.pexels.com/photos/1769349/pexels-photo-1769349.jpeg?cs=srgb&dl=action-adult-bicycle-1769349.jpg&fm=jpg'
-							// img='https://s23705.pcdn.co/wp-content/uploads/2019/02/Insurance.jpg'
 							text='Save up to $1000 yearly by changing the way your travel'
 							buttonText='Learn More &rarr;'
 							btnTheme='warning'
@@ -293,33 +308,6 @@ const Overview = ({
 						/>
 					</Col>
 				</Row>
-
-				{/* <Modal open={open} toggle={() => toggle(!open)}>
-					<ModalHeader>Advanced Search</ModalHeader>
-					<ModalBody>
-						<Form>
-							<FormGroup>
-								<label htmlFor='username'>Input</label>
-								<FormInput id='username' />
-								<label htmlFor='username'>Input</label>
-								<FormInput id='username' />
-								<label htmlFor='username'>Input</label>
-								<FormInput id='username' />
-								<label htmlFor='username'>Input</label>
-								<FormInput id='username' />
-								<label htmlFor='username'>Input</label>
-								<FormInput id='username' />
-								<label htmlFor='username'>Input</label>
-								<FormInput id='username' />
-								<label htmlFor='username'>Input</label>
-								<FormInput id='username' />
-							</FormGroup>
-						</Form>
-					</ModalBody>
-					<ModalFooter>
-						<Button>Search</Button>
-					</ModalFooter>
-				</Modal> */}
 				<Link to='/iteration3'>
 					<Fab
 						color='primary'
@@ -348,51 +336,56 @@ Overview.defaultProps = {
 			label: 'Time Wasted',
 			value: '0',
 			unit: 'Mins',
-			numberDesc:
-				'This data presents how many minutes user wasted due to traffic congestion',
+			numberDesc: `This is the time you’re wasting in a day (or, week / month / year, depending on the selected period). 
+				Time Wasted = Total Travel Time in Peak Hours - Total Travel Time in Off - Peak Hours 
+				*Data Source: Google API`,
 			increase: true,
-			attrs: { md: '6', sm: '6' }
+			attrs: { md: '12', sm: '6' }
 		},
 		{
 			label: 'Spending',
 			value: '0',
 			unit: '$',
-			numberDesc: 'This data presents how much money you spend',
+			numberDesc: `This is the money you’re spending in a day (or, week / month / year, depending on the selected period). 
+				Money Spent = Fuel Price + Average Insurance Price + Average Maintenance Price 
+				*Please note that the average insurance and maintenance prices were taken from a report published by the Australian Automobile Association in 2018`,
 
 			increase: true,
-			attrs: { md: '6', sm: '6' }
+			attrs: { md: '12', sm: '6' }
 		},
 		{
 			label: 'Carbon Footprint',
 			value: '0',
 			unit: 'Kg CO2e',
-			numberDesc:
-				'This data presents how many carbon dioxide are created by using current travel method',
+			numberDesc: `This is your carbon footprint, i.e. how much carbon dioxide your car emits in a day (or, week / month / year, depending on the selected period) 
+				*Please note that this is an average value, actual levels may vary`,
 			increase: false,
 			decrease: true,
-			attrs: { md: '6', sm: '6' }
+			attrs: { md: '12', sm: '6' }
 		},
 		{
 			label: 'Environmental Impact',
 			value: '0',
 			unit: 'Num Of Trees',
-			numberDesc:
-				'This data presents how many trees are needed to absorb those created carbon dioxide',
+			numberDesc: `This is how many trees it would take to undo your carbon footprint, 
+						i.e. to absorb the carbon dioxide your car generated in a day (or, week / month / year, depending on the selected period).`,
 			increase: false,
 			decrease: true,
-			attrs: { md: '6', sm: '6' }
+			attrs: { md: '12', sm: '6' }
 		}
 	]
 };
 
-const mapStateToProps = ({ info }) => {
+const mapStateToProps = ({ info, loading }) => {
+	console.log('I3 OVERVIEW MAPSTATETOPROPS', info, loading);
 	return {
 		currentInfo: info.currentInfo,
-		currentParam: info.currentParam
+		currentParam: info.currentParam,
+		loading: loading.fetchDefaultloading
 	};
 };
 
 export default connect(
 	mapStateToProps,
-	{ fetchDefaultResult }
+	{ fetchDefaultResultIteration3, setDefaultLoading }
 )(Overview);

@@ -11,6 +11,7 @@ import {
 	PopoverBody,
 	Popover
 } from 'shards-react';
+
 import Tooltip from '@material-ui/core/Tooltip';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
@@ -49,6 +50,7 @@ class SmallStats extends React.Component {
 			percentage,
 			increase,
 			unit,
+			id,
 			numberDesc
 		} = this.props;
 		const cardClasses = classNames(
@@ -92,10 +94,8 @@ class SmallStats extends React.Component {
 			`stats-small__percentage--${increase ? 'increase' : 'decrease'}`
 		);
 
-		const canvasHeight = variation === '1' ? 120 : 60;
-
 		return (
-			<Card large className={cardClasses}>
+			<Card large className={cardClasses} style={{ height: '92%' }}>
 				<CardBody className={cardBodyClasses}>
 					<div className={innerWrapperClasses}>
 						<div className={dataFieldClasses}>
@@ -115,6 +115,7 @@ class SmallStats extends React.Component {
 						)}
 					</div>
 				</CardBody>
+
 				<Button
 					style={{
 						position: 'absolute',
@@ -123,21 +124,26 @@ class SmallStats extends React.Component {
 					}}
 					size='sm'
 					onClick={this.toggle}
-					id='popover-1'
+					// id='popover-1'
+					id={id}
 				>
-					V
+					Learn More
 				</Button>
+
 				<Popover
-					target='#popover-1'
+					// target='#popover-1'
+					target={`#${id}`}
 					placement='bottom'
 					open={this.state.open}
 					toggle={this.toggle}
 				>
-					<PopoverHeader>Title here</PopoverHeader>
+					<PopoverHeader>How we calculate this number ?</PopoverHeader>
 					<PopoverBody>
-						Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus
-						terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer
-						labore wes anderson cred nesciunt sapiente ea proident.
+						{numberDesc.split('\n').map((item, i) => (
+							<p style={{ marginBottom: '0.25rem' }} key={i}>
+								{item}
+							</p>
+						))}
 					</PopoverBody>
 				</Popover>
 				{/* <MuiThemeProvider theme={theme}>

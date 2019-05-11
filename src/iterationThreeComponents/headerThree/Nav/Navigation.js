@@ -46,7 +46,9 @@ class Navigation extends Component {
 	render() {
 		return (
 			<Navbar type='dark' theme='primary' expand='md'>
-				<NavbarBrand href='#'>Eco-Melbourne</NavbarBrand>
+				<Link to='/'>
+					<NavbarBrand href='#'>Eco-Melbourne</NavbarBrand>
+				</Link>
 				<NavbarToggler onClick={this.toggleNavbar} />
 
 				<Collapse open={this.state.collapseOpen} navbar>

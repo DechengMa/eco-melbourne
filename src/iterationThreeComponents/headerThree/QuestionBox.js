@@ -15,7 +15,8 @@ import { GOOGLEMAPAPI } from '../../config/keys';
 import LocationSearchInput from '../utils/LocationSearchInput';
 import { connect } from 'react-redux';
 import {
-	fetchDefaultResult,
+	fetchDefaultResultIteration3,
+	fetchComparsionResultIteration3,
 	setCurrentValue,
 	fetchComparsionResult,
 	setDefaultLoading
@@ -30,7 +31,7 @@ class QuestionBox extends Component {
 	state = {
 		livingSuburb: '',
 		workingSuburb: '',
-		period: 'Week',
+		period: 'Day',
 		postParams: {
 			livingSuburb: '',
 			workingSuburb: '',
@@ -40,7 +41,12 @@ class QuestionBox extends Component {
 			distance: '',
 			daysWork: '1',
 			congestion: '',
-			period: 'Week',
+			period: 'Day',
+			ptvWalkingTime: '',
+			carTimeMorning: '',
+			carTimeAfternoon: '',
+			congestionMorning: '',
+			congestionAfternoon: '',
 			timeGoToWork: get_next_weekday(8),
 			timeLeaveWork: get_next_weekday(17)
 		},
@@ -50,7 +56,7 @@ class QuestionBox extends Component {
 	};
 
 	componentDidMount() {
-		this.getNextFiveDaysPrediction();
+		// this.getNextFiveDaysPrediction();
 	}
 
 	handleLivingSelect = address => {
@@ -93,7 +99,6 @@ class QuestionBox extends Component {
 
 	onChangeLeave = value => {
 		const [hours, mins] = value.format('HH:mm').split(':');
-		console.log(hours, mins);
 		const timeLeaveWork = get_next_weekday(hours, mins);
 		this.setState(prevState => ({
 			...prevState,
@@ -107,16 +112,15 @@ class QuestionBox extends Component {
 
 	handleClick = () => {
 		var hasError = false;
-		const { livingSuburb, workingSuburb, daysWork } = this.state.postParams;
-		const validArr = [livingSuburb, workingSuburb, daysWork];
-		const validaArrName = ['livingSuburb', 'workingSuburb', 'daysWork'];
+		const { livingSuburb, workingSuburb } = this.state.postParams;
+		const validArr = [livingSuburb, workingSuburb];
+		const validaArrName = ['livingSuburb', 'workingSuburb'];
 		const validMsg = [
 			'Please select a valid suburb',
-			'Please select a valid suburb',
-			'Please select a how many days you work weekly'
+			'Please select a valid suburb'
 		];
 		validArr.forEach((e, index) => {
-			if (e === '') {
+			if (e === '' || livingSuburb === workingSuburb) {
 				this.setState(prevState => ({
 					error: {
 						...prevState.error,
@@ -133,62 +137,10 @@ class QuestionBox extends Component {
 		this.getDistance(livingSuburb, workingSuburb);
 	};
 
-	getNextFiveDaysPrediction = (baseLocation, targetLocation) => {
-		// var predictData = [{ date: { travelTime: 12, tra_in_traffic: 15 } }];
-		const { google } = this.props;
-
-		var service = new google.maps.DistanceMatrixService();
-
-		const nextWeekArr = get_next_week_arr(8, 17, 0);
-
-		nextWeekArr.forEach(date => {
-			console.log(date);
-			// date.forEach(e => {
-			// 	this.setState(state)
-			// 	predictData.forEach(element => {
-			// 		if(e === date){
-			// 			// alrealdy have one predicton, just add another
-			// 			if(date.travelTime){
-			// 				date.travelTime = date.travelTime + travelTime
-			// 			}else {
-			// 				date.travelTime = travelTime
-			// 			}
-			// 			if(date.tra_in_traffic){
-			// 				date.tra_in_traffic = date.tra_in_traffic + tra_in_traffic
-			// 			}else {
-			// 				date.tra_in_traffic = tra_in_traffic
-			// 			}
-			// 		}
-			// 	});
-			// });
-		});
-
-		// service.getDistanceMatrix(
-		// 	{
-		// 		...originsAndDest,
-		// 		travelMode: 'DRIVING',
-		// 		drivingOptions: { departureTime: dptTime, trafficModel: 'bestguess' }
-		// 	},
-		// 	(response, status) => {
-		// 		if (status !== 'OK') {
-		// 			console.log('ERROR!', status);
-		// 		} else {
-		// 			const data = response.rows[0].elements[0];
-		// 			const duration_in_traffic = data.duration_in_traffic.value / 60;
-		// 			const carTime = data.duration_in_traffic.value / 60;
-
-		// 			this.setState(prevState => ({
-
-		// 			}));
-		// 			this.fetchResultFromBackEnd();
-		// 		}
-		// 	}
-		// );
-	};
-
 	getDistance = (baseLocation, targetLocation) => {
 		const { google } = this.props;
-		var dptTime = get_next_weekday();
+		// var dptTime = get_next_weekday();
+		const { timeGoToWork, timeLeaveWork } = this.state.postParams;
 
 		var service = new google.maps.DistanceMatrixService();
 
@@ -203,7 +155,10 @@ class QuestionBox extends Component {
 			{
 				...originsAndDest,
 				travelMode: 'DRIVING',
-				drivingOptions: { departureTime: dptTime, trafficModel: 'bestguess' }
+				drivingOptions: {
+					departureTime: timeGoToWork,
+					trafficModel: 'bestguess'
+				}
 			},
 			(response, status) => {
 				if (status !== 'OK') {
@@ -228,19 +183,76 @@ class QuestionBox extends Component {
 						}));
 						return;
 					}
-					// TODO use congestion for morning and afternoon
-					const congestion =
+					const congestionMorning =
 						(data.duration_in_traffic.value - data.duration.value) / 60;
 
-					const carTime = data.duration_in_traffic.value / 60;
-
+					const carTimeMorning = data.duration_in_traffic.value / 60;
+					console.log(
+						'GOOGLE ==== congestionMorning, carTimeMorning',
+						congestionMorning,
+						carTimeMorning
+					);
 					this.setState(prevState => ({
 						postParams: {
 							...prevState.postParams,
 							distance: distance,
-							congestion: congestion,
-							carTime: carTime,
-							period: 'Week'
+							congestionMorning: congestionMorning,
+							carTimeMorning: carTimeMorning,
+							period: 'Day'
+						}
+					}));
+					this.fetchResultFromBackEnd();
+				}
+			}
+		);
+
+		service.getDistanceMatrix(
+			{
+				...originsAndDest,
+				travelMode: 'DRIVING',
+				drivingOptions: {
+					departureTime: timeLeaveWork,
+					trafficModel: 'bestguess'
+				}
+			},
+			(response, status) => {
+				if (status !== 'OK') {
+					console.log('ERROR!', status);
+				} else {
+					const data = response.rows[0].elements[0];
+					const distance = data.distance.text.substring(
+						0,
+						data.distance.text.length - 2
+					);
+					if (distance > 300) {
+						this.props.setDefaultLoading(false);
+						this.setState(prevState => ({
+							error: {
+								...prevState.error,
+								livingSuburb:
+									'Invalid address, please only input address inside Melbourne',
+								workingSuburb:
+									'Invalid address, please only input address inside Melbourne'
+							}
+						}));
+						return;
+					}
+					const congestionAfternoon =
+						(data.duration_in_traffic.value - data.duration.value) / 60;
+
+					const carTimeAfternoon = data.duration_in_traffic.value / 60;
+					console.log(
+						'GOOGLE ==== congestionMorning, carTimeMorning',
+						congestionAfternoon,
+						carTimeAfternoon
+					);
+					this.setState(prevState => ({
+						postParams: {
+							...prevState.postParams,
+							distance: distance,
+							congestionAfternoon: congestionAfternoon,
+							carTimeAfternoon: carTimeAfternoon,
+							period: 'Day'
 						}
 					}));
 					this.fetchResultFromBackEnd();
@@ -252,16 +264,58 @@ class QuestionBox extends Component {
 		const travelModePostParams = ['ptvTime', 'bicycleTime', 'walkingTime'];
 
 		travelModeArr.forEach((e, index) => {
+			if (e === 'TRANSIT') {
+				const DirectionsService = new google.maps.DirectionsService();
+
+				DirectionsService.route(
+					{
+						origin: baseLocation,
+						destination: targetLocation,
+						travelMode: e,
+						transitOptions: {
+							departureTime: timeGoToWork
+						}
+					},
+					(result, status) => {
+						if (status === google.maps.DirectionsStatus.OK) {
+							var ptvWalkingTime = 0;
+							if (result && result.routes[0] && result.routes[0].legs[0]) {
+								const steps = result.routes[0].legs[0].steps;
+								steps.forEach(step => {
+									if (step.travel_mode === 'WALKING') {
+										console.log('travel_mode === walking', step.duration.value);
+										ptvWalkingTime += step.duration.value;
+									}
+								});
+							}
+							const ptvWalkingTimeMins = ptvWalkingTime / 60;
+							console.log('ptvWalkingTimeMins', ptvWalkingTimeMins);
+							this.setState(prevState => ({
+								...prevState,
+								postParams: {
+									...prevState.postParams,
+									ptvWalkingTime: ptvWalkingTimeMins
+								}
+							}));
+							this.fetchResultFromBackEnd();
+						} else {
+							console.error(`error fetching directions ${result}`);
+						}
+					}
+				);
+			}
+
 			service.getDistanceMatrix(
 				{
 					...originsAndDest,
 					travelMode: e,
-					transitOptions: { departureTime: dptTime }
+					transitOptions: { departureTime: timeGoToWork }
 				},
 				(res, status) => {
 					if (status !== 'OK') {
 						console.log('ERROR!', status);
 					} else {
+						console.log(e, 'DATA FROM GOOGLE', res);
 						const data = res.rows[0].elements[0];
 						if (!(data && data.duration && data.duration.value)) {
 							this.props.setDefaultLoading(false);
@@ -274,10 +328,11 @@ class QuestionBox extends Component {
 										'Invalid address, please only input address inside Melbourne'
 								}
 							}));
-							return;
 						}
+
 						const name = travelModePostParams[index];
 						this.setState(prevState => ({
+							...prevState,
 							postParams: {
 								...prevState.postParams,
 								[name]: data.duration.value / 60
@@ -293,24 +348,33 @@ class QuestionBox extends Component {
 
 	fetchResultFromBackEnd = () => {
 		const {
-			carTime,
+			livingSuburb,
+			workingSuburb,
+			carTimeAfternoon,
+			carTimeMorning,
 			bicycleTime,
 			walkingTime,
 			ptvTime,
 			distance,
-			congestion,
+			congestionMorning,
+			congestionAfternoon,
 			daysWork,
-			period
+			period,
+			ptvWalkingTime
 		} = this.state.postParams;
-		const { livingSuburb, workingSuburb } = this.state;
-
 		if (
 			(bicycleTime !== '' && walkingTime !== '',
 			ptvTime !== '',
 			distance !== '',
-			congestion !== '')
+			carTimeMorning !== '',
+			carTimeAfternoon !== '',
+			congestionMorning !== '',
+			congestionAfternoon !== '',
+			ptvWalkingTime !== '')
 		) {
-			this.props.fetchDefaultResult(
+			const carTime = carTimeMorning + carTimeAfternoon;
+			const congestion = congestionMorning + congestionAfternoon;
+			this.props.fetchDefaultResultIteration3(
 				distance,
 				daysWork,
 				congestion,
@@ -321,7 +385,7 @@ class QuestionBox extends Component {
 				ptvTime,
 				this.props.history
 			);
-			this.props.fetchComparsionResult(
+			this.props.fetchComparsionResultIteration3(
 				distance,
 				daysWork,
 				congestion,
@@ -329,7 +393,8 @@ class QuestionBox extends Component {
 				carTime,
 				bicycleTime,
 				walkingTime,
-				ptvTime
+				ptvTime,
+				ptvWalkingTime
 			);
 			this.props.setCurrentValue(
 				livingSuburb,
@@ -431,11 +496,11 @@ class QuestionBox extends Component {
 						</Container>
 						<br />
 						<Button
-							style={{ height: '35px', marginTop: '10px' }}
+							style={{ height: '35px', width: '115px', marginTop: '10px' }}
 							onClick={this.handleClick}
 						>
 							{this.props.loading ? (
-								<CircularProgress size={20} style={{ color: '#fff' }} />
+								<CircularProgress size={18} style={{ color: '#fff' }} />
 							) : (
 								'GET STARTED'
 							)}
@@ -455,8 +520,8 @@ const mapStateToProps = ({ loading }) => {
 export default connect(
 	mapStateToProps,
 	{
-		fetchDefaultResult,
-		fetchComparsionResult,
+		fetchDefaultResultIteration3,
+		fetchComparsionResultIteration3,
 		setCurrentValue,
 		setDefaultLoading
 	}

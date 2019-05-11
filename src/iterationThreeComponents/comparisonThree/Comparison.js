@@ -1,7 +1,15 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Container, Row, Col, Button, Card, CardBody } from 'shards-react';
+import {
+	Container,
+	Row,
+	Col,
+	Button,
+	Card,
+	CardBody,
+	Fade
+} from 'shards-react';
 import {
 	FormControl,
 	InputLabel,
@@ -10,12 +18,14 @@ import {
 	Fab
 } from '@material-ui/core';
 import { Home } from '@material-ui/icons';
-import { fetchComparsionResult } from '../../actions';
+import {
+	fetchComparsionResult,
+	fetchComparsionResultIteration3
+} from '../../actions';
 import { Link } from 'react-router-dom';
 
 import PageTitle from '../components/common/PageTitle';
 import SmallStats from '../components/common/SmallStats';
-import UsersByDevice from '../components/blog/UsersByDevice';
 import Navigation from '../headerThree/Nav/Navigation';
 import { Bar } from 'react-chartjs-2';
 
@@ -27,7 +37,7 @@ const Comparison = ({
 	currentParam,
 	fetchComparsionResult
 }) => {
-	const [period, setPeriod] = useState('Week');
+	const [period, setPeriod] = useState('Day');
 	const chartOptions = {
 		scales: {
 			xAxes: [
@@ -82,285 +92,106 @@ const Comparison = ({
 		]
 	};
 
+	var alternate_1ModeName = '';
+	var alternate_2ModeName = '';
+	var alternate_3ModeName = '';
+
 	console.log('Comparison.props.comparisonInfo', comparisonInfo);
 
-	const [modeOfTransit, changeMode] = useState('');
+	const [modeOfTransitShowing, changeMode] = useState('Alternate_1');
+	// const [alternateToShow, changeAlter] = useState('');
 
-	console.log(modeOfTransit);
+	console.log('modeOfTransitShowing', modeOfTransitShowing);
 	if (comparisonInfo) {
-		const numOfWay = Object.keys(comparisonInfo).length;
-		if (numOfWay === 1) {
-			if (modeOfTransit !== comparisonInfo.Alternate.modeOfTransit) {
-				changeMode(comparisonInfo.Alternate.modeOfTransit);
-			}
+		console.log('COMPARESONINFO', comparisonInfo);
+		var travelMethodToShow = comparisonInfo[modeOfTransitShowing];
 
-			data = {
-				labels: ['Money Spend $', 'Travel Time (mins)'],
-				datasets: [
-					{
-						label: 'Car',
-						...moneySpentBarStyle,
-						data: [
-							comparisonInfo.Alternate.carMoney,
-							comparisonInfo.Alternate.carTime
-						]
-					},
-					{
-						label: 'PTV',
-						...travelTimeBarStyle,
-						data: [
-							comparisonInfo.Alternate.ptvMoney,
-							comparisonInfo.Alternate.ptvTime
-						]
-					}
-				]
-			};
+		if (comparisonInfo.Alternate_1) {
+			alternate_1ModeName = comparisonInfo.Alternate_1.modeOfTransit;
+			alternate_2ModeName = comparisonInfo.Alternate_2.modeOfTransit;
+			alternate_3ModeName = comparisonInfo.Alternate_3.modeOfTransit;
+		}
 
-			smallStats = [
+		data = {
+			labels: ['Money Spend $', 'Travel Time (mins)'],
+			datasets: [
 				{
-					label: 'Time Difference',
-					value: comparisonInfo.Alternate
-						? comparisonInfo.Alternate.timeDifferencePTV
-						: '0',
-					percentage: comparisonInfo.Alternate
-						? `${comparisonInfo.Alternate.timePercentage}%`
-						: '0',
-					increase: comparisonInfo.Alternate.timePercentage < 0 ? false : true,
-					unit: 'Mins',
-					numberDesc:
-						'This data presents how many minutes user wasted due to traffic congestion',
-					chartLabels: [null, null, null, null, null, null, null],
-					attrs: { md: '6', sm: '6' },
-					datasets: [
-						{
-							label: 'Today',
-							fill: 'start',
-							borderWidth: 1.5,
-							backgroundColor: 'rgba(0, 184, 216, 0.1)',
-							borderColor: 'rgb(0, 184, 216)',
-							data: [1, 2, 1, 3, 5, 4, 7]
-						}
-					]
+					label: 'Car',
+					...moneySpentBarStyle,
+					data: [travelMethodToShow.carMoney, travelMethodToShow.carTime]
 				},
 				{
-					label: 'Money Saved',
-					value: comparisonInfo ? comparisonInfo.Alternate.moneySaved : '0',
-					percentage: comparisonInfo.Alternate
-						? `${comparisonInfo.Alternate.moneyPercentage}%`
-						: '0',
-					increase: comparisonInfo.Alternate.moneyPercentage < 0 ? false : true,
-					numberDesc: 'This data presents how much money user saved.',
-					unit: '$',
-					chartLabels: [null, null, null, null, null, null, null],
-					attrs: { md: '6', sm: '6' },
-					datasets: [
-						{
-							label: 'Today',
-							fill: 'start',
-							borderWidth: 1.5,
-							backgroundColor: 'rgba(0, 184, 216, 0.1)',
-							borderColor: 'rgb(0, 184, 216)',
-							data: [1, 2, 1, 3, 5, 4, 7]
-						}
-					]
+					label: travelMethodToShow.modeOfTransit,
+					...travelTimeBarStyle,
+					data: [travelMethodToShow.newMoney, travelMethodToShow.newTime]
 				}
-			];
-		} else if (numOfWay === 2) {
-			if (
-				modeOfTransit !== comparisonInfo.Alternate_1.modeOfTransit &&
-				modeOfTransit !== comparisonInfo.Alternate_2.modeOfTransit
-			) {
-				changeMode(comparisonInfo.Alternate_1.modeOfTransit);
-			}
-			if (modeOfTransit === 'CYCLING') {
-				data = {
-					labels: ['Money Spend $', 'Travel Time (mins)'],
-					datasets: [
-						{
-							label: 'Car',
-							...moneySpentBarStyle,
-							data: [
-								comparisonInfo.Alternate_1.carMoney,
-								comparisonInfo.Alternate_1.carTime
-							]
-						},
-						{
-							label: 'Bicycle',
-							...travelTimeBarStyle,
-							data: [
-								comparisonInfo.Alternate_1.bicycleMoney,
-								comparisonInfo.Alternate_1.bicycleTime
-							]
-						}
-					]
-				};
-				smallStats = [
+			]
+		};
+		smallStats = [
+			{
+				label: 'Time Difference',
+				value: travelMethodToShow ? travelMethodToShow.timeDifference : '0',
+				percentage: travelMethodToShow
+					? `${travelMethodToShow.timePercentage}%`
+					: '0',
+				numberDesc: 'This data presents how many minutes you saved',
+				increase: travelMethodToShow.timePercentage < 0 ? false : true,
+				unit: 'Mins',
+				chartLabels: [null, null, null, null, null, null, null],
+				attrs: { md: '6', sm: '6' },
+				datasets: [
 					{
-						label: 'Time Difference',
-						value: comparisonInfo.Alternate_1
-							? comparisonInfo.Alternate_1.timeDifferenceCycling
-							: '0',
-						percentage: comparisonInfo.Alternate_1
-							? `${comparisonInfo.Alternate_1.timePercentage}%`
-							: '0',
-						numberDesc: 'This data presents how many minutes user saved',
-						increase:
-							comparisonInfo.Alternate_1.timePercentage < 0 ? false : true,
-						unit: 'Mins',
-						chartLabels: [null, null, null, null, null, null, null],
-						attrs: { md: '6', sm: '6' },
-						datasets: [
-							{
-								label: 'Today',
-								fill: 'start',
-								borderWidth: 1.5,
-								backgroundColor: 'rgba(0, 184, 216, 0.1)',
-								borderColor: 'rgb(0, 184, 216)',
-								data: [1, 2, 1, 3, 5, 4, 7]
-							}
-						]
-					},
-					{
-						label: 'Money Saved',
-						value: comparisonInfo ? comparisonInfo.Alternate_1.moneySaved : '0',
-						percentage: comparisonInfo.Alternate_1
-							? `${comparisonInfo.Alternate_1.moneyPercentage}%`
-							: '0',
-						numberDesc: 'This data presents how much money user saved',
-						increase:
-							comparisonInfo.Alternate_1.moneyPercentage < 0 ? false : true,
-						unit: '$',
-						chartLabels: [null, null, null, null, null, null, null],
-						attrs: { md: '6', sm: '6' },
-						datasets: [
-							{
-								label: 'Today',
-								fill: 'start',
-								borderWidth: 1.5,
-								backgroundColor: 'rgba(0, 184, 216, 0.1)',
-								borderColor: 'rgb(0, 184, 216)',
-								data: [1, 2, 1, 3, 5, 4, 7]
-							}
-						]
-					},
-					{
-						label: 'Calories Burnt',
-						value: comparisonInfo
-							? comparisonInfo.Alternate_1.caloriesBurnt
-							: '0',
-
-						// unit: '$',
-						numberDesc:
-							'This data presents how many calories are consumed by using current travel method',
-						chartLabels: [null, null, null, null, null, null, null],
-						attrs: { md: '6', sm: '6' },
-						datasets: [
-							{
-								label: 'Today',
-								fill: 'start',
-								borderWidth: 1.5,
-								backgroundColor: 'rgba(0, 184, 216, 0.1)',
-								borderColor: 'rgb(0, 184, 216)',
-								data: [1, 2, 1, 3, 5, 4, 7]
-							}
-						]
+						label: 'Today',
+						fill: 'start',
+						borderWidth: 1.5,
+						backgroundColor: 'rgba(0, 184, 216, 0.1)',
+						borderColor: 'rgb(0, 184, 216)',
+						data: [1, 2, 1, 3, 5, 4, 7]
 					}
-				];
-			} else if (modeOfTransit === 'WALKING') {
-				data = {
-					labels: ['Money Spend $', 'Travel Time (mins)'],
-					datasets: [
-						{
-							label: 'Car',
-							...moneySpentBarStyle,
-							data: [
-								comparisonInfo.Alternate_2.carMoney,
-								comparisonInfo.Alternate_2.carTime
-							]
-						},
-						{
-							label: 'Walking',
-							...travelTimeBarStyle,
-							data: [
-								comparisonInfo.Alternate_2.walkingMoney,
-								comparisonInfo.Alternate_2.walkingTime
-							]
-						}
-					]
-				};
-				smallStats = [
+				]
+			},
+			{
+				label: 'Money Saved',
+				value: comparisonInfo ? travelMethodToShow.moneySaved : '0',
+				percentage: travelMethodToShow
+					? `${travelMethodToShow.moneyPercentage}%`
+					: '0',
+				numberDesc: 'This data presents how much money user saved',
+				increase: travelMethodToShow.moneyPercentage < 0 ? false : true,
+				unit: '$',
+				chartLabels: [null, null, null, null, null, null, null],
+				attrs: { md: '6', sm: '6' },
+				datasets: [
 					{
-						label: 'Time Difference',
-						value: comparisonInfo.Alternate_2
-							? comparisonInfo.Alternate_2.timeDifferenceWalking
-							: '0',
-						percentage: comparisonInfo.Alternate_2
-							? `${comparisonInfo.Alternate_2.timePercentage}%`
-							: '0',
-						numberDesc: 'This data presents how many minutes user saved',
-						increase:
-							comparisonInfo.Alternate_2.timePercentage < 0 ? false : true,
-						unit: 'Mins',
-						chartLabels: [null, null, null, null, null, null, null],
-						attrs: { md: '6', sm: '6' },
-						datasets: [
-							{
-								label: 'Today',
-								fill: 'start',
-								borderWidth: 1.5,
-								backgroundColor: 'rgba(0, 184, 216, 0.1)',
-								borderColor: 'rgb(0, 184, 216)',
-								data: [1, 2, 1, 3, 5, 4, 7]
-							}
-						]
-					},
-					{
-						label: 'Money Saved',
-						value: comparisonInfo ? comparisonInfo.Alternate_2.moneySaved : '0',
-						percentage: comparisonInfo.Alternate_2
-							? `${comparisonInfo.Alternate_2.moneyPercentage}%`
-							: '0',
-						numberDesc: 'This data presents how much money user saved',
-						increase:
-							comparisonInfo.Alternate_2.moneyPercentage < 0 ? false : true,
-						unit: '$',
-						chartLabels: [null, null, null, null, null, null, null],
-						attrs: { md: '6', sm: '6' },
-						datasets: [
-							{
-								label: 'Today',
-								fill: 'start',
-								borderWidth: 1.5,
-								backgroundColor: 'rgba(0, 184, 216, 0.1)',
-								borderColor: 'rgb(0, 184, 216)',
-								data: [1, 2, 1, 3, 5, 4, 7]
-							}
-						]
-					},
-					{
-						label: 'Calories Burnt',
-						value: comparisonInfo
-							? comparisonInfo.Alternate_2.caloriesBurnt
-							: '0',
-
-						numberDesc:
-							'This data presents how many calories are consumed by using current travel method',
-						chartLabels: [null, null, null, null, null, null, null],
-						attrs: { md: '6', sm: '6' },
-						datasets: [
-							{
-								label: 'Today',
-								fill: 'start',
-								borderWidth: 1.5,
-								backgroundColor: 'rgba(0, 184, 216, 0.1)',
-								borderColor: 'rgb(0, 184, 216)',
-								data: [1, 2, 1, 3, 5, 4, 7]
-							}
-						]
+						label: 'Today',
+						fill: 'start',
+						borderWidth: 1.5,
+						backgroundColor: 'rgba(0, 184, 216, 0.1)',
+						borderColor: 'rgb(0, 184, 216)',
+						data: [1, 2, 1, 3, 5, 4, 7]
 					}
-				];
+				]
+			},
+			{
+				label: 'Calories Burnt',
+				value: comparisonInfo ? travelMethodToShow.caloriesBurnt : '0',
+				// unit: '$',
+				numberDesc:
+					'This data presents how many calories are consumed by using current selected travel method during a day/week/month/year.',
+				chartLabels: [null, null, null, null, null, null, null],
+				attrs: { md: '6', sm: '6' },
+				datasets: [
+					{
+						label: 'Today',
+						fill: 'start',
+						borderWidth: 1.5,
+						backgroundColor: 'rgba(0, 184, 216, 0.1)',
+						borderColor: 'rgb(0, 184, 216)',
+						data: [1, 2, 1, 3, 5, 4, 7]
+					}
+				]
 			}
-		}
+		];
 	}
 
 	var origin = '';
@@ -382,7 +213,7 @@ const Comparison = ({
 				ptvTime
 			} = currentParam;
 
-			fetchComparsionResult(
+			fetchComparsionResultIteration3(
 				distance,
 				days,
 				congestion,
@@ -397,11 +228,28 @@ const Comparison = ({
 
 	const renderMap = () => {
 		var travelMode = '';
-		if (modeOfTransit === 'PTV') {
+
+		switch (modeOfTransitShowing) {
+			case 'Alternate_1':
+				travelMode = alternate_1ModeName;
+				break;
+			case 'Alternate_2':
+				travelMode = alternate_2ModeName;
+				break;
+			case 'Alternate_3':
+				travelMode = alternate_3ModeName;
+				break;
+
+			default:
+				travelMode = alternate_1ModeName;
+				break;
+		}
+
+		if (travelMode === 'PTV') {
 			travelMode = 'TRANSIT';
-		} else if (modeOfTransit === 'CYCLING') {
+		} else if (travelMode === 'CYCLING') {
 			travelMode = 'BICYCLING';
-		} else if (modeOfTransit === 'WALKING') {
+		} else if (travelMode === 'WALKING') {
 			travelMode = 'WALKING';
 		}
 		console.log('renderMap', travelMode);
@@ -415,141 +263,147 @@ const Comparison = ({
 	};
 
 	return (
-		<>
-			{/* <Container
+		<Fade in={true}>
+			<Container
 				style={{ position: 'relative' }}
 				fluid
 				className='main-content-container px-4'
-			> */}
-			<Row noGutters className='page-header py-4'>
-				<Col
-					lg='10'
-					md='12'
-					sm='12'
-					style={{ fontSize: '1.6rem' }}
-					className='text-sm-left mb-3'
-				>
-					Have you ever thought of traveling by{' '}
-					{modeOfTransit === 'PTV' ? (
+			>
+				<Row noGutters className='page-header py-4'>
+					<Col
+						lg='10'
+						md='12'
+						sm='12'
+						style={{ fontSize: '1.6rem' }}
+						className='text-sm-left mb-3'
+					>
+						We recommend you to travel by
 						<Button
 							style={{ margin: '5px', fontSize: '1.2rem' }}
-							theme='success'
+							theme={
+								modeOfTransitShowing === 'Alternate_1' ? 'success' : 'secondary'
+							}
+							onClick={() => {
+								changeMode('Alternate_1');
+							}}
 						>
-							Public Transportation
+							{alternate_1ModeName === 'PTV'
+								? 'PUBLIC TRANSPORT'
+								: alternate_1ModeName}
 						</Button>
-					) : (
-						<>
-							<Button
-								style={{ margin: '5px', fontSize: '1.2rem' }}
-								theme={modeOfTransit === 'CYCLING' ? 'success' : 'secondary'}
-								onClick={() => changeMode('CYCLING')}
-							>
-								Cycling
-							</Button>
-							Or
-							<Button
-								style={{ margin: '5px', fontSize: '1.2rem' }}
-								theme={modeOfTransit === 'WALKING' ? 'success' : 'secondary'}
-								onClick={() => changeMode('WALKING')}
-							>
-								Walking
-							</Button>
-						</>
-					)}
-					? This is the difference!
-				</Col>
-				<Col
-					lg='2'
-					md='12'
-					sm='12'
-					xs='12'
-					style={{ marginTop: '20px', textAlign: 'right' }}
-				>
-					<FormControl variant='outlined'>
-						<InputLabel>Period</InputLabel>
-						<Select
-							value={period}
-							onChange={event => {
-								fetchDataFromBackEnd(event.target.value);
-								setPeriod(event.target.value);
+						, here is the difference!
+						<br />
+						<span style={{ fontSize: '1.2rem' }}>
+							Want to see others options? Click to Check
+						</span>
+						<Button
+							style={{ margin: '5px', fontSize: '1.0rem' }}
+							theme={
+								modeOfTransitShowing === 'Alternate_2' ? 'success' : 'secondary'
+							}
+							onClick={() => {
+								changeMode('Alternate_2');
 							}}
 						>
-							<MenuItem value={'Week'}>Weekly</MenuItem>
-							<MenuItem value={'Month'}>Monthly</MenuItem>
-							<MenuItem value={'Year'}>Yearly</MenuItem>
-						</Select>
-					</FormControl>
-				</Col>
-			</Row>
-
-			<Row>
-				{smallStats.map((stats, idx) => (
-					<Col className='col-lg mb-4' key={idx} {...stats.attrs}>
-						<SmallStats
-							id={`small-stats-${idx}`}
-							variation='1'
-							chartData={stats.datasets}
-							numberDesc={stats.numberDesc}
-							chartLabels={stats.chartLabels}
-							unit={stats.unit}
-							label={stats.label}
-							value={stats.value}
-							percentage={stats.percentage}
-							increase={stats.increase}
-							decrease={stats.decrease}
-						/>
-					</Col>
-				))}
-			</Row>
-
-			<Row>
-				<Col lg='8' md='12' sm='12' className='mb-4'>
-					{renderMap()}
-					{/* <MapContainer travelMode={} origin={origin} destination={destination} /> */}
-				</Col>
-
-				<Col lg='4' md='6' sm='12' className='mb-4'>
-					<Card style={{ height: '100%', padding: '10px' }}>
-						<Bar
-							data={data}
-							width={60}
-							height={150}
-							options={{
-								maintainAspectRatio: false,
-								scales: {
-									xAxes: [
-										{
-											maxBarThickness: 40
-										}
-									],
-									yAxes: [
-										{
-											ticks: {
-												beginAtZero: true
-											}
-										}
-									]
-								}
+							{/* {alternate_2ModeName !== '' ? alternate_2ModeName : 'Cycling'} */}
+							{alternate_2ModeName === 'PTV'
+								? 'PUBLIC TRANSPORT'
+								: alternate_2ModeName}
+						</Button>
+						<Button
+							style={{ margin: '5px', fontSize: '1.0rem' }}
+							theme={
+								modeOfTransitShowing === 'Alternate_3' ? 'success' : 'secondary'
+							}
+							onClick={() => {
+								changeMode('Alternate_3');
 							}}
-						/>
-					</Card>
-				</Col>
-			</Row>
-			{/* <Link to='/iteration3'>
-					<Fab
-						color='primary'
-						style={{
-							position: 'absolute',
-							right: '20px',
-							bottom: '20px',
-							zIndex: '1000'
-						}}
+						>
+							{alternate_3ModeName === 'PTV'
+								? 'PUBLIC TRANSPORT'
+								: alternate_3ModeName}
+							{/* {alternate_3ModeName !== '' ? alternate_3ModeName : 'Walking'} */}
+						</Button>
+					</Col>
+					<Col
+						lg='2'
+						md='12'
+						sm='12'
+						xs='12'
+						style={{ marginTop: '20px', textAlign: 'right' }}
 					>
-						<Home />
-					</Fab>
-				</Link> */}
-			{/* </Container> */}
-		</>
+						<FormControl variant='outlined'>
+							<InputLabel>Period</InputLabel>
+							<Select
+								value={period}
+								onChange={event => {
+									fetchDataFromBackEnd(event.target.value);
+									setPeriod(event.target.value);
+								}}
+							>
+								<MenuItem value={'Day'}>Daily</MenuItem>
+								<MenuItem value={'Week'}>Weekly</MenuItem>
+								<MenuItem value={'Month'}>Monthly</MenuItem>
+								<MenuItem value={'Year'}>Yearly</MenuItem>
+							</Select>
+						</FormControl>
+					</Col>
+				</Row>
+
+				<Row>
+					{smallStats.map((stats, idx) => (
+						<Col className='col-lg mb-4' key={idx} {...stats.attrs}>
+							<SmallStats
+								id={`small-stats-${idx}`}
+								variation='1'
+								chartData={stats.datasets}
+								numberDesc={stats.numberDesc}
+								chartLabels={stats.chartLabels}
+								unit={stats.unit}
+								label={stats.label}
+								value={stats.value}
+								percentage={stats.percentage}
+								increase={stats.increase}
+								decrease={stats.decrease}
+							/>
+						</Col>
+					))}
+				</Row>
+
+				<Row>
+					<Col lg='4' md='6' sm='12' className='mb-4'>
+						<Card style={{ height: '100%', padding: '10px' }}>
+							<Bar
+								data={data}
+								width={60}
+								height={150}
+								options={{
+									maintainAspectRatio: false,
+									scales: {
+										xAxes: [
+											{
+												maxBarThickness: 40
+											}
+										],
+										yAxes: [
+											{
+												ticks: {
+													beginAtZero: true
+												}
+											}
+										]
+									}
+								}}
+							/>
+						</Card>
+					</Col>
+
+					<Col lg='8' md='6' sm='12' className='mb-4'>
+						{renderMap()}
+					</Col>
+				</Row>
+			</Container>
+		</Fade>
 	);
 };
 
@@ -603,6 +457,7 @@ Comparison.defaultProps = {
 };
 
 const mapStateToProps = ({ info }) => {
+	console.log('mapStateToProps COMPARISON', info);
 	return {
 		comparisonInfo: info.comparisonInfo,
 		currentParam: info.currentParam
