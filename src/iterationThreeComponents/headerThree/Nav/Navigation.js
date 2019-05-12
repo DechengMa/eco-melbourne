@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-// import { faSearch } from '@fortawesome/free-solid-svg-icons';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { connect } from 'react-redux';
 import {
 	Navbar,
 	NavbarToggler,
@@ -11,6 +10,43 @@ import {
 	Collapse
 } from 'shards-react';
 import { Link } from 'react-router-dom';
+
+const navWithInput = [
+	{
+		url: '/',
+		name: 'Home'
+	},
+	{
+		url: '/iteration3/calculator',
+		name: 'Calculator'
+	},
+	{
+		url: '/iteration3/comparison',
+		name: 'Comparison'
+	},
+	{
+		url: '/iteration3/future',
+		name: 'Explore'
+	},
+	{
+		url: '/iteration3/aboutus',
+		name: 'About Us'
+	}
+];
+const navWithoutInput = [
+	{
+		url: '/',
+		name: 'Home'
+	},
+	{
+		url: '/iteration3/future',
+		name: 'Explore'
+	},
+	{
+		url: '/iteration3/aboutus',
+		name: 'About Us'
+	}
+];
 
 class Navigation extends Component {
 	constructor(props) {
@@ -43,6 +79,26 @@ class Navigation extends Component {
 		});
 	}
 
+	renderNav = () => {
+		if (!this.props.currentInfo) {
+			return navWithoutInput.map(e => (
+				<Link to={e.url}>
+					<NavItem>
+						<NavLink active>{e.name}</NavLink>
+					</NavItem>
+				</Link>
+			));
+		} else {
+			return navWithInput.map(e => (
+				<Link to={e.url}>
+					<NavItem>
+						<NavLink active>{e.name}</NavLink>
+					</NavItem>
+				</Link>
+			));
+		}
+	};
+
 	render() {
 		return (
 			<Navbar type='dark' theme='primary' expand='md'>
@@ -53,21 +109,7 @@ class Navigation extends Component {
 
 				<Collapse open={this.state.collapseOpen} navbar>
 					<Nav navbar className='ml-auto'>
-						<Link to='/iteration3'>
-							<NavItem>
-								<NavLink active>Home</NavLink>
-							</NavItem>
-						</Link>
-						<Link to='/iteration3/calculator'>
-							<NavItem>
-								<NavLink active>Calculator</NavLink>
-							</NavItem>
-						</Link>
-						<Link to='/iteration3/comparison'>
-							<NavItem>
-								<NavLink active>Comparison</NavLink>
-							</NavItem>
-						</Link>
+						{this.renderNav()}
 					</Nav>
 				</Collapse>
 			</Navbar>
@@ -75,4 +117,11 @@ class Navigation extends Component {
 	}
 }
 
-export default Navigation;
+const mapStateToProps = ({ info }) => {
+	return {
+		currentInfo: info.currentInfo,
+		currentParam: info.currentParam
+	};
+};
+
+export default connect(mapStateToProps)(Navigation);

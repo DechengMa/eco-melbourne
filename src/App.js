@@ -37,6 +37,8 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import HeaderThree from './iterationThreeComponents/headerThree';
 import CalculatorThree from './iterationThreeComponents/calculatorThree';
 import ComparisonThree from './iterationThreeComponents/comparisonThree';
+import FutureThree from './iterationThreeComponents/futureThree';
+import AboutUsThree from './iterationThreeComponents/aboutUsThree';
 
 const App = () => {
 	const [spinner, setSpinner] = useState(true);
@@ -75,6 +77,8 @@ const App = () => {
 	const iteration3HomePage = () => <HeaderThree />;
 	const iteration3Calculator = () => <CalculatorThree />;
 	const iteration3Comparison = () => <ComparisonThree />;
+	const iteration3Future = () => <FutureThree />;
+	const iteration3AboutUs = () => <AboutUsThree />;
 
 	// End of iteration 3 Components
 
@@ -148,6 +152,16 @@ const App = () => {
 							path='/iteration3/comparison'
 							component={iteration3Comparison}
 						/>
+						<Route
+							exact
+							path='/iteration3/future'
+							component={iteration3Future}
+						/>
+						<Route
+							exact
+							path='/iteration3/aboutus'
+							component={iteration3AboutUs}
+						/>
 						{/* iteration 3 */}
 
 						<Route component={NotFoundPage} />
@@ -158,34 +172,6 @@ const App = () => {
 			return <PasswordModal />;
 		}
 	}
-
-	// return spinner ? (
-	// 	<div style={{ display: 'flex', justifyContent: 'center', height: '100vh' }}>
-	// 		<CircularProgress style={{ position: 'absolute', top: '40%' }} />
-	// 	</div>
-	// ) : (
-	// 	<PasswordModal />
-
-	// 	<Router>
-	// 		<Switch>
-	// 			<Route path='/iteration1' component={iteration1} />
-	// 			<Iteration2>
-	// 				<Route exact path='/iteration2' component={iteration2HomePage} />
-	// 				<Route
-	// 					exact
-	// 					path='/iteration2/calculator'
-	// 					component={iteration2Calculator}
-	// 				/>
-	// 				<Route
-	// 					exact
-	// 					path='/iteration2/comparison'
-	// 					component={comparisonTwo}
-	// 				/>
-	// 			</Iteration2>
-	// 			<Route component={NotFoundPage} />
-	// 		</Switch>
-	// 	</Router>
-	// );
 };
 
 export default App;

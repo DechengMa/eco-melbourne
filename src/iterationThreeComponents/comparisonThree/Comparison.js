@@ -15,7 +15,8 @@ import {
 	InputLabel,
 	Select,
 	MenuItem,
-	Fab
+	Fab,
+	CircularProgress
 } from '@material-ui/core';
 import { Home } from '@material-ui/icons';
 import {
@@ -35,7 +36,8 @@ const Comparison = ({
 	smallStats,
 	comparisonInfo,
 	currentParam,
-	fetchComparsionResult
+	fetchComparsionResultIteration3,
+	loading
 }) => {
 	const [period, setPeriod] = useState('Day');
 	const chartOptions = {
@@ -72,7 +74,7 @@ const Comparison = ({
 	};
 
 	var data = {
-		labels: ['Money Spent', 'Travel Time'],
+		labels: ['Money Spent', 'Travel Time (mins for a round trip)'],
 		datasets: [
 			{
 				label: 'Car',
@@ -95,15 +97,8 @@ const Comparison = ({
 	var alternate_1ModeName = '';
 	var alternate_2ModeName = '';
 	var alternate_3ModeName = '';
-
-	console.log('Comparison.props.comparisonInfo', comparisonInfo);
-
 	const [modeOfTransitShowing, changeMode] = useState('Alternate_1');
-	// const [alternateToShow, changeAlter] = useState('');
-
-	console.log('modeOfTransitShowing', modeOfTransitShowing);
 	if (comparisonInfo) {
-		console.log('COMPARESONINFO', comparisonInfo);
 		var travelMethodToShow = comparisonInfo[modeOfTransitShowing];
 
 		if (comparisonInfo.Alternate_1) {
@@ -134,7 +129,9 @@ const Comparison = ({
 				percentage: travelMethodToShow
 					? `${travelMethodToShow.timePercentage}%`
 					: '0',
-				numberDesc: 'This data presents how many minutes you saved',
+				numberDesc: `This data presents the time difference between new travel method and driving a car in a day (or, week / month / year, depending on the selected period). 
+				Time difference = the total travel time of new travel method - the current travel time of driving a car.
+				`,
 				increase: travelMethodToShow.timePercentage < 0 ? false : true,
 				unit: 'Mins',
 				chartLabels: [null, null, null, null, null, null, null],
@@ -151,12 +148,14 @@ const Comparison = ({
 				]
 			},
 			{
-				label: 'Money Saved',
+				label: 'Money difference',
 				value: comparisonInfo ? travelMethodToShow.moneySaved : '0',
 				percentage: travelMethodToShow
 					? `${travelMethodToShow.moneyPercentage}%`
 					: '0',
-				numberDesc: 'This data presents how much money user saved',
+				numberDesc: `This data presents the money difference between new travel method and driving a car in a day (or, week / month / year, depending on the selected period).
+				Money difference = the total spend of using the new travel method - the current spend of driving a car.
+				`,
 				increase: travelMethodToShow.moneyPercentage < 0 ? false : true,
 				unit: '$',
 				chartLabels: [null, null, null, null, null, null, null],
@@ -210,7 +209,8 @@ const Comparison = ({
 				carTime,
 				bicycleTime,
 				walkingTime,
-				ptvTime
+				ptvTime,
+				ptvWalkingTime
 			} = currentParam;
 
 			fetchComparsionResultIteration3(
@@ -221,7 +221,8 @@ const Comparison = ({
 				carTime,
 				bicycleTime,
 				walkingTime,
-				ptvTime
+				ptvTime,
+				ptvWalkingTime
 			);
 		}
 	};
@@ -350,25 +351,33 @@ const Comparison = ({
 					</Col>
 				</Row>
 
-				<Row>
-					{smallStats.map((stats, idx) => (
-						<Col className='col-lg mb-4' key={idx} {...stats.attrs}>
-							<SmallStats
-								id={`small-stats-${idx}`}
-								variation='1'
-								chartData={stats.datasets}
-								numberDesc={stats.numberDesc}
-								chartLabels={stats.chartLabels}
-								unit={stats.unit}
-								label={stats.label}
-								value={stats.value}
-								percentage={stats.percentage}
-								increase={stats.increase}
-								decrease={stats.decrease}
-							/>
-						</Col>
-					))}
-				</Row>
+				{loading ? (
+					<Row style={{ height: '165px' }}>
+						<CircularProgress
+							style={{ position: 'absolute', left: '50%', top: '20%' }}
+						/>
+					</Row>
+				) : (
+					<Row>
+						{smallStats.map((stats, idx) => (
+							<Col className='col-lg mb-4' key={idx} {...stats.attrs}>
+								<SmallStats
+									id={`small-stats-${idx}`}
+									variation='1'
+									chartData={stats.datasets}
+									numberDesc={stats.numberDesc}
+									chartLabels={stats.chartLabels}
+									unit={stats.unit}
+									label={stats.label}
+									value={stats.value}
+									percentage={stats.percentage}
+									increase={stats.increase}
+									decrease={stats.decrease}
+								/>
+							</Col>
+						))}
+					</Row>
+				)}
 
 				<Row>
 					<Col lg='4' md='6' sm='12' className='mb-4'>
@@ -420,7 +429,9 @@ Comparison.defaultProps = {
 			percentage: '0%',
 			increase: true,
 			chartLabels: [null, null, null, null, null, null, null],
-			numberDesc: 'This data presents how many minutes user saved',
+			numberDesc: `This data presents the time difference between new travel method and driving a car in a day (or, week / month / year, depending on the selected period). 
+			Time difference = the total travel time of new travel method - the current travel time of driving a car.
+			`,
 			attrs: { md: '6', sm: '6' },
 			datasets: [
 				{
@@ -438,7 +449,9 @@ Comparison.defaultProps = {
 			value: '0',
 			unit: '$',
 			percentage: '0%',
-			numberDesc: 'This data presents how much money user saved',
+			numberDesc: `This data presents the money difference between new travel method and driving a car in a day (or, week / month / year, depending on the selected period).
+			Money difference = the total spend of using the new travel method - the current spend of driving a car.
+			`,
 			increase: true,
 			chartLabels: [null, null, null, null, null, null, null],
 			attrs: { md: '6', sm: '6' },
@@ -456,15 +469,16 @@ Comparison.defaultProps = {
 	]
 };
 
-const mapStateToProps = ({ info }) => {
+const mapStateToProps = ({ info, loading }) => {
 	console.log('mapStateToProps COMPARISON', info);
 	return {
 		comparisonInfo: info.comparisonInfo,
-		currentParam: info.currentParam
+		currentParam: info.currentParam,
+		loading: loading.fetchDefaultloading
 	};
 };
 
 export default connect(
 	mapStateToProps,
-	{ fetchComparsionResult }
+	{ fetchComparsionResultIteration3 }
 )(Comparison);

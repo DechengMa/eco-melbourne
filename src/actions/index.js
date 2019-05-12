@@ -22,7 +22,8 @@ export const setCurrentValue = (
 	carTime,
 	bicycleTime,
 	walkingTime,
-	ptvTime
+	ptvTime,
+	ptvWalkingTime
 ) => dispatch => {
 	const currentParam = {
 		livingSuburb,
@@ -34,7 +35,8 @@ export const setCurrentValue = (
 		carTime,
 		bicycleTime,
 		walkingTime,
-		ptvTime
+		ptvTime,
+		ptvWalkingTime
 	};
 	dispatch({ type: SET_CURRENT_PARAM, payload: currentParam });
 };
@@ -97,10 +99,10 @@ export const fetchComparsionResultIteration3 = (
 ) => async dispatch => {
 	dispatch(setDefaultLoading(true));
 	var url = `https://cors-anywhere.herokuapp.com/https://ecomelbourneiteration3.azurewebsites.net/Compare1/compare?distance=${distance}&days=${days}&period=${period}&congestion=${congestion}&carTime=${carTime}&bicycleTime=${bicycleTime}&walkingTime=${walkingTime}&ptvTime=${ptvTime}&ptvWalkingTime=${ptvWalkingTime}`;
-	console.log('fetchComparsionResultIteration3', url);
+
 	const response = await apis.post(url);
 	const comparsionResult = response.data;
-	console.log('response ', comparsionResult);
+
 	dispatch(setDefaultLoading(false));
 	dispatch({ type: FETCH_COMPARISON_RESULT, payload: comparsionResult });
 };

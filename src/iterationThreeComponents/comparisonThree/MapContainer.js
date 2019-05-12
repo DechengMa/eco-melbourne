@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { GoogleApiWrapper } from 'google-maps-react';
-import { Card, CardHeader, CardBody } from 'shards-react';
+import { Card, CardHeader, CardBody, ButtonGroup, Button } from 'shards-react';
 import { GOOGLEMAPAPI } from '../../config/keys';
-
+import { get_next_weekday } from '../utils/Variables';
 import {
 	withScriptjs,
 	withGoogleMap,
@@ -23,7 +24,7 @@ const MapWithADirectionsRenderer = compose(
 	lifecycle({
 		componentDidMount() {
 			const { google } = window;
-			const { origin, destination, travelMode } = this.props;
+			const { origin, destination, travelMode, timeGoToWork } = this.props;
 
 			const DirectionsService = new google.maps.DirectionsService();
 
@@ -33,10 +34,11 @@ const MapWithADirectionsRenderer = compose(
 					origin,
 					destination,
 					// travelMode: google.maps.TravelMode.TRANSIT
-					travelMode
-					// transitOptions: {
-					// 	departureTime: departureTime
-					// },
+					travelMode,
+					// TODO
+					transitOptions: {
+						departureTime: timeGoToWork ? timeGoToWork : get_next_weekday(8)
+					}
 				},
 				(result, status) => {
 					if (status === google.maps.DirectionsStatus.OK) {
@@ -52,7 +54,7 @@ const MapWithADirectionsRenderer = compose(
 		},
 		componentDidUpdate() {
 			const { google } = window;
-			const { origin, destination, travelMode } = this.props;
+			const { origin, destination, travelMode, timeGoToWork } = this.props;
 
 			const DirectionsService = new google.maps.DirectionsService();
 
@@ -62,10 +64,10 @@ const MapWithADirectionsRenderer = compose(
 					origin,
 					destination,
 					// travelMode: google.maps.TravelMode.TRANSIT
-					travelMode
-					// transitOptions: {
-					// 	departureTime: departureTime
-					// },
+					travelMode,
+					transitOptions: {
+						departureTime: timeGoToWork ? timeGoToWork : get_next_weekday(8)
+					}
 				},
 				(result, status) => {
 					if (status === google.maps.DirectionsStatus.OK) {
@@ -90,18 +92,63 @@ const MapWithADirectionsRenderer = compose(
 ));
 
 export class MapContainer extends Component {
+	state = { contentShowing: 'route' };
+
 	render() {
-		console.log('MapContainer Render Function');
-		console.log(
-			'origin, destination',
-			this.props.origin,
-			this.props.destination,
-			this.props.travelMode
-		);
+		const { contentShowing } = this.state;
+		if (this.props.travelMode === 'BICYCLING') {
+			return (
+				<Card small className='h-100'>
+					<CardHeader className='border-bottom'>
+						<ButtonGroup>
+							<Button
+								theme={contentShowing === 'route' ? 'success' : 'secondary'}
+								onClick={() => {
+									this.setState({ contentShowing: 'route' });
+								}}
+							>
+								Route
+							</Button>
+							<Button
+								theme={contentShowing === 'bikeShare' ? 'success' : 'secondary'}
+								onClick={() => {
+									this.setState({ contentShowing: 'bikeShare' });
+								}}
+							>
+								Melbourne Bike Share Stations Map
+							</Button>
+						</ButtonGroup>
+					</CardHeader>
+					<CardBody className='pt-0'>
+						<div style={{ width: '100%', height: '500px' }}>
+							{contentShowing === 'route' ? (
+								<MapWithADirectionsRenderer
+									origin={this.props.origin}
+									destination={this.props.destination}
+									travelMode={this.props.travelMode}
+								/>
+							) : (
+								<iframe
+									src='https://data.melbourne.vic.gov.au/dataset/Melbourne-Bike-Share-Stations-Map/tri2-3a8m/embed?width=900&height=500'
+									style={{
+										height: '100%',
+										width: '100%',
+										border: 0,
+										padding: 0,
+										margin: 0
+									}}
+								/>
+							)}
+						</div>
+					</CardBody>
+				</Card>
+			);
+		}
+
 		return (
 			<Card small className='h-100'>
 				<CardHeader className='border-bottom'>
-					<h6 className='m-0'>Route </h6>
+					<h6 className='m-0'>Route</h6>
 				</CardHeader>
 				<CardBody className='pt-0'>
 					<div style={{ width: '100%', height: '500px' }}>
@@ -109,14 +156,12 @@ export class MapContainer extends Component {
 							origin={this.props.origin}
 							destination={this.props.destination}
 							travelMode={this.props.travelMode}
+							timeGoToWork={
+								this.props.currentParam
+									? this.props.currentParam.timeGoToWork
+									: get_next_weekday(8)
+							}
 						/>
-						{/* <Map
-							style={{ width: '95%', height: '500px' }}
-							google={this.props.google}
-							zoom={14}
-						>
-							<Marker onClick={this.onMarkerClick} name={'Current location'} />
-						</Map> */}
 					</div>
 				</CardBody>
 			</Card>
@@ -124,6 +169,10 @@ export class MapContainer extends Component {
 	}
 }
 
+const mapStateToProps = ({ info }) => {
+	return { currentParam: info.currentParam };
+};
+
 export default GoogleApiWrapper({
 	apiKey: GOOGLEMAPAPI
-})(MapContainer);
+})(connect(mapStateToProps)(MapContainer));

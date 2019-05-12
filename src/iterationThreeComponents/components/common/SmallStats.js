@@ -94,13 +94,25 @@ class SmallStats extends React.Component {
 			`stats-small__percentage--${increase ? 'increase' : 'decrease'}`
 		);
 
+		const { labelFontSize, numberFontSize } = this.props;
+
 		return (
 			<Card large className={cardClasses} style={{ height: '92%' }}>
 				<CardBody className={cardBodyClasses}>
 					<div className={innerWrapperClasses}>
 						<div className={dataFieldClasses}>
-							<span className={labelClasses}>{label}</span>
-							<h6 className={valueClasses}>
+							<span
+								className={labelClasses}
+								style={{ fontSize: labelFontSize ? labelFontSize : '0.75rem' }}
+							>
+								{label}
+							</span>
+							<h6
+								className={valueClasses}
+								style={{
+									fontSize: numberFontSize ? numberFontSize : '2.0625rem'
+								}}
+							>
 								{value}
 								<span style={{ fontSize: '0.8rem' }}>{unit}</span>
 							</h6>
@@ -146,18 +158,6 @@ class SmallStats extends React.Component {
 						))}
 					</PopoverBody>
 				</Popover>
-				{/* <MuiThemeProvider theme={theme}>
-					<Tooltip title={numberDesc ? numberDesc : ''}>
-						<HelpOutline
-							style={{
-								position: 'absolute',
-								left: '10px',
-								bottom: '10px',
-								color: '#838ea1'
-							}}
-						/>
-					</Tooltip>
-				</MuiThemeProvider> */}
 			</Card>
 		);
 	}
