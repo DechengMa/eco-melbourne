@@ -12,7 +12,7 @@ import Nav from './Nav/Navigation';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { Button } from 'shards-react';
-import FooterThree from '../asdfooterThree';
+import FooterThree from '../footerThree';
 
 const styles = theme => ({
 	container: {
