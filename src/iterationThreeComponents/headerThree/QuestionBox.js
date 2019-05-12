@@ -101,6 +101,9 @@ class QuestionBox extends Component {
 	};
 
 	onChangeGoTo = value => {
+		if (!value) {
+			return;
+		}
 		const [hours, mins] = value.format('HH:mm').split(':');
 		const timeGoToWork = get_next_weekday(hours, mins);
 		this.setState(prevState => ({
@@ -114,6 +117,9 @@ class QuestionBox extends Component {
 	};
 
 	onChangeLeave = value => {
+		if (!value) {
+			return;
+		}
 		const [hours, mins] = value.format('HH:mm').split(':');
 		const timeLeaveWork = get_next_weekday(hours, mins);
 		this.setState(prevState => ({
@@ -465,7 +471,7 @@ class QuestionBox extends Component {
 			<Card small style={{ padding: '15px' }}>
 				<CardHeader className={`border-bottom ${classes.header}`}>
 					{/* <h5 className='m-0' style={{ textTransform: 'uppercase' }}> */}
-					<h6 className={classes.slogan}>Change the way you travel</h6>
+					<h6 className={classes.slogan}>Check how much you can save</h6>
 
 					{/* </h5> */}
 				</CardHeader>

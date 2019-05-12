@@ -15,7 +15,7 @@ import {
 } from 'shards-react';
 import Navigation from '../headerThree/Nav/Navigation';
 import EnvironmentalIssue from '../../resources/img/Environmental issue.png';
-import HealthyIssue from '../../resources/img/Healthy issue.png';
+import HealthyIssue from '../../resources/img/Healthy issue.PNG';
 import TableauReport from 'tableau-react';
 import IssuesCard from './IssuesCard';
 
@@ -30,25 +30,24 @@ const healthyRisksPoints = (
 
 const environmentalIssuesPoints = (
 	<>
-		<p>• Greenhouse effect </p>
 		<p>• Global warming </p>
 		<p>• Air soil and water pollution </p>
 		<p>• Noise pollution </p>
 	</>
 );
 
-const healthyRisksDesc = `• Overweight and obesity;
+const healthyRisksDesc = `• Overweight and obesity
 According to recent research(NTC, 2015), long-term driving influence the health of the driver. 
 74% driver are overweight or obese, compared to 58% of males in the general population.
-• Sleep disorder;
+• Sleep disorder
 According to recent research (NTC, 2015), long-term driving influence the health of the driver. 
-18% driver has high score to very high score on the Epworth Sleepiness Scale, an indicator of excess daytime sleepiness
+18% driver has high score to very high score on the Epworth Sleepiness Scale, an indicator of excess daytime sleepiness.
 • Breath issue
 According to recent research (NTC, 2015), long-term driving influence the health of the driver. 
-24% driver have a high to very high risk of breathing problems associated with a sleep disorder
-• Hypertension.
+24% driver have a high to very high risk of breathing problems associated with a sleep disorder.
+• Hypertension
 According to recent research (NTC, 2015), long-term driving influence the health of the driver. 
-26% driver have mild hypertension (high blood pressure) 
+26% driver have mild hypertension (high blood pressure).
 `;
 
 const environmentalIssuesDesc = `
@@ -78,14 +77,14 @@ const index = props => {
 								style={{ fontSize: '1.6rem', textTransform: 'uppercase' }}
 								className='text-sm-left mb-3'
 							>
-								Want To Know More ?
+								What happens in the future if you don't take any action?
 							</h6>
-							<h6
+							{/* <h6
 								style={{ fontSize: '1.4rem', textTransform: 'uppercase' }}
 								className='text-sm-left mb-3'
 							>
 								Come And Have A Look
-							</h6>
+							</h6> */}
 						</Col>
 					</Row>
 					<Row>
@@ -94,7 +93,7 @@ const index = props => {
 								<CardBody>
 									<TableauReport
 										url={
-											'https://public.tableau.com/views/PC_15576489568200/Sheet1?:embed=y&:display_count=yes&publish=yes'
+											'https://public.tableau.com/views/PC_15576489568200/Dashboard1?:embed=y&:display_count=yes'
 										}
 									/>
 								</CardBody>
@@ -103,7 +102,7 @@ const index = props => {
 								<CardBody>
 									<TableauReport
 										url={
-											'https://public.tableau.com/views/TimeWasted/Sheet1?:embed=y&:display_count=yes&publish=yes'
+											'https://public.tableau.com/views/TimeWasted/Dashboard1?:embed=y&:display_count=yes'
 										}
 									/>
 								</CardBody>

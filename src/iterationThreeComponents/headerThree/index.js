@@ -42,8 +42,9 @@ const styles = theme => ({
 		margin: '2rem',
 		fontSize: '1.2rem',
 		textAlign: 'left',
-		fontWeight: '300',
+		fontWeight: '330',
 		color: 'rgba(64,81,110)',
+		letterSpacing: '1px',
 		[theme.breakpoints.up('md')]: {
 			fontSize: '1.4rem',
 			transform: 'translateY(-30px)'

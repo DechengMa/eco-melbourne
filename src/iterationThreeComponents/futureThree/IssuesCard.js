@@ -17,7 +17,7 @@ const IssuesCard = ({ header, body, img, desc, id }) => {
 	const [popoverOpen, setOpen] = useState(false);
 
 	return (
-		<Card style={{ maxWidth: '350px' }}>
+		<Card style={{ maxWidth: '350px', height: '660px' }}>
 			<CardHeader style={{ fontSize: '1rem', textTransform: 'uppercase' }}>
 				{header}
 			</CardHeader>

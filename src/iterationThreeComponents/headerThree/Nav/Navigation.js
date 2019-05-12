@@ -44,7 +44,7 @@ const navWithoutInput = [
 	},
 	{
 		url: '/iteration3/aboutus',
-		name: 'About Us'
+		name: 'About'
 	}
 ];
 
