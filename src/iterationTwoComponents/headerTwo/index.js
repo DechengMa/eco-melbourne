@@ -1,17 +1,9 @@
 import React, { Component } from 'react';
-import header from '../../resources/img/header.jpg';
 import QuestionBox from './QuestionBox.js';
 import Grid from '@material-ui/core/Grid';
 import withWidth from '@material-ui/core/withWidth';
 import Typography from '@material-ui/core/Typography';
-import {
-	Link,
-	Element,
-	Events,
-	animateScroll as scroll,
-	scrollSpy,
-	scroller
-} from 'react-scroll';
+import { animateScroll as scroll } from 'react-scroll';
 
 import { Button } from 'shards-react';
 

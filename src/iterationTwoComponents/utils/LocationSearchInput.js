@@ -7,7 +7,6 @@ import {
 	FormGroup,
 	FormFeedback
 } from 'shards-react';
-import axios from 'axios';
 import { GoogleApiWrapper } from 'google-maps-react';
 import { GOOGLEMAPAPI } from '../../config/keys';
 
@@ -16,22 +15,6 @@ class LocationSearchInput extends React.Component {
 		address: this.props.value,
 		bounds: []
 	};
-
-	componentDidMount() {
-		// axios
-		// 	.get(
-		// 		'https://cors-anywhere.herokuapp.com/http://polygons.openstreetmap.fr/get_geojson.py?id=4246124&params=0'
-		// 	)
-		// 	.then(response => {
-		// 		console.log();
-		// 		const coordinatesArr = response.data.geometries[0].coordinates[0];
-		// 		coordinatesArr.forEach(element => {
-		// 			element.forEach(el => {
-		// 				console.log(el[0], el[1]);
-		// 			});
-		// 		});
-		// 	});
-	}
 
 	handleChange = address => {
 		this.setState({ address });
@@ -43,11 +26,6 @@ class LocationSearchInput extends React.Component {
 
 		// parents value
 		handleSelect(address);
-
-		// geocodeByAddress(address)
-		// 	.then(results => getLatLng(results[0]))
-		// 	.then(latLng => this.props.returnCenterPoint(latLng))
-		// 	.catch(error => console.error('Error', error));
 	};
 
 	componentWillReceiveProps(props) {

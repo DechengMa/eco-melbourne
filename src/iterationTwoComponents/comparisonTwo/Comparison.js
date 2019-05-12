@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Container, Row, Col, Button, Card, CardBody } from 'shards-react';
+import { Container, Row, Col, Button, Card } from 'shards-react';
 import { FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
 import { fetchComparsionResult } from '../../actions';
-
-import PageTitle from '../components/common/PageTitle';
 import SmallStats from '../components/common/SmallStats';
-import UsersByDevice from '../components/blog/UsersByDevice';
 import Navigation from '../headerTwo/Nav/Navigation';
 import { Bar } from 'react-chartjs-2';
 
@@ -20,21 +17,6 @@ const Comparison = ({
 	fetchComparsionResult
 }) => {
 	const [period, setPeriod] = useState('Week');
-	const chartOptions = {
-		scales: {
-			xAxes: [
-				{
-					barPercentage: 0.5,
-					barThickness: 6,
-					maxBarThickness: 8,
-					minBarLength: 2,
-					gridLines: {
-						offsetGridLines: true
-					}
-				}
-			]
-		}
-	};
 
 	var moneySpentBarStyle = {
 		// label: 'Money Spend ($)',

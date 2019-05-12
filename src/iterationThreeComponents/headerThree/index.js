@@ -1,17 +1,8 @@
 import React, { Component } from 'react';
 import QuestionBox from './QuestionBox.js';
-import {
-	withWidth,
-	Grid,
-	Typography,
-	withStyles,
-	Paper
-} from '@material-ui/core';
-import { animateScroll as scroll } from 'react-scroll';
+import { Grid, Typography, withStyles } from '@material-ui/core';
 import Nav from './Nav/Navigation';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-import { Button } from 'shards-react';
 import FooterThree from '../footerThree';
 
 const styles = theme => ({

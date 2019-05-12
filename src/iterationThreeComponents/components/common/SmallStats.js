@@ -1,32 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import shortid from 'shortid';
 import {
 	Card,
 	CardBody,
-	CardFooter,
 	Button,
 	PopoverHeader,
 	PopoverBody,
 	Popover
 } from 'shards-react';
-
-import Tooltip from '@material-ui/core/Tooltip';
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-
-import { HelpOutline } from '@material-ui/icons';
-import Chart from '../../utils/chart';
-
-const theme = createMuiTheme({
-	overrides: {
-		MuiTooltip: {
-			tooltip: {
-				fontSize: '1.2em'
-			}
-		}
-	}
-});
 
 class SmallStats extends React.Component {
 	constructor(props) {

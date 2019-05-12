@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Container, Row, Col, Fade } from 'shards-react';
 import { FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
@@ -10,7 +10,6 @@ import UsersOverview from './../components/blog/UsersOverview';
 import { connect } from 'react-redux';
 import { fetchDefaultResult } from '../../actions';
 import Navigation from '../headerTwo/Nav/Navigation';
-// import UsersByDevice from './../components/blog/UsersByDevice';
 
 const Overview = ({
 	smallStats,
@@ -18,14 +17,9 @@ const Overview = ({
 	currentParam,
 	fetchDefaultResult
 }) => {
-	const [open, toggle] = useState(false);
-	const [dropdownOpen, dropdownToggle] = useState(false);
 	const [period, setPeriod] = useState('Week');
-	// const [period, ]
-	// var dropdownOpen = false;
 
 	var chartData = {
-		// labels: Array.from(new Array(10), (_, i) => (i === 0 ? 1 : i)),
 		labels: [
 			'2019',
 			'2020',
@@ -60,7 +54,6 @@ const Overview = ({
 
 	if (currentInfo) {
 		chartData = {
-			// labels: Array.from(new Array(10), (_, i) => (i === 0 ? 1 : i)),
 			labels: [
 				'2019',
 				'2020',

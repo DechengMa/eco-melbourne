@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Container, Row, Col, Fade } from 'shards-react';
 import {
@@ -6,20 +6,12 @@ import {
 	InputLabel,
 	Select,
 	MenuItem,
-	Fab,
 	CircularProgress
 } from '@material-ui/core';
-import { Home } from '@material-ui/icons';
 import LearnMoreCard from '../utils/LearnMoreCard';
-import { Link } from 'react-router-dom';
 import SmallStats from './../components/common/SmallStats';
 import { connect } from 'react-redux';
-import {
-	fetchDefaultResult,
-	fetchDefaultResultIteration3,
-	setDefaultLoading
-} from '../../actions';
-import Navigation from '../headerThree/Nav/Navigation';
+import { fetchDefaultResultIteration3, setDefaultLoading } from '../../actions';
 import Bike from '../../resources/img/bicycle.png';
 
 const Overview = ({
@@ -32,93 +24,22 @@ const Overview = ({
 }) => {
 	const [period, setPeriod] = useState('Day');
 
-	// var chartData = {
-	// 	// labels: Array.from(new Array(10), (_, i) => (i === 0 ? 1 : i)),
-	// 	labels: ['08/05', '09/05', '10/05', '11/05', '12/05'],
-	// 	datasets: [
-	// 		{
-	// 			label: 'Time without traffic',
-	// 			fill: 'start',
-	// 			numberDesc:
-	// 				'This data represents the total delay time for one week/month/year. In other words, how many minutes was the user wasted on the way to and from work during this time.',
-	// 			data: [20, 13, 24, 28, 32],
-
-	// 			backgroundColor: 'rgba(0,123,255,0.1)',
-	// 			borderColor: 'rgba(0,123,255,1)',
-	// 			pointBackgroundColor: '#ffffff',
-	// 			pointHoverBackgroundColor: 'rgb(0,123,255)',
-	// 			borderWidth: 1.5,
-	// 			pointRadius: 0,
-	// 			pointHoverRadius: 3
-	// 		},
-	// 		{
-	// 			label: 'Travel Time with Traffic',
-	// 			fill: 'start',
-	// 			numberDesc:
-	// 				'This data represents the total delay time for one week/month/year. In other words, how many minutes was the user wasted on the way to and from work during this time.',
-	// 			data: [22, 20, 30, 50, 60],
-	// 			backgroundColor: 'rgba(255,65,105,0.1)',
-	// 			borderColor: 'rgba(255,65,105,1)',
-	// 			pointBackgroundColor: '#ffffff',
-	// 			pointHoverBackgroundColor: 'rgba(255,65,105,1)',
-	// 			borderWidth: 1.5,
-	// 			pointRadius: 0,
-	// 			pointHoverRadius: 3
-	// 		}
-	// 	]
-	// };
-
 	if (currentInfo) {
-		// chartData = {
-		// 	labels: ['08/05', '09/05', '10/05', '11/05', '12/05'],
-		// 	datasets: [
-		// 		{
-		// 			label: 'Time without traffic',
-		// 			fill: 'start',
-		// 			numberDesc:
-		// 				'This data represents the total delay time for one week/month/year. In other words, how many minutes was the user wasted on the way to and from work during this time.',
-		// 			data: [0, 13, 24, 28, 32],
-
-		// 			backgroundColor: 'rgba(0,123,255,0.1)',
-		// 			borderColor: 'rgba(0,123,255,1)',
-		// 			pointBackgroundColor: '#ffffff',
-		// 			pointHoverBackgroundColor: 'rgb(0,123,255)',
-		// 			borderWidth: 1.5,
-		// 			pointRadius: 0,
-		// 			pointHoverRadius: 3
-		// 		},
-		// 		{
-		// 			label: 'Travel Time with Traffic',
-		// 			fill: 'start',
-		// 			numberDesc:
-		// 				'This data represents the total delay time for one week/month/year. In other words, how many minutes was the user wasted on the way to and from work during this time.',
-		// 			data: [0, 20, 30, 50, 60],
-		// 			backgroundColor: 'rgba(255,65,105,0.1)',
-		// 			borderColor: 'rgba(255,65,105,1)',
-		// 			pointBackgroundColor: '#ffffff',
-		// 			pointHoverBackgroundColor: 'rgba(255,65,105,1)',
-		// 			borderWidth: 1.5,
-		// 			pointRadius: 0,
-		// 			pointHoverRadius: 3
-		// 		}
-		// 	]
-		// };
-
 		smallStats = [
 			{
-				label: 'Time waste in traffic',
+				label: 'Time wasted in traffic',
 				value: currentInfo.environment
 					? currentInfo.environment.timeWaste
 					: '0',
-				numberDesc: `This is the time you’re wasting in a day (or, week / month / year, depending on the selected period).
-					 Time Wasted = Total Travel Time in Peak Hours - Total Travel Time in Off - Peak Hours
+				numberDesc: `This is the time you’re wasting because of traffic congestion in a day (or, week / month / year, depending on the selected period).
+					 Time Wasted = Travel Time With Traffic - Travel Time Without Traffic
 					 *Data Source: Google API`,
 				increase: true,
 				unit: 'Mins',
 				attrs: { md: '6', sm: '6' }
 			},
 			{
-				label: 'Spending',
+				label: 'Money Spending',
 				value: currentInfo.price ? currentInfo.price.totalMoneySpent : '0',
 				numberDesc: `This is the money you’re spending in a day (or, week / month / year, depending on the selected period). 
 					Money Spent =  Fuel Price + Average Insurance Price + Average Maintenance Price 
@@ -199,7 +120,7 @@ const Overview = ({
 				<Row noGutters className='page-header py-4'>
 					<Col lg='10' md='12' sm='12'>
 						<h6 style={{ fontSize: '1.6rem' }} className='text-sm-left mb-3'>
-							Here Is Your Current Spending Overview
+							Here is your current spending overview
 						</h6>
 						<p>{subtitle}</p>
 					</Col>
@@ -312,19 +233,6 @@ const Overview = ({
 						/>
 					</Col>
 				</Row>
-				<Link to='/iteration3'>
-					<Fab
-						color='primary'
-						style={{
-							position: 'absolute',
-							right: '20px',
-							bottom: '20px',
-							zIndex: '1000'
-						}}
-					>
-						<Home />
-					</Fab>
-				</Link>
 			</Container>
 		</Fade>
 	);
@@ -337,17 +245,17 @@ Overview.propTypes = {
 Overview.defaultProps = {
 	smallStats: [
 		{
-			label: 'Time Wasted',
+			label: 'Time wasted in traffic ',
 			value: '0',
 			unit: 'Mins',
-			numberDesc: `This is the time you’re wasting in a day (or, week / month / year, depending on the selected period). 
-				Time Wasted = Total Travel Time in Peak Hours - Total Travel Time in Off - Peak Hours 
+			numberDesc: `This is the time you’re wasting because of traffic congestion in a day (or, week / month / year, depending on the selected period). 
+				Time Wasted = Travel Time With Traffic - Travel Time Without Traffic
 				*Data Source: Google API`,
 			increase: true,
 			attrs: { md: '12', sm: '6' }
 		},
 		{
-			label: 'Spending',
+			label: 'Money Spending',
 			value: '0',
 			unit: '$',
 			numberDesc: `This is the money you’re spending in a day (or, week / month / year, depending on the selected period). 
@@ -381,7 +289,6 @@ Overview.defaultProps = {
 };
 
 const mapStateToProps = ({ info, loading }) => {
-	console.log('I3 OVERVIEW MAPSTATETOPROPS', info, loading);
 	return {
 		currentInfo: info.currentInfo,
 		currentParam: info.currentParam,

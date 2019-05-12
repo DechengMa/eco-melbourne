@@ -2,12 +2,9 @@ import React from 'react';
 import Navigation from '../headerThree/Nav/Navigation';
 import {
 	Card,
-	CardHeader,
 	CardTitle,
 	CardImg,
 	CardBody,
-	CardFooter,
-	Button,
 	Container,
 	Row,
 	Col

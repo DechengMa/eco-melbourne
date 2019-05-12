@@ -129,6 +129,7 @@ export class MapContainer extends Component {
 								/>
 							) : (
 								<iframe
+									title='bicycle'
 									src='https://data.melbourne.vic.gov.au/dataset/Melbourne-Bike-Share-Stations-Map/tri2-3a8m/embed?width=900&height=500'
 									style={{
 										height: '100%',

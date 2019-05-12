@@ -7,7 +7,6 @@ import {
 	FormGroup,
 	FormFeedback
 } from 'shards-react';
-import axios from 'axios';
 import { GoogleApiWrapper } from 'google-maps-react';
 import { GOOGLEMAPAPI } from '../../config/keys';
 

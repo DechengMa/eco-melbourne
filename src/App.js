@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { Element } from 'react-scroll';
-import {
-	BrowserRouter as Router,
-	Route,
-	Switch,
-	Redirect
-} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import {
 	Modal,
 	ModalBody,

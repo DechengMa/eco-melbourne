@@ -117,14 +117,6 @@ class QuestionBox extends Component {
 	getDistance = (baseLocation, targetLocation) => {
 		const { google } = this.props;
 		var dptTime = get_next_weekday();
-		console.log('dptTime');
-		console.log(dptTime);
-		const transitOptions = {
-			// arrivalTime: Date,
-			departureTime: dptTime,
-			modes: ['TRAM', 'TRAIN']
-			// routingPreference: TransitRoutePreference
-		};
 
 		const drivingOptions = {
 			departureTime: dptTime,
@@ -185,11 +177,6 @@ class QuestionBox extends Component {
 					console.log(status);
 				} else {
 					const data = response.rows[0].elements[0];
-					// console.log(response.rows[0].elements[0].distance.text);
-					const distance = data.distance.text.substring(
-						0,
-						data.distance.text.length - 2
-					);
 
 					const ptvTime = data.duration.value / 60;
 

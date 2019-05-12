@@ -1,18 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {
-	Container,
-	Row,
-	Col,
-	Fade,
-	CardHeader,
-	CardImg,
-	CardBody,
-	Card,
-	Button,
-	CardTitle,
-	CardFooter
-} from 'shards-react';
+import { Container, Row, Col, Fade, CardBody, Card } from 'shards-react';
 import Navigation from '../headerThree/Nav/Navigation';
 import EnvironmentalIssue from '../../resources/img/environmentalIssue.png';
 import HealthyIssue from '../../resources/img/healthyIssue.png';
@@ -73,18 +60,9 @@ const index = props => {
 				>
 					<Row noGutters className='page-header py-4'>
 						<Col lg='10' md='12' sm='12'>
-							<h6
-								style={{ fontSize: '1.6rem', textTransform: 'uppercase' }}
-								className='text-sm-left mb-3'
-							>
+							<h6 style={{ fontSize: '1.6rem' }} className='text-sm-left mb-3'>
 								What happens in the future if you don't take any action?
 							</h6>
-							{/* <h6
-								style={{ fontSize: '1.4rem', textTransform: 'uppercase' }}
-								className='text-sm-left mb-3'
-							>
-								Come And Have A Look
-							</h6> */}
 						</Col>
 					</Row>
 					<Row>

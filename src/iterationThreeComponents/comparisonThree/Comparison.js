@@ -1,33 +1,17 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import {
-	Container,
-	Row,
-	Col,
-	Button,
-	Card,
-	CardBody,
-	Fade
-} from 'shards-react';
+import { Container, Row, Col, Button, Card, Fade } from 'shards-react';
 import {
 	FormControl,
 	InputLabel,
 	Select,
 	MenuItem,
-	Fab,
 	CircularProgress
 } from '@material-ui/core';
-import { Home } from '@material-ui/icons';
-import {
-	fetchComparsionResult,
-	fetchComparsionResultIteration3
-} from '../../actions';
-import { Link } from 'react-router-dom';
+import { fetchComparsionResultIteration3 } from '../../actions';
 
-import PageTitle from '../components/common/PageTitle';
 import SmallStats from '../components/common/SmallStats';
-import Navigation from '../headerThree/Nav/Navigation';
 import { Bar } from 'react-chartjs-2';
 
 import MapContainer from './MapContainer';
@@ -40,24 +24,8 @@ const Comparison = ({
 	loading
 }) => {
 	const [period, setPeriod] = useState('Day');
-	const chartOptions = {
-		scales: {
-			xAxes: [
-				{
-					barPercentage: 0.5,
-					barThickness: 6,
-					maxBarThickness: 8,
-					minBarLength: 2,
-					gridLines: {
-						offsetGridLines: true
-					}
-				}
-			]
-		}
-	};
 
 	var moneySpentBarStyle = {
-		// label: 'Money Spend ($)',
 		backgroundColor: 'rgba(255,128,64,1)',
 		borderColor: 'rgba(255,128,64,1)',
 		borderWidth: 1,
@@ -65,7 +33,6 @@ const Comparison = ({
 		hoverBorderColor: 'rgba(255,128,64,1)'
 	};
 	var travelTimeBarStyle = {
-		// label: 'Travel Time (mins)',
 		backgroundColor: 'rgb(40,125,246)',
 		borderColor: 'rgb(40,125,246)',
 		borderWidth: 1,

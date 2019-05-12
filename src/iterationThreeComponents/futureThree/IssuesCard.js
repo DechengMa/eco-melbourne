@@ -5,9 +5,6 @@ import {
 	CardBody,
 	Card,
 	Button,
-	Popover,
-	PopoverHeader,
-	PopoverBody,
 	Modal,
 	ModalHeader,
 	ModalBody
@@ -28,8 +25,6 @@ const IssuesCard = ({ header, body, img, desc, id }) => {
 					onClick={() => {
 						setOpen(!popoverOpen);
 					}}
-					// id='popover-1'
-					// id={id}
 					style={{ position: 'absolute', bottom: '20px', right: '10px' }}
 				>
 					Learn More
@@ -45,22 +40,6 @@ const IssuesCard = ({ header, body, img, desc, id }) => {
 					))}
 				</ModalBody>
 			</Modal>
-			{/* <Popover
-				// target='#popover-1'
-				target={`#${id}`}
-				placement='bottom'
-				open={popoverOpen}
-				toggle={setOpen}
-			>
-				<PopoverHeader>Where is the detail?</PopoverHeader>
-				<PopoverBody>
-					{desc.split('\n').map((item, i) => (
-						<p style={{ marginBottom: '0.25rem' }} key={i}>
-							{item}
-						</p>
-					))}
-				</PopoverBody>
-			</Popover> */}
 		</Card>
 	);
 };

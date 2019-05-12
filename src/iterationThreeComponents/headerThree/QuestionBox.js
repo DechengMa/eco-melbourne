@@ -18,10 +18,9 @@ import {
 	fetchDefaultResultIteration3,
 	fetchComparsionResultIteration3,
 	setCurrentValue,
-	fetchComparsionResult,
 	setDefaultLoading
 } from '../../actions';
-import { get_next_weekday, get_next_week_arr } from '../utils/Variables';
+import { get_next_weekday } from '../utils/Variables';
 import { withRouter } from 'react-router-dom';
 import 'rc-time-picker/assets/index.css';
 import moment from 'moment';

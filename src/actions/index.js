@@ -3,8 +3,7 @@ import {
 	FETCH_DEFAULT_RESULT,
 	SET_CURRENT_PARAM,
 	FETCH_COMPARISON_RESULT,
-	FETCH_LOADING,
-	FETCH_COMPARISON_RESULT_I3
+	FETCH_LOADING
 } from './types';
 
 export const setDefaultLoading = isLoading => dispatch => {

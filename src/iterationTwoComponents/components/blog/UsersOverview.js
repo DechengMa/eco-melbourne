@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Row, Col, Card, CardHeader, CardBody, Button } from 'shards-react';
-
-// import RangeDatePicker from '../common/RangeDatePicker';
+import { Row, Col, Card, CardHeader, CardBody } from 'shards-react';
 import Chart from '../../utils/chart';
 
 class UsersOverview extends React.Component {
@@ -93,8 +91,6 @@ class UsersOverview extends React.Component {
 	}
 
 	render() {
-		const { title } = this.props;
-
 		return (
 			<Card small className='h-100'>
 				<CardHeader className='border-bottom'>

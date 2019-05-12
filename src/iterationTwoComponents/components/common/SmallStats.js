@@ -1,13 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import shortid from 'shortid';
 import { Card, CardBody } from 'shards-react';
 import Tooltip from '@material-ui/core/Tooltip';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 import { HelpOutline } from '@material-ui/icons';
-import Chart from '../../utils/chart';
 
 const theme = createMuiTheme({
 	overrides: {
@@ -32,72 +30,6 @@ class SmallStats extends React.Component {
 			open: !this.state.open
 		});
 	};
-
-	componentDidMount() {
-		const chartOptions = {
-			...{
-				maintainAspectRatio: true,
-				responsive: true,
-				legend: {
-					display: false
-				},
-				tooltips: {
-					enabled: false,
-					custom: false
-				},
-				elements: {
-					point: {
-						radius: 0
-					},
-					line: {
-						tension: 0.33
-					}
-				},
-				scales: {
-					xAxes: [
-						{
-							gridLines: false,
-							ticks: {
-								display: false
-							}
-						}
-					],
-					yAxes: [
-						{
-							gridLines: false,
-							scaleLabel: false,
-							ticks: {
-								display: false,
-								isplay: false,
-								// Avoid getting the graph line cut of at the top of the canvas.
-								// Chart.js bug link: https://github.com/chartjs/Chart.js/issues/4790
-								suggestedMax: Math.max(...this.props.chartData[0].data) + 1
-							}
-						}
-					]
-				}
-			},
-			...this.props.chartOptions
-		};
-
-		const chartConfig = {
-			...{
-				type: 'line',
-				data: {
-					...{
-						labels: this.props.chartLabels
-					},
-					...{
-						datasets: this.props.chartData
-					}
-				},
-				options: chartOptions
-			},
-			...this.props.chartConfig
-		};
-
-		// new Chart(this.canvasRef.current, chartConfig);
-	}
 
 	render() {
 		const {
@@ -149,8 +81,6 @@ class SmallStats extends React.Component {
 			'stats-small__percentage',
 			`stats-small__percentage--${increase ? 'increase' : 'decrease'}`
 		);
-
-		const canvasHeight = variation === '1' ? 120 : 60;
 
 		return (
 			<Card small className={cardClasses}>
