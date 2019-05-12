@@ -14,8 +14,8 @@ import {
 	CardFooter
 } from 'shards-react';
 import Navigation from '../headerThree/Nav/Navigation';
-import EnvironmentalIssue from '../../resources/img/Environmental issue.png';
-import HealthyIssue from '../../resources/img/Healthy issue.PNG';
+import EnvironmentalIssue from '../../resources/img/environmentalIssue.png';
+import HealthyIssue from '../../resources/img/healthyIssue.png';
 import TableauReport from 'tableau-react';
 import IssuesCard from './IssuesCard';
 
