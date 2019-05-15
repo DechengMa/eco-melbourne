@@ -75,6 +75,7 @@ export const fetchDefaultResultIteration3 = (
 	console.log('fetchDefaultResultIteration3');
 	var url = `https://cors-anywhere.herokuapp.com/https://ecomelbourneiteration3.azurewebsites.net/Compare1/calculate?distance=${distance}&days=${days}&period=${period}&congestion=${congestion}&carTime=${carTime}&bicycleTime=${bicycleTime}&walkingTime=${walkingTime}&ptvTime=${ptvTime}`;
 	const response = await apis.post(url);
+	console.log('URL', url);
 	console.log('ACTION CREATOR RESP DATA', response.data);
 	const defaultResult = response.data;
 	dispatch({ type: FETCH_DEFAULT_RESULT, payload: defaultResult });

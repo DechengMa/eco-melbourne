@@ -417,6 +417,12 @@ class QuestionBox extends Component {
 		) {
 			const carTime = carTimeMorning + carTimeAfternoon;
 			const congestion = congestionMorning + congestionAfternoon;
+			console.log(
+				'congestionMorning',
+				'congestionAfternoon',
+				congestionMorning,
+				congestionAfternoon
+			);
 			this.props.fetchDefaultResultIteration3(
 				distance,
 				daysWork,

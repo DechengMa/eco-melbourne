@@ -3,7 +3,11 @@ import moment from 'moment-business-days';
 export const Colors = {
 	mainGreen: '#489e52',
 	mainYellow: '#e7853d',
-	mainBlue: '#2f64a7'
+	mainBlue: '#2f64a7',
+	infoYellow: '#ffb400',
+	infoRed: '#c4183c',
+	infoGreen: '#17c671',
+	infoBlue: '#00b8d8'
 };
 
 export const isNumeric = value => {
