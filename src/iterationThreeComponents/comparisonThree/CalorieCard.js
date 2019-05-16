@@ -23,7 +23,7 @@ const descStyle = {
 
 const CalorieCard = ({ value, period, travelMethod }) => {
 	const renderFood = () => {
-		if (Number(value) > 50000) {
+		if (Number(value) > 20000) {
 			return (
 				<>
 					<h6

@@ -31,7 +31,7 @@ const TimeDifferenceCard = ({
 		labels: ['Car', travelMethodName],
 		datasets: [
 			{
-				label: 'Time Difference',
+				label: 'Travel Time',
 				backgroundColor: ['rgba(255, 128, 64, 1)', 'rgb(40, 125, 246)'],
 				data: data
 			}

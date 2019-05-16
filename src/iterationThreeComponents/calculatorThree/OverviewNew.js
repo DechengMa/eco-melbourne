@@ -105,7 +105,7 @@ class OverviewNew extends Component {
 
 				<Row>
 					{loading ? (
-						<Col lg='8' md='6' sm='12' className='mb-4'>
+						<Col lg='9' md='9' sm='12' className='mb-4'>
 							<CircularProgress
 								style={{ position: 'absolute', left: '50%', top: '40%' }}
 							/>

@@ -42,7 +42,7 @@ const MoneyDifferenceCard = ({
 		labels: ['Car', travelMethodName],
 		datasets: [
 			{
-				label: 'Money Difference',
+				label: 'Money Spending',
 				backgroundColor: ['rgba(255, 128, 64, 1)', 'rgb(40, 125, 246)'],
 				data: data
 			}
