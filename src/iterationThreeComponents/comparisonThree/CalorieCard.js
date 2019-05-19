@@ -23,62 +23,61 @@ const descStyle = {
 
 const CalorieCard = ({ value, period, travelMethod }) => {
 	const renderFood = () => {
-		if (Number(value) > 20000) {
-			return (
-				<>
-					<h6
-						className='stats-small__value'
-						style={{
-							fontSize: '2.0625rem',
-							color: Colors.infoGreen
-						}}
-					>
-						{(Number(value) / 298).toFixed(2)}
-						<span style={{ fontSize: '0.8rem' }} />
-					</h6>
-					<h6
-						style={{
-							...descStyle
-						}}
-						className='stats-small__label'
-					>
-						<LocalPizza />
-						Pizza (pepperoni, regular crust, one slice)
-					</h6>
-				</>
-			);
-		} else {
-			return (
-				<>
-					<h6
-						className='stats-small__value'
-						style={{
-							fontSize: '2.0625rem',
-							color: Colors.infoGreen
-						}}
-					>
-						{(Number(value) / 137).toFixed(2)}
-						<span style={{ fontSize: '0.8rem' }} />
-					</h6>
-					<h6
-						style={{
-							...descStyle
-						}}
-						className='stats-small__label'
-					>
-						<Fastfood />
-						Hot dog (beef and pork)
-					</h6>
-				</>
-			);
-		}
+		// if (Number(value) > 20000) {
+		return (
+			<>
+				<h6
+					className='stats-small__value'
+					style={{
+						fontSize: '2.0625rem',
+						color: Colors.infoGreen
+					}}
+				>
+					{(Number(value) / 365).toFixed(2)}
+					<span style={{ fontSize: '0.8rem' }}>hour(s)</span>
+				</h6>
+				<h6
+					style={{
+						...descStyle
+					}}
+					className='stats-small__label'
+				>
+					To Burn if you Run on the Treadmill
+				</h6>
+			</>
+		);
+		// } else {
+		// 	return (
+		// 		<>
+		// 			<h6
+		// 				className='stats-small__value'
+		// 				style={{
+		// 					fontSize: '2.0625rem',
+		// 					color: Colors.infoGreen
+		// 				}}
+		// 			>
+		// 				{(Number(value) / 137).toFixed(2)}
+		// 				<span style={{ fontSize: '0.8rem' }} />
+		// 			</h6>
+		// 			<h6
+		// 				style={{
+		// 					...descStyle
+		// 				}}
+		// 				className='stats-small__label'
+		// 			>
+		// 				<Fastfood />
+		// 				Hot dog (beef and pork)
+		// 			</h6>
+		// 		</>
+		// 	);
+		// }
 	};
 
 	return (
 		<Card style={{ width: '100%', height: '100%' }}>
 			<CardBody style={{ ...containerStyle }}>
 				<h6 style={{ ...titleStyle }} className='stats-small__label'>
-					You will generate
+					You will Burn
 				</h6>
 				<h6
 					className='stats-small__value'
@@ -88,7 +87,7 @@ const CalorieCard = ({ value, period, travelMethod }) => {
 					}}
 				>
 					{value}
-					<span style={{ fontSize: '0.8rem' }}>calorie</span>
+					<span style={{ fontSize: '0.8rem' }}>kcal</span>
 				</h6>
 				<h6
 					style={{
@@ -96,11 +95,11 @@ const CalorieCard = ({ value, period, travelMethod }) => {
 					}}
 					className='stats-small__label'
 				>
-					By traveling by {travelMethod} in one {period}
+					If you Travel by {travelMethod}
 				</h6>
 				<KeyboardArrowDown />
 				<h6 style={{ ...titleStyle }} className='stats-small__label'>
-					Which equals to
+					Which Would Take
 				</h6>
 				{renderFood()}
 			</CardBody>

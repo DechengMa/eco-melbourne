@@ -38,7 +38,7 @@ const styles = theme => ({
 	}
 });
 
-const delayBase = 8000;
+const delayBase = 4000;
 
 const renderWorkingTime = totalMoneySpent => {
 	const hours =
@@ -65,7 +65,7 @@ const renderWorkingTime = totalMoneySpent => {
 				className='stats-small__label'
 			>
 				<AccessTime />
-				Which needs
+				Which Takes
 			</h6>
 			<h6
 				className='stats-small__value'
@@ -83,7 +83,7 @@ const renderWorkingTime = totalMoneySpent => {
 				}}
 				className='stats-small__label'
 			>
-				Extra working time to earn back
+				For an Average Employee in Melbourne to Earn
 			</h6>
 		</div>
 	);
@@ -103,7 +103,7 @@ class SpendingCard extends Component {
 					<Container>
 						<Row style={{ textAlign: 'center' }}>
 							<Col lg='5' md='5' sm='12' xs='12'>
-								<Fade delay={500}>
+								<Fade delay={500 + delayBase}>
 									<div>
 										<h6
 											style={{
@@ -112,7 +112,7 @@ class SpendingCard extends Component {
 											className='stats-small__label'
 										>
 											<AttachMoney />
-											The Running Costs is
+											You are Spending
 										</h6>
 
 										<h6
@@ -131,18 +131,20 @@ class SpendingCard extends Component {
 											}}
 											className='stats-small__label'
 										>
-											For using your car daily
+											Running your Car
 										</h6>
 									</div>
 								</Fade>
 							</Col>
 							<Col style={{ ...arrowStyle }}>
-								<Fade delay={1000}>
+								<Fade delay={800 + delayBase}>
 									<ArrowForwardIos />
 								</Fade>
 							</Col>
 							<Col lg='5' md='5' sm='12' xs='12'>
-								<Fade delay={2000}>{renderWorkingTime(totalMoneySpent)}</Fade>
+								<Fade delay={1100 + delayBase}>
+									{renderWorkingTime(totalMoneySpent)}
+								</Fade>
 							</Col>
 						</Row>
 						<Row>
@@ -170,7 +172,9 @@ class SpendingCard extends Component {
 						aria-expanded={this.state.collapse}
 						aria-label='Show more'
 					>
-						<ExpandMore />
+						<Fade delay={1300 + delayBase}>
+							<ExpandMore />
+						</Fade>
 					</IconButton>
 				</CardBody>
 			</Card>

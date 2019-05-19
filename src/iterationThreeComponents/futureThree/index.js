@@ -67,24 +67,28 @@ const index = props => {
 					</Row>
 					<Row>
 						<Col lg='8' md='6' sm='12' className='mb-4'>
-							<Card style={{ overflow: 'hidden' }}>
-								<CardBody>
-									<TableauReport
-										url={
-											'https://public.tableau.com/views/PC_15576489568200/Dashboard1?:embed=y&:display_count=yes'
-										}
-									/>
-								</CardBody>
-							</Card>
-							<Card style={{ overflow: 'hidden', marginTop: '30px' }}>
-								<CardBody>
-									<TableauReport
-										url={
-											'https://public.tableau.com/views/TimeWasted/Dashboard1?:embed=y&:display_count=yes'
-										}
-									/>
-								</CardBody>
-							</Card>
+							<Col lg='12' md='12' sm='12' className='mb-4'>
+								<Card style={{ overflow: 'hidden' }}>
+									<CardBody>
+										<TableauReport
+											url={
+												'https://public.tableau.com/views/PC_15576489568200/Dashboard1?:embed=y&:display_count=yes'
+											}
+										/>
+									</CardBody>
+								</Card>
+							</Col>
+							<Col lg='12' md='12' sm='12' className='mb-4'>
+								<Card style={{ overflow: 'hidden' }}>
+									<CardBody>
+										<TableauReport
+											url={
+												'https://public.tableau.com/views/TimeWasted/Dashboard1?:embed=y&:display_count=yes'
+											}
+										/>
+									</CardBody>
+								</Card>
+							</Col>
 						</Col>
 						<Col lg='4' md='6' sm='12' className='mb-4'>
 							<Col lg='12' md='12' sm='12' className='mb-4'>

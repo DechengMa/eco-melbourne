@@ -231,11 +231,7 @@ const ComparisonNew = ({
 								? 'PUBLIC TRANSPORT'
 								: alternate_1ModeName}
 						</Button>
-						, here is the difference!
-						<br />
-						<span style={{ fontSize: '1.2rem' }}>
-							Want to see others options? Click to Check
-						</span>
+						, or try
 						<Button
 							style={{ margin: '5px', fontSize: '1.0rem' }}
 							theme={
@@ -248,7 +244,8 @@ const ComparisonNew = ({
 							{alternate_2ModeName === 'PTV'
 								? 'PUBLIC TRANSPORT'
 								: alternate_2ModeName}
-						</Button>
+						</Button>{' '}
+						/
 						<Button
 							style={{ margin: '5px', fontSize: '1.0rem' }}
 							theme={

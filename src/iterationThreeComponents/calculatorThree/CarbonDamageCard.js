@@ -25,18 +25,18 @@ const titleStyle = {
 	fontWeight: '400'
 };
 
-const delayBase = 4000;
+const delayBase = 2000;
 
 const renderTrees = value => {
 	value = Number(value).toFixed(2);
 	var data = [];
 
 	if (value < 2000) {
-		data[0] = 'Which can be used to build';
-		data[1] = (value / 44).toFixed(2);
-		data[2] = 'House(s) of 2600 square feet';
+		data[0] = 'Which Could be Used to Build';
+		data[1] = `${(value / 44).toFixed(2)} `;
+		data[2] = 'of Size 2600 Square Feet';
 	} else {
-		data[0] = 'Which equals to';
+		data[0] = 'Which Equals to';
 		data[1] = (value / 2982).toFixed(2);
 		data[2] = 'Num of trees in Albert Park';
 	}
@@ -60,7 +60,9 @@ const renderTrees = value => {
 				}}
 			>
 				{data[1]}
+				<span style={{ fontSize: '0.8rem' }}>house(s)</span>
 			</h6>
+
 			<h6
 				style={{
 					fontSize: '0.825rem'
@@ -107,7 +109,7 @@ class CarbonDamageCard extends Component {
 											className='stats-small__label'
 										>
 											<ScatterPlot />
-											You Generated
+											Your Car is Generating
 										</h6>
 
 										<h6
@@ -125,25 +127,25 @@ class CarbonDamageCard extends Component {
 											}}
 											className='stats-small__label'
 										>
-											Carbon Footprint by driving daily
+											of Carbon Emission
 										</h6>
 									</div>
 								</Fade>
 							</Col>
 							<Col style={{ ...arrowStyle }}>
-								<Fade delay={1000 + delayBase}>
+								<Fade delay={800 + delayBase}>
 									<ArrowForwardIos />
 								</Fade>
 							</Col>
 							<Col lg='3' md='3' sm='12' xs='12'>
-								<Fade delay={2000 + delayBase}>
+								<Fade delay={1100 + delayBase}>
 									<div>
 										<h6
 											style={{ ...titleStyle }}
 											className='stats-small__label'
 										>
 											<Terrain />
-											Which needs
+											It Would Require
 										</h6>
 										<h6
 											className='stats-small__value'
@@ -161,18 +163,18 @@ class CarbonDamageCard extends Component {
 											}}
 											className='stats-small__label'
 										>
-											To absorb your car emission yealy
+											to Undo your Carbon Footprint
 										</h6>
 									</div>
 								</Fade>
 							</Col>
 							<Col style={{ ...arrowStyle }}>
-								<Fade delay={2500 + delayBase}>
+								<Fade delay={1400 + delayBase}>
 									<ArrowForwardIos />
 								</Fade>
 							</Col>
 							<Col lg='3' md='3' sm='12' xs='12'>
-								<Fade delay={3500 + delayBase}>
+								<Fade delay={1700 + delayBase}>
 									<div>{renderTrees(treesRequired)}</div>
 								</Fade>
 							</Col>
@@ -204,7 +206,7 @@ class CarbonDamageCard extends Component {
 						aria-expanded={this.state.collapse}
 						aria-label='Show more'
 					>
-						<Fade delay={4000 + delayBase}>
+						<Fade delay={1900 + delayBase}>
 							<ExpandMore />
 						</Fade>
 					</IconButton>

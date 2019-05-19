@@ -34,17 +34,17 @@ const renderItem = value => {
 			title = (
 				<>
 					<LocalCafe />
-					Which can buy
+					Which Could Buy
 				</>
 			);
 			number = [valueToCompare / 1, 'cup(s)'];
-			desc = 'of regular coffees from 711';
+			desc = 'of Regular Sized Coffee from 7-Eleven';
 			break;
 		case valueToCompare > 100 && valueToCompare < 600:
 			title = (
 				<>
 					<Watch />
-					Which can buy
+					Which Could Buy
 				</>
 			);
 			number = [(valueToCompare / 99.95).toFixed(1), ''];
@@ -54,7 +54,7 @@ const renderItem = value => {
 			title = (
 				<>
 					<Watch />
-					Which can buy
+					Which Could Buy
 				</>
 			);
 			number = [(valueToCompare / 600).toFixed(1), ''];
@@ -64,7 +64,7 @@ const renderItem = value => {
 			title = (
 				<>
 					<Computer />
-					Which can buy
+					Which Could Buy
 				</>
 			);
 			number = [(valueToCompare / 1849).toFixed(1), ''];
@@ -146,7 +146,7 @@ class TimeWastedCard extends Component {
 											className='stats-small__label'
 										>
 											<AccessTime />
-											You wasted
+											You are Wasting
 										</h6>
 
 										<h6
@@ -157,7 +157,7 @@ class TimeWastedCard extends Component {
 											}}
 										>
 											{Number(timeWaste) > 0 ? timeWaste : 0}
-											<span style={{ fontSize: '0.8rem' }}>mins</span>
+											<span style={{ fontSize: '0.8rem' }}> mins</span>
 										</h6>
 										<h6
 											style={{
@@ -165,20 +165,20 @@ class TimeWastedCard extends Component {
 											}}
 											className='stats-small__label'
 										>
-											Daily stuck on the road
+											Stuck on the Road in Congestion
 										</h6>
 									</div>
 								</Fade>
 							</Col>
 
 							<Col style={{ ...arrowStyle }}>
-								<Fade delay={1000 + delayBase}>
+								<Fade delay={800 + delayBase}>
 									<ArrowForwardIos />
 								</Fade>
 							</Col>
 
 							<Col lg='3' md='3' sm='12' xs='12'>
-								<Fade delay={2000 + delayBase}>
+								<Fade delay={1100 + delayBase}>
 									<div>
 										<h6
 											style={{
@@ -188,7 +188,7 @@ class TimeWastedCard extends Component {
 											className='stats-small__label'
 										>
 											<AttachMoney />
-											Might let you lose
+											In Which You’re Losing
 										</h6>
 										<h6
 											className='stats-small__value'
@@ -206,20 +206,20 @@ class TimeWastedCard extends Component {
 											}}
 											className='stats-small__label'
 										>
-											Compare to Melbourne Avg salary rate
+											Based on Average Melbourne Hourly Wage
 										</h6>
 									</div>
 								</Fade>
 							</Col>
 
 							<Col style={{ ...arrowStyle }}>
-								<Fade delay={2500 + delayBase}>
+								<Fade delay={1400 + delayBase}>
 									<ArrowForwardIos />
 								</Fade>
 							</Col>
 
 							<Col lg='3' md='3' sm='12' xs='12'>
-								<Fade delay={3500 + delayBase}>
+								<Fade delay={1700 + delayBase}>
 									<div>{renderItem(money)}</div>
 								</Fade>
 							</Col>
@@ -249,7 +249,9 @@ class TimeWastedCard extends Component {
 						aria-expanded={this.state.collapse}
 						aria-label='Show more'
 					>
-						<ExpandMore />
+						<Fade delay={1900 + delayBase}>
+							<ExpandMore />
+						</Fade>
 					</IconButton>
 				</CardBody>
 			</Card>

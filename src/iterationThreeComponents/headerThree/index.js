@@ -4,15 +4,12 @@ import { Grid, Typography, withStyles } from '@material-ui/core';
 import Nav from './Nav/Navigation';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import FooterThree from '../footerThree';
+import BannerSection from './BannerSection.js';
 
 const styles = theme => ({
 	container: {
 		display: 'flex',
-		height: 'calc(100vh - 67px)',
-		backgroundSize: 'cover',
-		backgroundPosition: 'top',
-		backgroundImage:
-			'url(https://images.unsplash.com/photo-1507035895480-2b3156c31fc8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80)'
+		height: 'calc(100vh - 67px)'
 	},
 	questionBox: {
 		order: 2,
@@ -56,8 +53,16 @@ class index extends Component {
 	renderQuestionBox = () => {
 		const { classes } = this.props;
 		return (
-			<>
+			<div
+				style={{
+					backgroundSize: 'cover',
+					backgroundImage:
+						'url(https://images.unsplash.com/photo-1507035895480-2b3156c31fc8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80)',
+					backgroundAttachment: 'fixed'
+				}}
+			>
 				<Nav />
+				<BannerSection />
 				<div className={classes.container}>
 					<Grid container alignItems='center'>
 						<Grid item xs={1} md={2} />
@@ -88,7 +93,7 @@ class index extends Component {
 					</Grid>
 				</div>
 				<FooterThree />
-			</>
+			</div>
 		);
 	};
 

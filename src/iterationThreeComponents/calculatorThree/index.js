@@ -11,7 +11,6 @@ class index extends Component {
 		return (
 			<>
 				<Navigation />
-				{/* <Overview /> */}
 				<OverviewNew />
 				<FooterThree />
 			</>

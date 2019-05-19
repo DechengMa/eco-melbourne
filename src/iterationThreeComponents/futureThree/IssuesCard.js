@@ -32,7 +32,7 @@ const IssuesCard = ({ header, body, img, desc, id }) => {
 			</CardBody>
 			<Modal open={popoverOpen} toggle={setOpen}>
 				<ModalHeader>{header}</ModalHeader>
-				<ModalBody>
+				<ModalBody style={{ maxHeight: '80vh', overflow: 'scroll' }}>
 					{desc.split('\n').map((item, i) => (
 						<p style={{ marginBottom: '0.25rem' }} key={i}>
 							{item}

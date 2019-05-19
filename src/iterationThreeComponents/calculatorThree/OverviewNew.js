@@ -117,7 +117,7 @@ class OverviewNew extends Component {
 									<TimeWastedCard timeWaste={timeWaste} />
 								</Row>
 							</LightSpeed>
-							<LightSpeed right delay={4000}>
+							<LightSpeed right delay={2000}>
 								<Row style={{ marginBottom: '20px' }}>
 									<CarbonDamageCard
 										carCarbon={carCarbon}
@@ -125,7 +125,7 @@ class OverviewNew extends Component {
 									/>
 								</Row>
 							</LightSpeed>
-							<LightSpeed left delay={8000}>
+							<LightSpeed left delay={4000}>
 								<Row>
 									<SpendingCard totalMoneySpent={totalMoneySpent} />
 								</Row>

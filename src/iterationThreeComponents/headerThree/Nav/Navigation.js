@@ -27,10 +27,6 @@ const navWithInput = [
 	{
 		url: '/iteration3/future',
 		name: 'Explore'
-	},
-	{
-		url: '/iteration3/aboutus',
-		name: 'About Us'
 	}
 ];
 const navWithoutInput = [
@@ -39,12 +35,8 @@ const navWithoutInput = [
 		name: 'Home'
 	},
 	{
-		url: '/iteration3/future',
+		url: '/iteration3/explore',
 		name: 'Explore'
-	},
-	{
-		url: '/iteration3/aboutus',
-		name: 'About'
 	}
 ];
 
@@ -81,21 +73,25 @@ class Navigation extends Component {
 
 	renderNav = () => {
 		if (!this.props.currentInfo) {
-			return navWithoutInput.map(e => (
-				<Link to={e.url}>
-					<NavItem>
-						<NavLink active>{e.name}</NavLink>
-					</NavItem>
-				</Link>
-			));
+			return navWithoutInput.map(e => {
+				return (
+					<Link to={e.url}>
+						<NavItem>
+							<NavLink active>{e.name}</NavLink>
+						</NavItem>
+					</Link>
+				);
+			});
 		} else {
-			return navWithInput.map(e => (
-				<Link to={e.url}>
-					<NavItem>
-						<NavLink active>{e.name}</NavLink>
-					</NavItem>
-				</Link>
-			));
+			return navWithInput.map(e => {
+				return (
+					<Link to={e.url}>
+						<NavItem>
+							<NavLink active>{e.name}</NavLink>
+						</NavItem>
+					</Link>
+				);
+			});
 		}
 	};
 

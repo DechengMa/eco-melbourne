@@ -149,7 +149,7 @@ const App = () => {
 						/>
 						<Route
 							exact
-							path='/iteration3/future'
+							path='/iteration3/explore'
 							component={iteration3Future}
 						/>
 						<Route
