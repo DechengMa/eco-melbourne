@@ -5,6 +5,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import { ArrowForward } from '@material-ui/icons';
+import Shake from 'react-reveal/Shake';
 
 const styles = theme => ({
 	button: {
@@ -24,7 +26,6 @@ class ControlledOpenSelect extends React.Component {
 	};
 
 	handleChange = event => {
-		console.log(event.target.value);
 		this.props.handleChange(event.target.value);
 	};
 
@@ -37,30 +38,42 @@ class ControlledOpenSelect extends React.Component {
 	};
 
 	render() {
-		const { classes, period, handleChange } = this.props;
+		const { classes, period } = this.props;
 
 		return (
-			<form autoComplete='off' style={{ textAlign: 'right' }}>
-				<FormControl className={classes.formControl}>
-					<InputLabel htmlFor='demo-controlled-open-select'>Period</InputLabel>
-					<Select
-						open={this.state.open}
-						onClose={this.handleClose}
-						onOpen={this.handleOpen}
-						value={period}
-						onChange={this.handleChange}
-						inputProps={{
-							name: 'period',
-							id: 'demo-controlled-open-select'
-						}}
-					>
-						<MenuItem value={'Day'}>Daily</MenuItem>
-						<MenuItem value={'Week'}>Weekly</MenuItem>
-						<MenuItem value={'Month'}>Monthly</MenuItem>
-						<MenuItem value={'Year'}>Yearly</MenuItem>
-					</Select>
-				</FormControl>
-			</form>
+			<>
+				<Shake forever={true} timeout={4000}>
+					<span style={{ marginTop: '30px' }}>
+						Try to change period
+						<ArrowForward />
+					</span>
+				</Shake>
+
+				<form autoComplete='off' style={{ textAlign: 'right' }}>
+					<FormControl className={classes.formControl}>
+						<InputLabel htmlFor='demo-controlled-open-select'>
+							Period
+						</InputLabel>
+
+						<Select
+							open={this.state.open}
+							onClose={this.handleClose}
+							onOpen={this.handleOpen}
+							value={period}
+							onChange={this.handleChange}
+							inputProps={{
+								name: 'period',
+								id: 'demo-controlled-open-select'
+							}}
+						>
+							<MenuItem value={'Day'}>Daily</MenuItem>
+							<MenuItem value={'Week'}>Weekly</MenuItem>
+							<MenuItem value={'Month'}>Monthly</MenuItem>
+							<MenuItem value={'Year'}>Yearly</MenuItem>
+						</Select>
+					</FormControl>
+				</form>
+			</>
 		);
 	}
 }

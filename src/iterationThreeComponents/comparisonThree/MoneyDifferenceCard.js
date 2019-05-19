@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardBody, Container, Row, Col } from 'shards-react';
+import { Card, CardBody } from 'shards-react';
 import { Colors } from '../utils/Variables';
 import { Bar } from 'react-chartjs-2';
 import { Fade } from 'react-reveal';
@@ -21,18 +21,8 @@ const descStyle = {
 	fontSize: '1.1rem'
 };
 
-var data = {
-	labels: ['Car', 'PTV'],
-	datasets: [
-		{
-			label: 'Money Difference',
-			backgroundColor: ['rgba(255, 128, 64, 1)', 'rgb(40, 125, 246)'],
-			data: [10, 20]
-		}
-	]
-};
-
 const MoneyDifferenceCard = ({
+	period,
 	moneyDifference,
 	increase,
 	data,
@@ -42,7 +32,7 @@ const MoneyDifferenceCard = ({
 		labels: ['Car', travelMethodName],
 		datasets: [
 			{
-				label: 'Money Spending',
+				label: 'Money Spending ($)',
 				backgroundColor: ['rgba(255, 128, 64, 1)', 'rgb(40, 125, 246)'],
 				data: data
 			}
@@ -78,7 +68,7 @@ const MoneyDifferenceCard = ({
 						}}
 						className='stats-small__label'
 					>
-						By travel this travel method daily
+						By travel this travel method in one {period}
 					</h6>
 				</Fade>
 				<Fade delay={1700}>

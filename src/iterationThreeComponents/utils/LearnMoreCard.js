@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-	Card,
-	CardBody,
-	CardTitle,
-	Button,
-	CardImg,
-	CardFooter
-} from 'shards-react';
+import { Card, CardTitle, Button, CardImg, CardFooter } from 'shards-react';
 import { Link } from 'react-router-dom';
 import Pulse from 'react-reveal/Pulse';
 

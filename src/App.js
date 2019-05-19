@@ -11,6 +11,7 @@ import {
 	FormInput,
 	InputGroupText
 } from 'shards-react';
+import ScrollToTop from './iterationThreeComponents/utils/_ScrollToTop';
 
 import './resources/styles.css';
 
@@ -79,10 +80,6 @@ const App = () => {
 
 	// Password
 	const inputPassword = event => {
-		// if (process.env.NODE_ENV === 'development') {
-		// 	setShowContent(true);
-		// }
-
 		if (event.target.value === process.env.REACT_APP_PASSWORD) {
 			setShowContent(true);
 		}
@@ -114,53 +111,60 @@ const App = () => {
 		if (showContent) {
 			return (
 				<Router>
-					<Switch>
-						{/* iteration 1 */}
-						<Route path='/iteration1' component={iteration1} />
-						{/* iteration 1 */}
+					<ScrollToTop>
+						<Switch>
+							{/* iteration 1 */}
+							<Route path='/iteration1' component={iteration1} />
+							{/* iteration 1 */}
 
-						{/* iteration 2 */}
+							{/* iteration 2 */}
 
-						<Route exact path='/iteration2' component={iteration2HomePage} />
-						<Route
-							exact
-							path='/iteration2/calculator'
-							component={iteration2Calculator}
-						/>
-						<Route
-							exact
-							path='/iteration2/comparison'
-							component={iteration2Comparison}
-						/>
-						{/* iteration 2 */}
+							<Route exact path='/iteration2' component={iteration2HomePage} />
+							<Route
+								exact
+								path='/iteration2/calculator'
+								component={iteration2Calculator}
+							/>
+							<Route
+								exact
+								path='/iteration2/comparison'
+								component={iteration2Comparison}
+							/>
+							{/* iteration 2 */}
 
-						{/* iteration 3 */}
-						<Route exact path='/' component={iteration3HomePage} />
-						<Route exact path='/iteration3' component={iteration3HomePage} />
-						<Route
-							exact
-							path='/iteration3/calculator'
-							component={iteration3Calculator}
-						/>
-						<Route
-							exact
-							path='/iteration3/comparison'
-							component={iteration3Comparison}
-						/>
-						<Route
-							exact
-							path='/iteration3/explore'
-							component={iteration3Future}
-						/>
-						<Route
-							exact
-							path='/iteration3/aboutus'
-							component={iteration3AboutUs}
-						/>
-						{/* iteration 3 */}
+							{/* iteration 3 */}
+							<Route exact path='/' component={iteration3HomePage} />
+							<Route exact path='/iteration3' component={iteration3HomePage} />
+							<Route
+								exact
+								path='/iteration3/home'
+								component={iteration3HomePage}
+							/>
+							<Route
+								exact
+								path='/iteration3/calculator'
+								component={iteration3Calculator}
+							/>
+							<Route
+								exact
+								path='/iteration3/comparison'
+								component={iteration3Comparison}
+							/>
+							<Route
+								exact
+								path='/iteration3/explore'
+								component={iteration3Future}
+							/>
+							<Route
+								exact
+								path='/iteration3/aboutus'
+								component={iteration3AboutUs}
+							/>
+							{/* iteration 3 */}
 
-						<Route component={NotFoundPage} />
-					</Switch>
+							<Route component={NotFoundPage} />
+						</Switch>
+					</ScrollToTop>
 				</Router>
 			);
 		} else {

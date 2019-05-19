@@ -5,7 +5,7 @@ import {
 	AccessTime,
 	AttachMoney,
 	LocalCafe,
-	ArrowForwardIos,
+	ArrowForward,
 	Watch,
 	Computer,
 	ExpandMore
@@ -173,7 +173,7 @@ class TimeWastedCard extends Component {
 
 							<Col style={{ ...arrowStyle }}>
 								<Fade delay={800 + delayBase}>
-									<ArrowForwardIos />
+									<ArrowForward />
 								</Fade>
 							</Col>
 
@@ -214,7 +214,7 @@ class TimeWastedCard extends Component {
 
 							<Col style={{ ...arrowStyle }}>
 								<Fade delay={1400 + delayBase}>
-									<ArrowForwardIos />
+									<ArrowForward />
 								</Fade>
 							</Col>
 

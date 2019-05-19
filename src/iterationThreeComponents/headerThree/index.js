@@ -20,6 +20,10 @@ const styles = theme => ({
 		}
 	},
 	textbox: {
+		borderRadius: '10px',
+		padding: '20px',
+		background: 'rgba(255,255,255,0.6)',
+
 		order: 1,
 		[theme.breakpoints.up('md')]: {
 			order: 2,
@@ -32,13 +36,14 @@ const styles = theme => ({
 		textAlign: 'left',
 		fontWeight: '330',
 		color: 'rgba(64,81,110)',
-		letterSpacing: '1px',
+		display: 'none',
 		[theme.breakpoints.up('md')]: {
 			fontSize: '1.4rem',
 			transform: 'translateY(-30px)'
 		},
 		[theme.breakpoints.up('sm')]: {
-			fontSize: '1.3rem'
+			fontSize: '1.3rem',
+			display: 'block'
 		}
 	},
 	textPOne: {

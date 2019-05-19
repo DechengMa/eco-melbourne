@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import { Container, Row, Col, Button, Card, Fade } from 'shards-react';
+import { Container, Row, Col, Button, Fade } from 'shards-react';
 import { CircularProgress } from '@material-ui/core';
 import { fetchComparsionResultIteration3 } from '../../actions';
 import MapContainer from './MapContainer';
@@ -211,7 +210,7 @@ const ComparisonNew = ({
 			>
 				<Row noGutters className='page-header py-4'>
 					<Col
-						lg='10'
+						lg='8'
 						md='12'
 						sm='12'
 						style={{ fontSize: '1.6rem' }}
@@ -261,11 +260,15 @@ const ComparisonNew = ({
 						</Button>
 					</Col>
 					<Col
-						lg='2'
+						lg='4'
 						md='12'
 						sm='12'
 						xs='12'
-						style={{ marginTop: '20px', textAlign: 'right' }}
+						style={{
+							marginTop: '20px',
+							display: 'flex',
+							justifyContent: 'flex-end'
+						}}
 					>
 						<PeriodSelector
 							period={period}
@@ -278,7 +281,7 @@ const ComparisonNew = ({
 				</Row>
 
 				{loading ? (
-					<Row style={{ height: '165px' }}>
+					<Row style={{ height: '375px' }}>
 						<CircularProgress
 							style={{ position: 'absolute', left: '50%', top: '20%' }}
 						/>
@@ -287,6 +290,7 @@ const ComparisonNew = ({
 					<Row style={{ marginBottom: '20px' }}>
 						<Col>
 							<TimeDifferenceCard
+								period={period}
 								travelMethodName={data.datasets[1].label}
 								timeDifference={smallStats[0].value}
 								increase={smallStats[0].increase}
@@ -295,6 +299,7 @@ const ComparisonNew = ({
 						</Col>
 						<Col>
 							<MoneyDifferenceCard
+								period={period}
 								travelMethodName={data.datasets[1].label}
 								moneyDifference={smallStats[1].value}
 								increase={smallStats[1].increase}

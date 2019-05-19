@@ -539,13 +539,13 @@ class QuestionBox extends Component {
 						</Container>
 						<br />
 						<Button
-							style={{ height: '35px', width: '115px', marginTop: '10px' }}
+							style={{ height: '35px', width: '100px', marginTop: '10px' }}
 							onClick={this.handleClick}
 						>
 							{this.props.loading ? (
 								<CircularProgress size={18} style={{ color: '#fff' }} />
 							) : (
-								'GET STARTED'
+								'Get Started'
 							)}
 						</Button>
 					</ListGroupItem>

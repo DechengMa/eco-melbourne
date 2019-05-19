@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import {
 	ScatterPlot,
 	Terrain,
-	ArrowForwardIos,
+	ArrowForward,
 	AccountBalance,
 	ExpandMore
 } from '@material-ui/icons';
@@ -33,7 +33,7 @@ const renderTrees = value => {
 
 	if (value < 2000) {
 		data[0] = 'Which Could be Used to Build';
-		data[1] = `${(value / 44).toFixed(2)} `;
+		data[1] = `${(value / 44).toFixed(1)} `;
 		data[2] = 'of Size 2600 Square Feet';
 	} else {
 		data[0] = 'Which Equals to';
@@ -134,7 +134,7 @@ class CarbonDamageCard extends Component {
 							</Col>
 							<Col style={{ ...arrowStyle }}>
 								<Fade delay={800 + delayBase}>
-									<ArrowForwardIos />
+									<ArrowForward />
 								</Fade>
 							</Col>
 							<Col lg='3' md='3' sm='12' xs='12'>
@@ -170,7 +170,7 @@ class CarbonDamageCard extends Component {
 							</Col>
 							<Col style={{ ...arrowStyle }}>
 								<Fade delay={1400 + delayBase}>
-									<ArrowForwardIos />
+									<ArrowForward />
 								</Fade>
 							</Col>
 							<Col lg='3' md='3' sm='12' xs='12'>

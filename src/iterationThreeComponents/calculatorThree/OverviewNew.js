@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { CircularProgress } from '@material-ui/core';
-import { Container, Row, Col, Fade } from 'shards-react';
+import { Container, Row, Col } from 'shards-react';
 import LearnMoreCard from '../utils/LearnMoreCard';
 import { fetchDefaultResultIteration3, setDefaultLoading } from '../../actions';
 import Bike from '../../resources/img/bicycle.png';
@@ -47,13 +47,7 @@ class OverviewNew extends Component {
 		}
 	};
 	render() {
-		const {
-			currentInfo,
-			currentParam,
-			fetchDefaultResultIteration3,
-			setDefaultLoading,
-			loading
-		} = this.props;
+		const { currentInfo, currentParam, loading } = this.props;
 		const subtitle = currentParam
 			? `From ${currentParam.livingSuburb} to ${
 					currentParam.workingSuburb
@@ -86,13 +80,23 @@ class OverviewNew extends Component {
 				className='main-content-container px-4'
 			>
 				<Row className='page-header py-4'>
-					<Col lg='10' md='12' sm='12'>
+					<Col lg='8' md='12' sm='12'>
 						<h6 style={{ fontSize: '1.6rem' }} className='text-sm-left mb-3'>
 							Here is your current spending overview
 						</h6>
 						<p>{subtitle}</p>
 					</Col>
-					<Col lg='2' md='12' sm='12' xs='12' style={{ marginTop: '20px' }}>
+					<Col
+						lg='4'
+						md='12'
+						sm='12'
+						xs='12'
+						style={{
+							marginTop: '20px',
+							display: 'flex',
+							justifyContent: 'flex-end'
+						}}
+					>
 						<PeriodSelector
 							period={this.state.period}
 							handleChange={value => {

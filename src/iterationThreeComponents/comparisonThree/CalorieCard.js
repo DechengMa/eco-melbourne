@@ -1,8 +1,7 @@
 import React from 'react';
-import { KeyboardArrowDown } from '@material-ui/icons';
+import { ArrowDownward } from '@material-ui/icons';
 import { Card, CardBody } from 'shards-react';
 import { Colors } from '../utils/Variables';
-import { LocalPizza, Fastfood } from '@material-ui/icons';
 
 const containerStyle = {
 	alignItems: 'center',
@@ -23,7 +22,6 @@ const descStyle = {
 
 const CalorieCard = ({ value, period, travelMethod }) => {
 	const renderFood = () => {
-		// if (Number(value) > 20000) {
 		return (
 			<>
 				<h6
@@ -46,31 +44,6 @@ const CalorieCard = ({ value, period, travelMethod }) => {
 				</h6>
 			</>
 		);
-		// } else {
-		// 	return (
-		// 		<>
-		// 			<h6
-		// 				className='stats-small__value'
-		// 				style={{
-		// 					fontSize: '2.0625rem',
-		// 					color: Colors.infoGreen
-		// 				}}
-		// 			>
-		// 				{(Number(value) / 137).toFixed(2)}
-		// 				<span style={{ fontSize: '0.8rem' }} />
-		// 			</h6>
-		// 			<h6
-		// 				style={{
-		// 					...descStyle
-		// 				}}
-		// 				className='stats-small__label'
-		// 			>
-		// 				<Fastfood />
-		// 				Hot dog (beef and pork)
-		// 			</h6>
-		// 		</>
-		// 	);
-		// }
 	};
 
 	return (
@@ -97,7 +70,7 @@ const CalorieCard = ({ value, period, travelMethod }) => {
 				>
 					If you Travel by {travelMethod}
 				</h6>
-				<KeyboardArrowDown />
+				<ArrowDownward />
 				<h6 style={{ ...titleStyle }} className='stats-small__label'>
 					Which Would Take
 				</h6>

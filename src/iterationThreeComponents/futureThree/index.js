@@ -5,6 +5,7 @@ import EnvironmentalIssue from '../../resources/img/environmentalIssue.png';
 import HealthyIssue from '../../resources/img/healthyIssue.png';
 import TableauReport from 'tableau-react';
 import IssuesCard from './IssuesCard';
+import GoHomeBtn from '../utils/GoHomeBtn';
 
 const healthyRisksPoints = (
 	<>
@@ -113,6 +114,7 @@ const index = props => {
 					</Row>
 				</Container>
 			</Fade>
+			<GoHomeBtn />
 		</>
 	);
 };

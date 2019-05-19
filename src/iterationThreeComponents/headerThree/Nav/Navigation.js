@@ -1,19 +1,18 @@
 import React, { Component } from 'react';
+import { withRouter, NavLink as NavLinkRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {
 	Navbar,
 	NavbarToggler,
 	NavbarBrand,
 	Nav,
-	NavItem,
-	NavLink,
 	Collapse
 } from 'shards-react';
 import { Link } from 'react-router-dom';
 
 const navWithInput = [
 	{
-		url: '/',
+		url: '/iteration3/home',
 		name: 'Home'
 	},
 	{
@@ -25,13 +24,13 @@ const navWithInput = [
 		name: 'Comparison'
 	},
 	{
-		url: '/iteration3/future',
+		url: '/iteration3/explore',
 		name: 'Explore'
 	}
 ];
 const navWithoutInput = [
 	{
-		url: '/',
+		url: '/iteration3/home',
 		name: 'Home'
 	},
 	{
@@ -41,55 +40,75 @@ const navWithoutInput = [
 ];
 
 class Navigation extends Component {
-	constructor(props) {
-		super(props);
+	state = {
+		dropdownOpen: false,
+		collapseOpen: false,
+		path: '/'
+	};
 
-		this.toggleDropdown = this.toggleDropdown.bind(this);
-		this.toggleNavbar = this.toggleNavbar.bind(this);
-
-		this.state = {
-			dropdownOpen: false,
-			collapseOpen: false
-		};
-	}
-
-	toggleDropdown() {
+	toggleDropdown = () => {
 		this.setState({
 			...this.state,
 			...{
 				dropdownOpen: !this.state.dropdownOpen
 			}
 		});
-	}
+	};
 
-	toggleNavbar() {
+	toggleNavbar = () => {
 		this.setState({
 			...this.state,
 			...{
 				collapseOpen: !this.state.collapseOpen
 			}
 		});
+	};
+
+	componentDidUpdate(prevProps) {
+		console.log(this.props.location.pathname, prevProps.location.pathname);
+		if (this.props.location.pathname !== prevProps.location.pathname) {
+			this.onRouteChanged();
+		}
+	}
+
+	onRouteChanged() {
+		console.log('ROUTE CHANGED');
 	}
 
 	renderNav = () => {
 		if (!this.props.currentInfo) {
 			return navWithoutInput.map(e => {
 				return (
-					<Link to={e.url}>
-						<NavItem>
-							<NavLink active>{e.name}</NavLink>
-						</NavItem>
-					</Link>
+					<NavLinkRouter
+						style={{ color: '#fff', marginLeft: '20px' }}
+						activeStyle={{ color: '#fff', textDecoration: 'underline' }}
+						to={e.url}
+					>
+						{/* <NavItem>
+							<NavLink
+
+							// active
+							> */}
+						{e.name}
+						{/* </NavLink>
+						</NavItem> */}
+					</NavLinkRouter>
 				);
 			});
 		} else {
 			return navWithInput.map(e => {
 				return (
-					<Link to={e.url}>
-						<NavItem>
-							<NavLink active>{e.name}</NavLink>
-						</NavItem>
-					</Link>
+					<NavLinkRouter
+						style={{ color: '#fff', marginLeft: '20px' }}
+						activeStyle={{ color: '#fff', textDecoration: 'underline' }}
+						to={e.url}
+					>
+						{/* <NavItem> */}
+						{/* <NavLink> */}
+						{e.name}
+						{/* </NavLink> */}
+						{/* </NavItem> */}
+					</NavLinkRouter>
 				);
 			});
 		}
@@ -120,4 +139,4 @@ const mapStateToProps = ({ info }) => {
 	};
 };
 
-export default connect(mapStateToProps)(Navigation);
+export default connect(mapStateToProps)(withRouter(Navigation));

@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import {
 	AccessTime,
 	AttachMoney,
-	ArrowForwardIos,
+	ArrowForward,
 	ExpandMore
 } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
@@ -138,7 +138,7 @@ class SpendingCard extends Component {
 							</Col>
 							<Col style={{ ...arrowStyle }}>
 								<Fade delay={800 + delayBase}>
-									<ArrowForwardIos />
+									<ArrowForward />
 								</Fade>
 							</Col>
 							<Col lg='5' md='5' sm='12' xs='12'>
