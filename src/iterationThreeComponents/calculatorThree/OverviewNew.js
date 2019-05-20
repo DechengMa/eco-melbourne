@@ -73,6 +73,9 @@ class OverviewNew extends Component {
 				? currentInfo.environment.treesRequired
 				: '0';
 		}
+
+		const { period } = this.state;
+
 		return (
 			<Container
 				style={{ position: 'relative' }}
@@ -118,7 +121,7 @@ class OverviewNew extends Component {
 						<Col lg='9' md='9' sm='12' className='mb-4'>
 							<LightSpeed left>
 								<Row style={{ marginBottom: '20px' }}>
-									<TimeWastedCard timeWaste={timeWaste} />
+									<TimeWastedCard timeWaste={timeWaste} period={period} />
 								</Row>
 							</LightSpeed>
 							<LightSpeed right delay={2000}>
@@ -126,12 +129,16 @@ class OverviewNew extends Component {
 									<CarbonDamageCard
 										carCarbon={carCarbon}
 										treesRequired={treesRequired}
+										period={period}
 									/>
 								</Row>
 							</LightSpeed>
 							<LightSpeed left delay={4000}>
 								<Row>
-									<SpendingCard totalMoneySpent={totalMoneySpent} />
+									<SpendingCard
+										totalMoneySpent={totalMoneySpent}
+										period={period}
+									/>
 								</Row>
 							</LightSpeed>
 						</Col>

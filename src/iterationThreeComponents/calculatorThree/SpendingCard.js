@@ -131,7 +131,7 @@ class SpendingCard extends Component {
 											}}
 											className='stats-small__label'
 										>
-											Running your Car
+											Running your Car in one {this.props.period}
 										</h6>
 									</div>
 								</Fade>

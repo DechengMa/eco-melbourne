@@ -71,8 +71,8 @@ const BannerSection = ({ classes }) => {
 				</Typography>
 
 				<Typography className={classes.subtitleText}>
-					<strong>60%</strong> of all employees in Melbourne drive their cars to
-					work, making roads more <strong>congested</strong>.{' '}
+					<strong>74.4%</strong> of all employees in Melbourne drive their cars
+					to work, making roads more <strong>congested</strong>.{' '}
 					<Link to='/iteration3/explore'>
 						Click here to see what happens in the future
 					</Link>

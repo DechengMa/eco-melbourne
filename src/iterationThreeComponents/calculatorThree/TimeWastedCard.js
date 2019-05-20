@@ -165,7 +165,7 @@ class TimeWastedCard extends Component {
 											}}
 											className='stats-small__label'
 										>
-											Stuck on the Road in Congestion
+											Stuck on the Road in Congestion in one {this.props.period}
 										</h6>
 									</div>
 								</Fade>

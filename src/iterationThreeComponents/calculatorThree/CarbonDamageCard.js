@@ -127,7 +127,7 @@ class CarbonDamageCard extends Component {
 											}}
 											className='stats-small__label'
 										>
-											of Carbon Emission
+											of Carbon Emission in one {this.props.period}
 										</h6>
 									</div>
 								</Fade>
