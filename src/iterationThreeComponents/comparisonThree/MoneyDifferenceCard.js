@@ -32,8 +32,9 @@ const MoneyDifferenceCard = ({
 		labels: ['Car', travelMethodName],
 		datasets: [
 			{
-				label: 'Money Spending ($)',
-				backgroundColor: ['rgba(255, 128, 64, 1)', 'rgb(40, 125, 246)'],
+				label: ['Money Spending ($)'],
+				backgroundColor: ['rgba(40, 125, 246,0.7)', 'rgba(40, 125, 246,0.9)'],
+				borderWidth: 1,
 				data: data
 			}
 		]
@@ -68,7 +69,7 @@ const MoneyDifferenceCard = ({
 						}}
 						className='stats-small__label'
 					>
-						By travel this travel method in one {period}
+						By using this travel method in one {period}
 					</h6>
 				</Fade>
 				<Fade delay={1700}>
@@ -82,6 +83,12 @@ const MoneyDifferenceCard = ({
 							responsive={true}
 							data={dataToShow}
 							options={{
+								legend: {
+									position: 'top',
+									labels: {
+										boxWidth: 20
+									}
+								},
 								maintainAspectRatio: false,
 								scales: {
 									xAxes: [

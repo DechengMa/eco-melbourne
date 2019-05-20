@@ -12,22 +12,23 @@ const styles = theme => ({
 		height: 'calc(100vh - 67px)'
 	},
 	questionBox: {
-		order: 2,
-		marginLeft: '40px',
-		[theme.breakpoints.up('md')]: {
-			order: 1,
-			marginLeft: '0'
-		}
+		// order: 2,
+		// marginLeft: '40px',
+		// [theme.breakpoints.up('md')]: {
+		// 	// order: 1,
+		// 	marginLeft: '0'
+		// }
 	},
 	textbox: {
 		borderRadius: '10px',
 		padding: '20px',
 		background: 'rgba(255,255,255,0.6)',
-
+		display: 'none',
 		order: 1,
 		[theme.breakpoints.up('md')]: {
 			order: 2,
-			marginLeft: '50px'
+			marginLeft: '50px',
+			display: 'block'
 		}
 	},
 	text: {
@@ -69,11 +70,18 @@ class index extends Component {
 				<Nav />
 				<BannerSection />
 				<div className={classes.container}>
-					<Grid container alignItems='center'>
-						<Grid item xs={1} md={2} />
-						<Grid item xs={9} md={4} className={classes.questionBox}>
+					<Grid container justify='center' alignItems='center'>
+						{/* <Grid item xs={1} md={2} /> */}
+						<Grid item xs={10} md={4} className={classes.questionBox}>
 							<QuestionBox />
 						</Grid>
+						{/* <Grid
+							item
+							xs={12}
+							sm={10}
+							md={4}
+							lg={4}
+						/> */}
 						<Grid
 							item
 							xs={12}

@@ -33,7 +33,8 @@ const TimeDifferenceCard = ({
 		datasets: [
 			{
 				label: 'Travel Time (mins)',
-				backgroundColor: ['rgba(255, 128, 64, 1)', 'rgb(40, 125, 246)'],
+				backgroundColor: ['rgba(40, 125, 246,0.7)', 'rgba(40, 125, 246,0.9)'],
+				borderWidth: 1,
 				data: data
 			}
 		]
@@ -45,7 +46,7 @@ const TimeDifferenceCard = ({
 					<h6 style={{ ...titleStyle }} className='stats-small__label'>
 						{increase
 							? ` In terms of time, you will save`
-							: `In terms of time, you will waste`}
+							: `In terms of time, you will spend an extra`}
 					</h6>
 				</Fade>
 				<Fade delay={700}>
@@ -68,7 +69,7 @@ const TimeDifferenceCard = ({
 						}}
 						className='stats-small__label'
 					>
-						By travel this travel method in one {period}
+						By using this travel method in one {period}
 					</h6>
 				</Fade>
 				<Fade delay={1700}>
@@ -82,6 +83,12 @@ const TimeDifferenceCard = ({
 							responsive={true}
 							data={dataToShow}
 							options={{
+								legend: {
+									position: 'top',
+									labels: {
+										boxWidth: 20
+									}
+								},
 								maintainAspectRatio: false,
 								scales: {
 									xAxes: [

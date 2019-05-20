@@ -3,12 +3,16 @@ import {
 	FETCH_DEFAULT_RESULT,
 	SET_CURRENT_PARAM,
 	FETCH_COMPARISON_RESULT,
-	FETCH_LOADING
+	FETCH_LOADING,
+	SET_PERIOD
 } from './types';
 
 export const setDefaultLoading = isLoading => dispatch => {
-	console.log('setDefaultLoading', isLoading);
 	dispatch({ type: FETCH_LOADING, payload: isLoading });
+};
+
+export const setGlobalPeriod = period => dispatch => {
+	dispatch({ type: SET_PERIOD, payload: period });
 };
 
 export const setCurrentValue = (
@@ -72,11 +76,8 @@ export const fetchDefaultResultIteration3 = (
 	ptvTime,
 	history
 ) => async dispatch => {
-	console.log('fetchDefaultResultIteration3');
 	var url = `https://cors-anywhere.herokuapp.com/https://ecomelbourneiteration3.azurewebsites.net/Compare1/calculate?distance=${distance}&days=${days}&period=${period}&congestion=${congestion}&carTime=${carTime}&bicycleTime=${bicycleTime}&walkingTime=${walkingTime}&ptvTime=${ptvTime}`;
 	const response = await apis.post(url);
-	console.log('URL', url);
-	console.log('ACTION CREATOR RESP DATA', response.data);
 	const defaultResult = response.data;
 	dispatch({ type: FETCH_DEFAULT_RESULT, payload: defaultResult });
 	dispatch(setDefaultLoading(false));

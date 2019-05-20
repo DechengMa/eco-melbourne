@@ -68,7 +68,7 @@ const CalorieCard = ({ value, period, travelMethod }) => {
 					}}
 					className='stats-small__label'
 				>
-					If you Travel by {travelMethod}
+					If you Travel by {travelMethod} in one {period}
 				</h6>
 				<ArrowDownward />
 				<h6 style={{ ...titleStyle }} className='stats-small__label'>

@@ -3,7 +3,11 @@ import { connect } from 'react-redux';
 import { CircularProgress } from '@material-ui/core';
 import { Container, Row, Col } from 'shards-react';
 import LearnMoreCard from '../utils/LearnMoreCard';
-import { fetchDefaultResultIteration3, setDefaultLoading } from '../../actions';
+import {
+	fetchDefaultResultIteration3,
+	setDefaultLoading,
+	setGlobalPeriod
+} from '../../actions';
 import Bike from '../../resources/img/bicycle.png';
 import PeriodSelector from '../utils/PeriodSelector';
 import TimeWastedCard from './TimeWastedCard';
@@ -13,6 +17,19 @@ import { LightSpeed } from 'react-reveal';
 
 class OverviewNew extends Component {
 	state = { period: 'Day' };
+
+	componentDidMount() {
+		const { currentPeriod } = this.props;
+		const { period } = this.state;
+		if (currentPeriod && currentPeriod !== period) {
+			this.fetchDataFromBackEnd(this.props.currentPeriod);
+			this.setState({ period: currentPeriod });
+		}
+	}
+
+	changeCurrentPeriod = period => {
+		this.props.setGlobalPeriod(period);
+	};
 
 	fetchDataFromBackEnd = period => {
 		const {
@@ -105,6 +122,7 @@ class OverviewNew extends Component {
 							handleChange={value => {
 								this.fetchDataFromBackEnd(value);
 								this.setState({ period: value });
+								this.changeCurrentPeriod(value);
 							}}
 						/>
 					</Col>
@@ -165,11 +183,12 @@ const mapStateToProps = ({ info, loading }) => {
 	return {
 		currentInfo: info.currentInfo,
 		currentParam: info.currentParam,
+		currentPeriod: info.periodNow,
 		loading: loading.fetchDefaultloading
 	};
 };
 
 export default connect(
 	mapStateToProps,
-	{ fetchDefaultResultIteration3, setDefaultLoading }
+	{ fetchDefaultResultIteration3, setDefaultLoading, setGlobalPeriod }
 )(OverviewNew);

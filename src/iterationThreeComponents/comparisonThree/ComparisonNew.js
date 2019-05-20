@@ -1,37 +1,49 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Container, Row, Col, Button, Fade } from 'shards-react';
 import { CircularProgress } from '@material-ui/core';
-import { fetchComparsionResultIteration3 } from '../../actions';
+import {
+	fetchComparsionResultIteration3,
+	setGlobalPeriod
+} from '../../actions';
 import MapContainer from './MapContainer';
 import PeriodSelector from '../utils/PeriodSelector';
 import CalorieCard from './CalorieCard';
 import TimeDifferenceCard from './TimeDifferenceCard';
 import MoneyDifferenceCard from './MoneyDifferenceCard';
 
+const moneySpentBarStyle = {
+	backgroundColor: 'rgba(255,128,64,1)',
+	borderColor: 'rgba(255,128,64,1)',
+	borderWidth: 1,
+	hoverBackgroundColor: 'rgba(255,128,64,1)',
+	hoverBorderColor: 'rgba(255,128,64,1)'
+};
+const travelTimeBarStyle = {
+	backgroundColor: 'rgb(40,125,246)',
+	borderColor: 'rgb(40,125,246)',
+	borderWidth: 1,
+	hoverBackgroundColor: 'rgb(40,85,265)',
+	hoverBorderColor: 'rgb(40,85,265)'
+};
+
 const ComparisonNew = ({
 	smallStats,
 	comparisonInfo,
 	currentParam,
 	fetchComparsionResultIteration3,
-	loading
+	loading,
+	currentPeriod,
+	setGlobalPeriod
 }) => {
 	const [period, setPeriod] = useState('Day');
 
-	var moneySpentBarStyle = {
-		backgroundColor: 'rgba(255,128,64,1)',
-		borderColor: 'rgba(255,128,64,1)',
-		borderWidth: 1,
-		hoverBackgroundColor: 'rgba(255,128,64,1)',
-		hoverBorderColor: 'rgba(255,128,64,1)'
-	};
-	var travelTimeBarStyle = {
-		backgroundColor: 'rgb(40,125,246)',
-		borderColor: 'rgb(40,125,246)',
-		borderWidth: 1,
-		hoverBackgroundColor: 'rgb(40,85,265)',
-		hoverBorderColor: 'rgb(40,85,265)'
-	};
+	useEffect(() => {
+		if (currentPeriod && currentPeriod !== period) {
+			fetchDataFromBackEnd(currentPeriod);
+			setPeriod(currentPeriod);
+		}
+	});
 
 	var data = {
 		labels: ['Money Spent', 'Travel Time (mins for a round trip)'],
@@ -275,20 +287,21 @@ const ComparisonNew = ({
 							handleChange={value => {
 								fetchDataFromBackEnd(value);
 								setPeriod(value);
+								setGlobalPeriod(value);
 							}}
 						/>
 					</Col>
 				</Row>
 
 				{loading ? (
-					<Row style={{ height: '375px' }}>
+					<Row style={{ height: '380px' }}>
 						<CircularProgress
 							style={{ position: 'absolute', left: '50%', top: '20%' }}
 						/>
 					</Row>
 				) : (
-					<Row style={{ marginBottom: '20px' }}>
-						<Col>
+					<Row>
+						<Col className='mb-4'>
 							<TimeDifferenceCard
 								period={period}
 								travelMethodName={data.datasets[1].label}
@@ -297,7 +310,7 @@ const ComparisonNew = ({
 								data={[data.datasets[0].data[1], [data.datasets[1].data[1]]]}
 							/>
 						</Col>
-						<Col>
+						<Col className='mb-4'>
 							<MoneyDifferenceCard
 								period={period}
 								travelMethodName={data.datasets[1].label}
@@ -328,10 +341,10 @@ const ComparisonNew = ({
 };
 
 const mapStateToProps = ({ info, loading }) => {
-	console.log('mapStateToProps COMPARISON', info);
 	return {
 		comparisonInfo: info.comparisonInfo,
 		currentParam: info.currentParam,
+		currentPeriod: info.periodNow,
 		loading: loading.fetchDefaultloading
 	};
 };
@@ -370,5 +383,5 @@ ComparisonNew.defaultProps = {
 
 export default connect(
 	mapStateToProps,
-	{ fetchComparsionResultIteration3 }
+	{ fetchComparsionResultIteration3, setGlobalPeriod }
 )(ComparisonNew);

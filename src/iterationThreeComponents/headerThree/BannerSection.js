@@ -21,10 +21,14 @@ const styles = theme => ({
 		[theme.breakpoints.up('sm')]: {
 			width: '50%',
 			left: '35%'
+			// width: '70%',
+			// left: '50%'
 		},
 		[theme.breakpoints.up('md')]: {
 			width: '40%',
 			left: '35%'
+			// width: '70%',
+			// left: '50%'
 		}
 	},
 	titleText: {
@@ -79,8 +83,8 @@ const BannerSection = ({ classes }) => {
 				</Typography>
 
 				<Typography className={classes.subtitleText}>
-					Use our <strong>calculator</strong> to see how much time and money
-					you’re wasting and compare with other methods of travel.
+					Use our <strong>calculator</strong> to see how much time and money you
+					could save using other methods of travel.
 				</Typography>
 
 				<HeadShake forever={true}>

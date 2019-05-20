@@ -503,13 +503,13 @@ class QuestionBox extends Component {
 							}
 						/>
 						<strong className='text-muted d-block mb-2'>
-							When do you go to and leave work?
+							What time do you
 						</strong>
 						<Container style={{ padding: '0' }}>
 							<Row noGutters={true}>
 								<Col sm='12' md='6' lg='6'>
 									<div style={{ width: '100%' }}>
-										<span className='text-muted d-block'>Go:</span>
+										<strong className='text-muted d-block'>Go to Work:</strong>
 										<TimePicker
 											showSecond={false}
 											defaultValue={timeGo}
@@ -524,7 +524,9 @@ class QuestionBox extends Component {
 
 								<Col sm='12' md='6' lg='6'>
 									<div style={{ width: '100%' }}>
-										<span className='text-muted d-block'>Leave:</span>
+										<strong className='text-muted d-block'>
+											Leave from Work:
+										</strong>
 										<TimePicker
 											showSecond={false}
 											defaultValue={timeLeave}

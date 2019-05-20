@@ -24,7 +24,7 @@ const arrowStyle = {
 const delayBase = 0;
 
 const renderItem = value => {
-	var valueToCompare = Number(value).toFixed(2);
+	var valueToCompare = Number(value).toFixed(1);
 	var title = '';
 
 	var number = [0, ''];
