@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import QuestionBox from './QuestionBox.js';
-import { Grid, Typography, withStyles } from '@material-ui/core';
+import { Grid, withStyles } from '@material-ui/core';
 import Nav from './Nav/Navigation';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import FooterThree from '../footerThree';
@@ -71,17 +71,9 @@ class index extends Component {
 				<BannerSection />
 				<div className={classes.container}>
 					<Grid container justify='center' alignItems='center'>
-						{/* <Grid item xs={1} md={2} /> */}
 						<Grid item xs={10} md={4} className={classes.questionBox}>
 							<QuestionBox />
 						</Grid>
-						{/* <Grid
-							item
-							xs={12}
-							sm={10}
-							md={4}
-							lg={4}
-						/> */}
 						<Grid
 							item
 							xs={12}
@@ -90,17 +82,15 @@ class index extends Component {
 							lg={4}
 							className={classes.textbox}
 						>
-							<div>
-								<Typography className={classes.text}>
-									<p className={classes.textPOne}>
-										Melbourne roads are choking up. The ever - increasing
-										congestion is costing you valuable time and money.{' '}
-									</p>
-									<p>
-										Using our calculator, find out how much you’re wasting on
-										the road. We will also help you find a better way to travel.{' '}
-									</p>
-								</Typography>
+							<div className={classes.text}>
+								<p className={classes.textPOne}>
+									Melbourne roads are choking up. The ever - increasing
+									congestion is costing you valuable time and money.
+								</p>
+								<p>
+									Using our calculator, find out how much you’re wasting on the
+									road. We will also help you find a better way to travel.
+								</p>
 							</div>
 						</Grid>
 					</Grid>
