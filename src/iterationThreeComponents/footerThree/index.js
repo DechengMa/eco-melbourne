@@ -14,6 +14,9 @@ const styles = theme => ({
 const FooterThree = ({ copyright }) => (
 	<footer className='bg-white border-top'>
 		<Grid container direction='row' justify='space-around' alignItems='center'>
+			<Grid style={{ textAlign: 'center' }} item md={3} xs={12}>
+				<span className='copyright ml-auto my-auto mr-2'>{copyright}</span>
+			</Grid>
 			<Grid item md={9} xs={12}>
 				<p style={{ margin: '20px' }}>
 					All the information on this website - www.ecomelbourne.com - is
@@ -24,14 +27,6 @@ const FooterThree = ({ copyright }) => (
 					at your own risk. ecomelbourne will not be liable for any losses
 					and/or damages in connection with the use of our website.
 				</p>
-			</Grid>
-			<Grid
-				style={{ textAlign: 'center', marginBottom: '20px' }}
-				item
-				md={3}
-				xs={12}
-			>
-				<span className='copyright ml-auto my-auto mr-2'>{copyright}</span>
 			</Grid>
 		</Grid>
 	</footer>
