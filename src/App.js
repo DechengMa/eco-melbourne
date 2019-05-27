@@ -38,7 +38,7 @@ import AboutUsThree from './iterationThreeComponents/aboutUsThree';
 
 const App = () => {
 	const [spinner, setSpinner] = useState(true);
-	const [showContent, setShowContent] = useState(true);
+	const [showContent, setShowContent] = useState(false);
 
 	useEffect(() => {
 		setTimeout(() => setSpinner(false), 1000);
