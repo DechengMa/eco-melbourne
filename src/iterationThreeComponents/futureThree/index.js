@@ -50,22 +50,6 @@ Oil and fuel spills from cars and trucks seep into the soil near highways, and d
 Noise from cars is harmful, damaging hearing and causing psychological ill-health.
 `;
 
-const table1 = (
-	<TableauReport
-		url={
-			'https://public.tableau.com/views/PC_15576489568200/Dashboard1?:embed=y&:display_count=yes'
-		}
-	/>
-);
-
-const table2 = (
-	<TableauReport
-		url={
-			'https://public.tableau.com/views/TimeWasted/Dashboard1?:embed=y&:display_count=yes'
-		}
-	/>
-);
-
 const index = props => {
 	return (
 		<>
