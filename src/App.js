@@ -9,16 +9,16 @@ import {
 	FormInput,
 	InputGroupText
 } from 'shards-react';
-import ScrollToTop from './iterationThreeComponents/utils/_ScrollToTop';
+import ScrollToTop from './components/utils/_ScrollToTop';
 import { CircularProgress } from '@material-ui/core';
 import './resources/styles.css';
 
-import HeaderThree from './iterationThreeComponents/headerThree';
-import CalculatorThree from './iterationThreeComponents/calculatorThree';
-import ComparisonThree from './iterationThreeComponents/comparisonThree';
-import FutureThree from './iterationThreeComponents/futureThree';
-import AboutUsThree from './iterationThreeComponents/aboutUsThree';
-import NotFoundPage from './iterationThreeComponents/NotFoundPage';
+import HeaderThree from './components/headerThree';
+import CalculatorThree from './components/calculatorThree';
+import ComparisonThree from './components/comparisonThree';
+import FutureThree from './components/futureThree';
+import AboutUsThree from './components/aboutUsThree';
+import NotFoundPage from './components/NotFoundPage';
 
 const App = () => {
 	const [spinner, setSpinner] = useState(true);
