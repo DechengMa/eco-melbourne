@@ -22,7 +22,7 @@ import NotFoundPage from './components/NotFoundPage';
 
 const App = () => {
 	const [spinner, setSpinner] = useState(true);
-	const [showContent, setShowContent] = useState(false);
+	const [showContent, setShowContent] = useState(true);
 
 	useEffect(() => {
 		setTimeout(() => setSpinner(false), 1000);
