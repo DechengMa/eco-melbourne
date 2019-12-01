@@ -3,7 +3,7 @@ import QuestionBox from './QuestionBox.js';
 import { Grid, withStyles } from '@material-ui/core';
 import Nav from './Nav/Navigation';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import FooterThree from '../footerThree';
+import FooterThree from '../footer';
 import BannerSection from './BannerSection.js';
 
 const styles = theme => ({

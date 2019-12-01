@@ -12,29 +12,29 @@ import {
 
 const navWithInput = [
 	{
-		url: '/iteration3/home',
+		url: '/',
 		name: 'Home'
 	},
 	{
-		url: '/iteration3/calculator',
+		url: '/calculator',
 		name: 'Calculator'
 	},
 	{
-		url: '/iteration3/comparison',
+		url: '/comparison',
 		name: 'Comparison'
 	},
 	{
-		url: '/iteration3/explore',
+		url: '/explore',
 		name: 'Explore'
 	}
 ];
 const navWithoutInput = [
 	{
-		url: '/iteration3/home',
+		url: '/',
 		name: 'Home'
 	},
 	{
-		url: '/iteration3/explore',
+		url: '/explore',
 		name: 'Explore'
 	}
 ];
@@ -84,6 +84,7 @@ class Navigation extends Component {
 			return navWithoutInput.map(e => {
 				return (
 					<NavLinkRouter
+						exact
 						key={e.name}
 						activeStyle={{ color: '#fff', textDecoration: 'underline' }}
 						to={e.url}
@@ -97,6 +98,7 @@ class Navigation extends Component {
 			return navWithInput.map(e => {
 				return (
 					<NavLinkRouter
+						exact
 						key={e.name}
 						activeStyle={{ color: '#fff', textDecoration: 'underline' }}
 						to={e.url}

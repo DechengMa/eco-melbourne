@@ -1,59 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import {
-	Modal,
-	ModalBody,
-	ModalHeader,
-	InputGroup,
-	InputGroupAddon,
-	FormInput,
-	InputGroupText
-} from 'shards-react';
 import ScrollToTop from './components/utils/_ScrollToTop';
 import { CircularProgress } from '@material-ui/core';
 import './resources/styles.css';
 
-import HeaderThree from './components/headerThree';
-import CalculatorThree from './components/calculatorThree';
-import ComparisonThree from './components/comparisonThree';
-import FutureThree from './components/futureThree';
-import AboutUsThree from './components/aboutUsThree';
+import Header from './components/header';
+import Calculator from './components/calculator';
+import Comparison from './components/comparison';
+import Future from './components/future';
+import AboutUs from './components/aboutUs';
 import NotFoundPage from './components/NotFoundPage';
 
 const App = () => {
 	const [spinner, setSpinner] = useState(true);
-	const [showContent, setShowContent] = useState(true);
 
 	useEffect(() => {
 		setTimeout(() => setSpinner(false), 1000);
 	}, []);
 
-	const iteration3HomePage = () => <HeaderThree />;
-	const iteration3Calculator = () => <CalculatorThree />;
-	const iteration3Comparison = () => <ComparisonThree />;
-	const iteration3Future = () => <FutureThree />;
-	const iteration3AboutUs = () => <AboutUsThree />;
-
-	// Password
-	const inputPassword = event => {
-		if (event.target.value === 'ecomelbourne') {
-			setShowContent(true);
-		}
-	};
-
-	const PasswordModal = () => (
-		<Modal open={true}>
-			<ModalHeader>Password</ModalHeader>
-			<ModalBody>
-				<InputGroup size='mb-2'>
-					<InputGroupAddon type='prepend'>
-						<InputGroupText>Password</InputGroupText>
-					</InputGroupAddon>
-					<FormInput onChange={inputPassword} />
-				</InputGroup>
-			</ModalBody>
-		</Modal>
-	);
+	const homePage = () => <Header />;
+	const calculator = () => <Calculator />;
+	const comparison = () => <Comparison />;
+	const future = () => <Future />;
+	const aboutUs = () => <AboutUs />;
 
 	if (spinner) {
 		return (
@@ -64,47 +33,20 @@ const App = () => {
 			</div>
 		);
 	} else {
-		if (showContent) {
-			return (
-				<Router>
-					<ScrollToTop>
-						<Switch>
-							<Route exact path='/' component={iteration3HomePage} />
-							<Route exact path='/iteration3' component={iteration3HomePage} />
-							<Route
-								exact
-								path='/iteration3/home'
-								component={iteration3HomePage}
-							/>
-							<Route
-								exact
-								path='/iteration3/calculator'
-								component={iteration3Calculator}
-							/>
-							<Route
-								exact
-								path='/iteration3/comparison'
-								component={iteration3Comparison}
-							/>
-							<Route
-								exact
-								path='/iteration3/explore'
-								component={iteration3Future}
-							/>
-							<Route
-								exact
-								path='/iteration3/aboutus'
-								component={iteration3AboutUs}
-							/>
-
-							<Route component={NotFoundPage} />
-						</Switch>
-					</ScrollToTop>
-				</Router>
-			);
-		} else {
-			return <PasswordModal />;
-		}
+		return (
+			<Router>
+				<ScrollToTop>
+					<Switch>
+						<Route exact path='/' component={homePage} />
+						<Route exact path='/calculator' component={calculator} />
+						<Route exact path='/comparison' component={comparison} />
+						<Route exact path='/explore' component={future} />
+						<Route exact path='/aboutus' component={aboutUs} />
+						<Route component={NotFoundPage} />
+					</Switch>
+				</ScrollToTop>
+			</Router>
+		);
 	}
 };
 

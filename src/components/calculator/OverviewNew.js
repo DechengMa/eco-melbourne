@@ -66,9 +66,7 @@ class OverviewNew extends Component {
 	render() {
 		const { currentInfo, currentParam, loading } = this.props;
 		const subtitle = currentParam
-			? `From ${currentParam.livingSuburb} to ${
-					currentParam.workingSuburb
-			  }, The distance is ${currentParam.distance} km`
+			? `From ${currentParam.livingSuburb} to ${currentParam.workingSuburb}, The distance is ${currentParam.distance} km`
 			: '';
 
 		var timeWaste = 0;
@@ -170,7 +168,7 @@ class OverviewNew extends Component {
 							text='Save up to $1000 yearly by changing the way your travel'
 							buttonText='Learn More &rarr;'
 							btnTheme='warning'
-							to='/iteration3/comparison'
+							to='/comparison'
 						/>
 					</Col>
 				</Row>
@@ -188,7 +186,8 @@ const mapStateToProps = ({ info, loading }) => {
 	};
 };
 
-export default connect(
-	mapStateToProps,
-	{ fetchDefaultResultIteration3, setDefaultLoading, setGlobalPeriod }
-)(OverviewNew);
+export default connect(mapStateToProps, {
+	fetchDefaultResultIteration3,
+	setDefaultLoading,
+	setGlobalPeriod
+})(OverviewNew);

@@ -83,7 +83,7 @@ export const fetchDefaultResultIteration3 = (
 	dispatch(setDefaultLoading(false));
 	if (response && history) {
 		dispatch(setDefaultLoading(false));
-		history.push('/iteration3/calculator');
+		history.push('/calculator');
 	}
 };
 

@@ -105,9 +105,7 @@ const Overview = ({
 	};
 
 	const subtitle = currentParam
-		? `From ${currentParam.livingSuburb} to ${
-				currentParam.workingSuburb
-		  }, The distance is ${currentParam.distance} km`
+		? `From ${currentParam.livingSuburb} to ${currentParam.workingSuburb}, The distance is ${currentParam.distance} km`
 		: '';
 
 	return (
@@ -229,7 +227,7 @@ const Overview = ({
 							text='Save up to $1000 yearly by changing the way your travel'
 							buttonText='Learn More &rarr;'
 							btnTheme='warning'
-							to='/iteration3/comparison'
+							to='/comparison'
 						/>
 					</Col>
 				</Row>
@@ -296,7 +294,7 @@ const mapStateToProps = ({ info, loading }) => {
 	};
 };
 
-export default connect(
-	mapStateToProps,
-	{ fetchDefaultResultIteration3, setDefaultLoading }
-)(Overview);
+export default connect(mapStateToProps, {
+	fetchDefaultResultIteration3,
+	setDefaultLoading
+})(Overview);

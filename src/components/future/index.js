@@ -1,12 +1,12 @@
 import React from 'react';
 import { Container, Row, Col, Fade, CardBody, Card } from 'shards-react';
-import Navigation from '../headerThree/Nav/Navigation';
+import Navigation from '../header/Nav/Navigation';
 import EnvironmentalIssue from '../../resources/img/environmentalIssue.png';
 import HealthyIssue from '../../resources/img/healthyIssue.png';
 import TableauReport from 'tableau-react';
 import IssuesCard from './IssuesCard';
 import GoHomeBtn from '../utils/GoHomeBtn';
-import Footer from '../footerThree';
+import Footer from '../footer';
 
 const healthyRisksPoints = (
 	<>

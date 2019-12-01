@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import Navigation from '../headerThree/Nav/Navigation';
+import Navigation from '../header/Nav/Navigation';
 import ComparisonNew from './ComparisonNew';
-import FooterThree from '../footerThree';
+import FooterThree from '../footer';
 import GoHomeBtn from '../utils/GoHomeBtn';
 
 class index extends Component {

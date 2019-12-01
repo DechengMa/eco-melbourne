@@ -1,5 +1,5 @@
 import React from 'react';
-import Navigation from '../headerThree/Nav/Navigation';
+import Navigation from '../header/Nav/Navigation';
 import {
 	Card,
 	CardTitle,
