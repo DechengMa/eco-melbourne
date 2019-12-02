@@ -1,1 +1,2 @@
-export const HOST = 'https://ecomelbourne.azurewebsites.net/Calculator/index';
+export const HOST =
+	'https://ecomelbourneiteration220191202092421.azurewebsites.net';

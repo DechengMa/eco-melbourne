@@ -1,5 +1,6 @@
 import axios from 'axios';
+import { HOST } from '../config/urls';
 
 export default axios.create({
-	baseURL: 'https://ecomelbourneiteration2.azurewebsites.net/'
+	baseURL: { HOST }
 });
