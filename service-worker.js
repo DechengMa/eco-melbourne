@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/eco-mel/precache-manifest.9534dd5fee7ee7cd943e3e19859a67fa.js"
+  "/Eco-Melbourne/precache-manifest.41a60b5d9e0e41b104a37e217ecdc729.js"
 );
 
 workbox.clientsClaim();
@@ -28,7 +28,7 @@ self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute("/eco-mel/index.html", {
+workbox.routing.registerNavigationRoute("/Eco-Melbourne/index.html", {
   
   blacklist: [/^\/_/,/\/[^\/]+\.[^\/]+$/],
 });
