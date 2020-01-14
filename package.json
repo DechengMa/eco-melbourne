@@ -7,7 +7,7 @@
 		"@material-ui/core": "^3.9.3",
 		"@material-ui/icons": "^3.0.2",
 		"@material-ui/styles": "^4.0.0-alpha.8",
-		"axios": "^0.18.0",
+		"axios": "^0.18.1",
 		"camelize": "^1.0.0",
 		"chart.js": "^2.8.0",
 		"classnames": "^2.2.6",
