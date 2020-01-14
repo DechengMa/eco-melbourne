@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/Eco-Melbourne/precache-manifest.41a60b5d9e0e41b104a37e217ecdc729.js"
+  "/Eco-Melbourne/precache-manifest.ecc150c34d67abff66b6c7cde4e62a1b.js"
 );
 
 workbox.clientsClaim();
